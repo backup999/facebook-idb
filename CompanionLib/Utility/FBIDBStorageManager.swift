@@ -27,7 +27,6 @@ public enum FBIDBStorageError: Error {
   case invalidPathExtension(pathExtension: String, path: URL)
   case testNotFoundByID(bundleID: String)
   case baseDirectoryUnreadable
-  case testNotFoundByURL(url: URL)
   case notExactlyOneTest(count: Int)
   case storageLocationCreationFailed(path: URL, underlying: Error)
 }
@@ -53,8 +52,6 @@ extension FBIDBStorageError: LocalizedError {
       return "Couldn't find test with id: \(bundleID)"
     case .baseDirectoryUnreadable:
       return "Error reading test bundle base directory"
-    case let .testNotFoundByURL(url):
-      return "Couldn't find test with url: \(url)"
     case let .notExactlyOneTest(count):
       return "Expected exactly one test in the xctestrun file, got: \(count)"
     case let .storageLocationCreationFailed(path, _):
@@ -341,11 +338,6 @@ public final class FBXCTestBundleStorage: FBBundleStorage {
     return try listXCTestContents(withExtension: XctestRunExtension)
   }
 
-  private func xctestBundle(withID bundleID: String) throws -> URL {
-    let directory = basePath.appendingPathComponent(bundleID)
-    return try FBStorageUtils.findFile(withExtension: XctestExtension, at: directory)
-  }
-
   private func listXCTestContents(withExtension ext: String) throws -> Set<URL> {
     guard let directories = try? FileManager.default.contentsOfDirectory(at: basePath, includingPropertiesForKeys: nil, options: .skipsSubdirectoryDescendants) else {
       throw FBIDBStorageError.baseDirectoryUnreadable
@@ -358,16 +350,6 @@ public final class FBXCTestBundleStorage: FBBundleStorage {
       }
     }
     return tests
-  }
-
-  private func testDescriptor(with url: URL) throws -> FBXCTestDescriptor {
-    let testDescriptors = try listTestDescriptors()
-    for testDescriptor in testDescriptors {
-      if testDescriptor.url.absoluteString == url.absoluteString {
-        return testDescriptor
-      }
-    }
-    throw FBIDBStorageError.testNotFoundByURL(url: url)
   }
 
   private func getDescriptors(from xctestrunContents: [String: Any], with xctestrunURL: URL) -> [FBXCTestDescriptor] {
