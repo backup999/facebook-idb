@@ -393,13 +393,6 @@ static void XCTestCase_performTest(id self, SEL sel, id arg1)
   XCPerformTestWithSuppressedExpectedAssertionFailures(self, originalSelector, arg1);
 }
 
-static void XCTestCaseSuite_performTest(id self, SEL sel, id arg1)
-{
-  SEL originalSelector = @selector(__XCTestCaseSuite_performTest:);
-  XCWaitForDebuggerIfNeeded();
-  XCPerformTestWithSuppressedExpectedAssertionFailures(self, originalSelector, arg1);
-}
-
 static id XCTRunnerDaemonSession_sharedSession(Class cls, SEL cmd)
 {
   return nil;
@@ -458,66 +451,31 @@ static void SwizzleXCTestMethodsIfAvailable(void)
 
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
-    if ([testLogClass instancesRespondToSelector:@selector(testSuiteWillStart:)]) {
-      // Swizzle methods for Xcode 8.
-      XTSwizzleSelectorForFunction(
-        testLogClass,
-        @selector(testSuiteWillStart:),
-        (IMP)XCTestLog_testSuiteWillStart
-      );
-      XTSwizzleSelectorForFunction(
-        testLogClass,
-        @selector(testSuiteDidFinish:),
-        (IMP)XCTestLog_testSuiteDidFinish
-      );
-      XTSwizzleSelectorForFunction(
-        testLogClass,
-        @selector(testCaseWillStart:),
-        (IMP)XCTestLog_testCaseWillStart
-      );
-      XTSwizzleSelectorForFunction(
-        testLogClass,
-        @selector(testCaseDidFinish:),
-        (IMP)XCTestLog_testCaseDidFinish
-      );
-      XTSwizzleSelectorForFunction(
-        testLogClass,
-        @selector(testCase:didFailWithDescription:inFile:atLine:),
-        (IMP)XCTestLog_testCaseDidFailWithDescription
-      );
-    } else {
-      // Swizzle methods for Xcode 7 and earlier.
-      XTSwizzleSelectorForFunction(
-        testLogClass,
-        @selector(testSuiteDidStart:),
-        (IMP)XCTestLog_testSuiteDidStart
-      );
-      XTSwizzleSelectorForFunction(
-        testLogClass,
-        @selector(testSuiteDidStop:),
-        (IMP)XCTestLog_testSuiteDidStop
-      );
-      XTSwizzleSelectorForFunction(
-        testLogClass,
-        @selector(testCaseDidStart:),
-        (IMP)XCTestLog_testCaseDidStart
-      );
-      XTSwizzleSelectorForFunction(
-        testLogClass,
-        @selector(testCaseDidStop:),
-        (IMP)XCTestLog_testCaseDidStop
-      );
-      XTSwizzleSelectorForFunction(
-        testLogClass,
-        @selector(testCaseDidFail:withDescription:inFile:atLine:),
-        (IMP)XCTestLog_testCaseDidFail
-      );
-      XTSwizzleSelectorForFunction(
-        objc_getClass("XCTestCaseSuite"),
-        @selector(performTest:),
-        (IMP)XCTestCaseSuite_performTest
-      );
-    }
+    XTSwizzleSelectorForFunction(
+      testLogClass,
+      @selector(testSuiteWillStart:),
+      (IMP)XCTestLog_testSuiteWillStart
+    );
+    XTSwizzleSelectorForFunction(
+      testLogClass,
+      @selector(testSuiteDidFinish:),
+      (IMP)XCTestLog_testSuiteDidFinish
+    );
+    XTSwizzleSelectorForFunction(
+      testLogClass,
+      @selector(testCaseWillStart:),
+      (IMP)XCTestLog_testCaseWillStart
+    );
+    XTSwizzleSelectorForFunction(
+      testLogClass,
+      @selector(testCaseDidFinish:),
+      (IMP)XCTestLog_testCaseDidFinish
+    );
+    XTSwizzleSelectorForFunction(
+      testLogClass,
+      @selector(testCase:didFailWithDescription:inFile:atLine:),
+      (IMP)XCTestLog_testCaseDidFailWithDescription
+    );
     XTSwizzleSelectorForFunction(
       objc_getClass("XCTestCase"),
       @selector(performTest:),
