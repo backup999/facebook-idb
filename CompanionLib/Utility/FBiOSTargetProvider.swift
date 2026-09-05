@@ -52,8 +52,6 @@ public final class FBiOSTargetProvider {
     }
   }
 
-  // MARK: - Private
-
   private static func fetchTarget(withUDID udid: String, targetSets: [FBiOSTargetSet], logger: FBControlCoreLogger) throws -> FBiOSTarget {
     if udid.lowercased() == "mac" {
       return FBMacDevice(logger: logger)

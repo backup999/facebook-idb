@@ -140,8 +140,6 @@ final class ReplRecordingCoordinator: @unchecked Sendable {
     await drop(beginStopping(matching: id))
   }
 
-  // MARK: - Private
-
   /// Atomically moves the active recording into the `stopping` state and returns it,
   /// when there is one and it matches `id` (any recording when `id` is nil). The slot
   /// stays occupied -- rejecting new reservations -- until `finishStopping()`, so the

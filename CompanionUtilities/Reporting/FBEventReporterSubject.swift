@@ -32,7 +32,7 @@ public struct FBEventReporterSubject: Sendable {
   /// Additional per-event integer columns attached to this subject alone.
   public let ints: [String: Int]
 
-  // MARK: Convenience Initializers
+  // MARK: - Convenience Initializers
 
   public init(forEvent eventName: String) {
     self.init(
@@ -100,8 +100,6 @@ public struct FBEventReporterSubject: Sendable {
       ints: ints
     )
   }
-
-  // MARK: Private
 
   // Saturating on purpose: durations can arrive negative (wall clocks step
   // backwards under NTP between a call's start and end) or non-finite, and

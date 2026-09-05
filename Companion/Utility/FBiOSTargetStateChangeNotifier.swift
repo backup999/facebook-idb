@@ -43,8 +43,6 @@ final class FBiOSTargetStateChangeNotifier: NSObject, FBiOSTargetSetDelegate {
   private var current: [String: FBiOSTargetDescription]
   private let donePromise = AsyncPromise<Void>()
 
-  // MARK: Initializers
-
   static func notifierToFilePath(_ filePath: String, withTargetSets targetSets: [FBiOSTargetSet], logger: FBControlCoreLogger) throws -> FBiOSTargetStateChangeNotifier {
     if targetSets.isEmpty {
       throw FBiOSTargetStateChangeNotifierError.noTargetSets
@@ -87,8 +85,6 @@ final class FBiOSTargetStateChangeNotifier: NSObject, FBiOSTargetSetDelegate {
     super.init()
   }
 
-  // MARK: Public
-
   func startNotifier() throws {
     for targetSet in targetSets {
       for target in targetSet.allTargetInfos {
@@ -115,8 +111,6 @@ final class FBiOSTargetStateChangeNotifier: NSObject, FBiOSTargetSetDelegate {
   func waitUntilDone() async throws {
     try await donePromise.value
   }
-
-  // MARK: Private
 
   @discardableResult
   private func writeTargets() -> Bool {
@@ -153,7 +147,7 @@ final class FBiOSTargetStateChangeNotifier: NSObject, FBiOSTargetSetDelegate {
     return true
   }
 
-  // MARK: FBiOSTargetSetDelegate
+  // MARK: - FBiOSTargetSetDelegate
 
   func targetAdded(_ targetInfo: FBiOSTargetInfo, in targetSet: FBiOSTargetSet) {
     current[targetInfo.uniqueIdentifier] = FBiOSTargetDescription(target: targetInfo)

@@ -88,8 +88,6 @@ final class IDBXCTestReporter: NSObject, FBXCTestReporter, FBDataConsumer, @unch
     self.logger = logger
   }
 
-  // MARK: - Async API
-
   /// Waits until reporting has terminated. Returns the status raw value reported.
   func awaitReportingTerminated() async throws -> Int {
     try await reportingTerminated.value
