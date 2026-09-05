@@ -13,8 +13,6 @@ private let StartCommand: UInt32 = 0x00000000
 public final class FBDeviceLocationCommands {
   private weak var device: FBDevice?
 
-  // MARK: - Initializers
-
   public class func commands(with device: FBDevice) -> FBDeviceLocationCommands {
     FBDeviceLocationCommands(device: device)
   }

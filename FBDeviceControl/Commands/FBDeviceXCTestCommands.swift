@@ -40,8 +40,6 @@ public final class FBDeviceXCTestCommands: NSObject {
   private(set) var processFetcher: FBProcessFetcher
   var runningXcodeBuildOperation = false
 
-  // MARK: Initializers
-
   public class func commands(with device: FBDevice) -> FBDeviceXCTestCommands {
     FBDeviceXCTestCommands(device: device, workingDirectory: NSTemporaryDirectory())
   }
@@ -76,8 +74,6 @@ public final class FBDeviceXCTestCommands: NSObject {
     let task = try await bridgeFBFuture(startTestWithLaunchConfiguration(configuration: testLaunchConfiguration, logger: logger))
     try await bridgeFBFutureVoid(FBXcodeBuildOperation.confirmExit(ofXcodebuildOperation: task, configuration: testLaunchConfiguration, reporter: reporter, target: device, logger: logger))
   }
-
-  // MARK: Private
 
   private func startTestWithLaunchConfiguration(configuration: FBTestLaunchConfiguration, logger: any FBControlCoreLogger) throws -> FBFuture<FBSubprocess<AnyObject, AnyObject, AnyObject>> {
     let filePath: String

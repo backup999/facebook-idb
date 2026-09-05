@@ -80,8 +80,6 @@ public final class FBDevice: FBiOSTarget, FBDeviceCommands, CustomStringConverti
   public var activationState: String { cachedActivationState ?? "" }
   public var allValues: [String: Any] { cachedAllValues ?? [:] }
 
-  // MARK: - Initializers
-
   public init(
     set: FBDeviceSet?,
     amDevice: FBAMDevice?,
@@ -107,8 +105,6 @@ public final class FBDevice: FBiOSTarget, FBDeviceCommands, CustomStringConverti
     }
     self.logger = logger.withName(udid)
   }
-
-  // MARK: - FBiOSTargetCommand
 
   public static func commands(with target: any FBiOSTarget) -> Self {
     guard let device = target as? Self else {
@@ -177,8 +173,6 @@ public final class FBDevice: FBiOSTarget, FBDeviceCommands, CustomStringConverti
   public func environmentAdditions() -> [String: String] {
     [:]
   }
-
-  // MARK: - CustomStringConvertible
 
   public var description: String {
     FBiOSTargetDescribe(self)

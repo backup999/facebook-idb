@@ -11,8 +11,6 @@ import Foundation
 public final class FBDeviceLifecycleCommands {
   private weak var device: FBDevice?
 
-  // MARK: - Initializers
-
   public class func commands(with device: FBDevice) -> FBDeviceLifecycleCommands {
     FBDeviceLifecycleCommands(device: device)
   }

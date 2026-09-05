@@ -36,8 +36,6 @@ extension FBDeviceRecoveryError: LocalizedError {
 public final class FBDeviceRecoveryCommands {
   private(set) weak var device: FBDevice?
 
-  // MARK: Initializers
-
   public class func commands(with device: FBDevice) -> FBDeviceRecoveryCommands {
     FBDeviceRecoveryCommands(device: device)
   }
@@ -85,8 +83,6 @@ public final class FBDeviceRecoveryCommands {
       throw FBDeviceRecoveryError.exitRecoveryFailed(recoveryDevice: String(describing: recoveryDevice), message: Self.errorMessage(for: status, calls: device.calls))
     }
   }
-
-  // MARK: - Helpers
 
   private static func errorMessage(for status: Int32, calls: AMDCalls) -> String {
     if let copyErrorTextFunc = calls.CopyErrorText {

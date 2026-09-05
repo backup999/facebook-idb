@@ -69,7 +69,7 @@ public final class FBDeviceFileContainer: AsyncFileContainer {
     self.queue = queue
   }
 
-  // MARK: AsyncFileContainer
+  // MARK: - AsyncFileContainer
 
   public func copy(fromHost sourcePath: String, toContainer destinationPath: String) async throws {
     let box = connectionBox
@@ -154,7 +154,7 @@ public final class FBDeviceFileContainer: AsyncFileContainer {
     }
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   private func readFile(inContainer path: String) async throws -> Data {
     let box = connectionBox
@@ -272,7 +272,7 @@ private class FBDeviceFileCommands_DiskImages: AsyncFileContainer {
     self.queue = queue
   }
 
-  // MARK: AsyncFileContainer
+  // MARK: - AsyncFileContainer
 
   func copy(fromHost sourcePath: String, toContainer destinationPath: String) async throws {
     throw FBDeviceFileContainerError.operationUnsupported(operation: #function, container: "Disk Images")
@@ -317,7 +317,7 @@ private class FBDeviceFileCommands_DiskImages: AsyncFileContainer {
     return FBDeviceFileCommands_DiskImages.traverseAndDescendPaths(diskImagePaths, path: path)
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   private var mountableDiskImagesByPath: [String: FBDeveloperDiskImage] {
     let images = commands.mountableDiskImages()
@@ -428,7 +428,7 @@ public final class FBDeviceFileCommands {
   private weak var device: FBDevice?
   private let afcCalls: AFCCalls
 
-  // MARK: Initializers
+  // MARK: - Initializers
 
   public class func commands(with device: FBDevice) -> FBDeviceFileCommands {
     FBDeviceFileCommands(device: device, afcCalls: FBAFCConnection.defaultCalls)
@@ -443,7 +443,7 @@ public final class FBDeviceFileCommands {
     self.afcCalls = afcCalls
   }
 
-  // MARK: FBFileCommands
+  // MARK: - FBFileCommands
 
   private func requireDevice() throws -> FBDevice {
     guard let device else {

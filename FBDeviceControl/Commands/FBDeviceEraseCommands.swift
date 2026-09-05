@@ -45,7 +45,7 @@ private final class FBDeviceEraseOperation: NSObject, FBiOSTargetSetDelegate, @u
     self.deviceManager.delegate = self
   }
 
-  // MARK: Erase
+  // MARK: - Erase
 
   func erase() async throws {
     try deviceManager.startListening()
@@ -60,8 +60,6 @@ private final class FBDeviceEraseOperation: NSObject, FBiOSTargetSetDelegate, @u
     logger.log("Device has gone offline, waiting for it to come back online")
     try await awaitEvent(deviceCameBack, timeout: OnlineTimeout, waitingFor: "Device to come back")
   }
-
-  // MARK: Private
 
   /// Issues `AMSEraseDevice` on the serial queue and awaits the value delivered by
   /// the C erase callback (with a timeout).
@@ -99,7 +97,7 @@ private final class FBDeviceEraseOperation: NSObject, FBiOSTargetSetDelegate, @u
     try await bridgeFBFutureVoid(timed)
   }
 
-  // MARK: FBiOSTargetSetDelegate
+  // MARK: - FBiOSTargetSetDelegate
 
   func targetAdded(_ targetInfo: any FBiOSTargetInfo, in targetSet: any FBiOSTargetSet) {
     if deviceDetected.state == .running {
@@ -146,7 +144,7 @@ public final class FBDeviceEraseCommands: EraseCommands {
     self.device = device
   }
 
-  // MARK: EraseCommands
+  // MARK: - EraseCommands
 
   public func erase() async throws {
     guard let device else {

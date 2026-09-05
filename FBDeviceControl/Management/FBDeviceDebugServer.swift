@@ -108,11 +108,7 @@ public final class FBDeviceDebugServer: NSObject, FBSocketServerDelegate, FBDebu
   private var teardown: FBMutableFuture<NSNull>?
   private var twistedPair: FBDeviceDebugServer_TwistedPairFiles?
 
-  // MARK: - FBDebugServer
-
   public let lldbBootstrapCommands: [String]
-
-  // MARK: - FBSocketServerDelegate
 
   public let queue: DispatchQueue
 
@@ -213,8 +209,6 @@ public final class FBDeviceDebugServer: NSObject, FBSocketServerDelegate, FBDebu
     }
     return unsafeBitCast(teardown, to: FBFuture<NSNull>.self)
   }
-
-  // MARK: - Private Methods
 
   private func startListening() -> FBFutureContext<FBDeviceDebugServer> {
     return tcpServer.startListeningContext()

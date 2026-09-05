@@ -26,8 +26,6 @@ extension FBDeviceScreenshotError: LocalizedError {
 public final class FBDeviceScreenshotCommands {
   private weak var device: FBDevice?
 
-  // MARK: - Initializers
-
   public class func commands(with device: FBDevice) -> FBDeviceScreenshotCommands {
     FBDeviceScreenshotCommands(device: device)
   }

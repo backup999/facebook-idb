@@ -32,6 +32,4 @@ extension FBDevice: InstrumentsCommands {
   }
 }
 
-// MARK: - FBDevice+AsynciOSTarget
-
 extension FBDevice: AsynciOSTarget {}

@@ -200,13 +200,9 @@ public final class FBAMDevice: FBiOSTargetInfo, FBDeviceCommands, CustomStringCo
     }
   }
 
-  // MARK: - CustomStringConvertible
-
   public var description: String {
     "AMDevice \(udid) | \(name)"
   }
-
-  // MARK: - Private
 
   private class func osVersionName(deviceClass: String?, productVersion: String?) -> String {
     guard let productVersion else {

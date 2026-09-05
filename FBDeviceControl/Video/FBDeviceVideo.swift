@@ -32,7 +32,7 @@ extension FBDeviceVideoError: LocalizedError {
 public final class FBDeviceVideo {
   private let encoder: FBVideoFileWriter
 
-  // MARK: Initialization Helpers
+  // MARK: - Initialization Helpers
 
   private class func allowAccessToScreenCaptureDevices() throws {
     var properties = CMIOObjectPropertyAddress(
@@ -68,8 +68,6 @@ public final class FBDeviceVideo {
     }
   }
 
-  // MARK: Initializers
-
   public class func captureSession(for device: FBDevice) async throws -> AVCaptureSession {
     try allowAccessToScreenCaptureDevices()
     let captureDevice = try await findCaptureDevice(for: device)
@@ -91,8 +89,6 @@ public final class FBDeviceVideo {
   private init(encoder: FBVideoFileWriter) {
     self.encoder = encoder
   }
-
-  // MARK: Public
 
   public func startRecording() async throws {
     try await encoder.start()

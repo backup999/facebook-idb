@@ -13,8 +13,6 @@ private let UnknownValue = "unknown"
 /// An Object Wrapper around AMRestorableDevice.
 public final class FBAMRestorableDevice: FBiOSTargetInfo, FBDeviceProtocol {
 
-  // MARK: - Properties
-
   public let calls: AMDCalls
   public var allValues: [String: Any]
   public let workQueue: DispatchQueue
@@ -34,8 +32,6 @@ public final class FBAMRestorableDevice: FBiOSTargetInfo, FBDeviceProtocol {
       restorableDeviceRef = replacement
     }
   }
-
-  // MARK: - Initializers
 
   public init(
     calls: AMDCalls,
@@ -128,8 +124,6 @@ public final class FBAMRestorableDevice: FBiOSTargetInfo, FBDeviceProtocol {
   public var activationState: String {
     FBDeviceActivationState.unknown.rawValue
   }
-
-  // MARK: - Public
 
   /// `AMRestorableGetStringForState` is private, and the mapping is simple enough to restate.
   public class func targetState(for state: AMRestorableDeviceState) -> FBiOSTargetState {

@@ -150,8 +150,6 @@ final class FBAMDeviceSession: @unchecked Sendable {
   private var waiters: [UUID: CheckedContinuation<Void, Error>] = [:]
   private var idleTeardown: Task<Void, Never>?
 
-  // MARK: - Initializers
-
   init(device: FBAMDevice, reuseTimeout: TimeInterval?, logger: any FBControlCoreLogger) {
     self.device = device
     self.reuseTimeout = reuseTimeout

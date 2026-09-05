@@ -61,7 +61,7 @@ class FBManagedConfigClient {
   private let queue: DispatchQueue
   private let logger: any FBControlCoreLogger
 
-  // MARK: Constants
+  // MARK: - Constants
 
   static let serviceName: String = "com.apple.mobile.MCInstall"
 
@@ -70,7 +70,7 @@ class FBManagedConfigClient {
     FBWallpaperName.lockscreen.rawValue: 1,
   ]
 
-  // MARK: Initializers
+  // MARK: - Initializers
 
   static func managedConfigClient(connection: FBAMDServiceConnection, logger: any FBControlCoreLogger) -> FBManagedConfigClient {
     let queue = DispatchQueue(label: "com.facebook.FBDeviceControl.managed_config")
@@ -202,7 +202,7 @@ class FBManagedConfigClient {
     }
   }
 
-  // MARK: Private Methods
+  // MARK: - Private Methods
 
   private func changeSettings(settings: [[String: Any]]) async throws {
     let connectionBox = ManagedConfigConnectionBox(connection)

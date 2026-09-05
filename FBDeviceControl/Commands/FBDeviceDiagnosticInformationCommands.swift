@@ -30,8 +30,6 @@ extension FBDiagnosticsRelayError: LocalizedError {
 public final class FBDeviceDiagnosticInformationCommands: NSObject, FBiOSTargetCommand {
   private weak var device: FBDevice?
 
-  // MARK: - Initializers
-
   public class func commands(with target: any FBiOSTarget) -> Self {
     guard let device = target as? FBDevice else {
       preconditionFailure("Expected FBDevice target, got \(target)")
@@ -60,8 +58,6 @@ public final class FBDeviceDiagnosticInformationCommands: NSObject, FBiOSTargetC
     ]
     return FBCollectionOperations.recursiveFilteredJSONSerializableRepresentation(of: merged) as [String: Any]
   }
-
-  // MARK: - Private
 
   private func fetchInformationFromDiagnosticsRelay(device: FBDevice) async throws -> Any {
     try await device.withServiceConnection(DiagnosticsRelayService) { connection in

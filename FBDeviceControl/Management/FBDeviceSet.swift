@@ -23,8 +23,6 @@ public final class FBDeviceSet: FBiOSTargetSet, FBiOSTargetSetDelegate, CustomSt
   public let logger: any FBControlCoreLogger
   public weak var delegate: (any FBiOSTargetSetDelegate)?
 
-  // MARK: Initializers
-
   public convenience init(logger: any FBControlCoreLogger, delegate: (any FBiOSTargetSetDelegate)?, ecidFilter: String?) throws {
     let calls = try Self._amDeviceCalls.get()
     let workQueue = DispatchQueue.main
@@ -49,13 +47,11 @@ public final class FBDeviceSet: FBiOSTargetSet, FBiOSTargetSetDelegate, CustomSt
     unsubscribeFromDeviceNotifications()
   }
 
-  // MARK: CustomStringConvertible
-
   public var description: String {
     "FBDeviceSet: \(FBCollectionInformation.oneLineDescription(from: allDevices))"
   }
 
-  // MARK: Querying
+  // MARK: - Querying
 
   public func target(withUDID udid: String) -> (any FBiOSTargetInfo)? {
     deviceWithUDID(udid)
@@ -65,19 +61,13 @@ public final class FBDeviceSet: FBiOSTargetSet, FBiOSTargetSetDelegate, CustomSt
     allDevices.first { $0.udid == udid }
   }
 
-  // MARK: FBiOSTargetSet
-
   public var allTargetInfos: [any FBiOSTargetInfo] {
     allDevices
   }
 
-  // MARK: Properties
-
   public var allDevices: [FBDevice] {
     Array(storage.attached.values).sorted { $0.uniqueIdentifier < $1.uniqueIdentifier }
   }
-
-  // MARK: Private
 
   private func subscribeToDeviceNotifications() {
     amDeviceManager.delegate = self
@@ -147,7 +137,7 @@ public final class FBDeviceSet: FBiOSTargetSet, FBiOSTargetSetDelegate, CustomSt
     }
   }
 
-  // MARK: FBiOSTargetSetDelegate
+  // MARK: - FBiOSTargetSetDelegate
 
   public func targetAdded(_ targetInfo: any FBiOSTargetInfo, in targetSet: any FBiOSTargetSet) {
     if let amDevice = targetInfo as? FBAMDevice {

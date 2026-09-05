@@ -11,8 +11,6 @@ import Foundation
 public final class FBDevicePowerCommands {
   private weak var device: FBDevice?
 
-  // MARK: - Initializers
-
   public class func commands(with device: FBDevice) -> FBDevicePowerCommands {
     FBDevicePowerCommands(device: device)
   }
@@ -20,8 +18,6 @@ public final class FBDevicePowerCommands {
   init(device: FBDevice) {
     self.device = device
   }
-
-  // MARK: - Private
 
   fileprivate func sendRelayCommand(_ request: String) async throws {
     guard let device else {

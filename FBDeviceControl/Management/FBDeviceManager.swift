@@ -14,13 +14,9 @@ import Foundation
 /// this class owns the registry of what is currently attached and notifies the delegate.
 class FBDeviceManager<PublicDevice: AnyObject>: NSObject, FBiOSTargetSet {
 
-  // MARK: - Properties
-
   let logger: any FBControlCoreLogger
   let storage: FBDeviceStorage<PublicDevice>
   weak var delegate: (any FBiOSTargetSetDelegate)?
-
-  // MARK: - Initializers
 
   init(logger: any FBControlCoreLogger) {
     self.logger = logger
@@ -121,8 +117,6 @@ class FBDeviceManager<PublicDevice: AnyObject>: NSObject, FBiOSTargetSet {
     }
   }
 
-  // MARK: - Public
-
   var currentDeviceList: [PublicDevice] {
     Array(storage.attached.values).sorted { lhs, rhs in
       let lhsID = (lhs as? any FBiOSTargetInfo)?.uniqueIdentifier ?? ""
@@ -140,8 +134,6 @@ class FBDeviceManager<PublicDevice: AnyObject>: NSObject, FBiOSTargetSet {
   func target(withUDID udid: String) -> (any FBiOSTargetInfo)? {
     allTargetInfos.first { FBiOSTargetPredicateForUDID(udid).evaluate(with: $0) }
   }
-
-  // MARK: - NSObject
 
   override var description: String {
     "\(type(of: self)): \(FBCollectionInformation.oneLineDescription(from: allTargetInfos))"

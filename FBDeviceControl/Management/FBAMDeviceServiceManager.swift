@@ -60,8 +60,6 @@ final class FBHouseArrestService: @unchecked Sendable {
   private var waiters: [CheckedContinuation<Void, Never>] = []
   private var idleTeardown: Task<Void, Never>?
 
-  // MARK: - Initializers
-
   init(device: FBAMDevice, bundleID: String, afcCalls: AFCCalls, reuseTimeout: TimeInterval?) {
     self.device = device
     self.bundleID = bundleID
@@ -215,14 +213,12 @@ final class FBAMDeviceServiceManager: @unchecked Sendable {
   private let lock = NSLock()
   private var houseArrestServices: [String: FBHouseArrestService] = [:]
 
-  // MARK: Initializers
-
   init(device: FBAMDevice, serviceTimeout: TimeInterval?) {
     self.device = device
     self.serviceTimeout = serviceTimeout
   }
 
-  // MARK: Public Services
+  // MARK: - Public Services
 
   /// The house arrest service for `bundleID`, created on first use and kept for the device's life.
   func houseArrestService(forBundleID bundleID: String, afcCalls: AFCCalls) -> FBHouseArrestService {

@@ -39,8 +39,6 @@ extension FBDeviceDebuggerError: LocalizedError {
 public final class FBDeviceDebuggerCommands {
   private weak var device: FBDevice?
 
-  // MARK: - Initializers
-
   public class func commands(with device: FBDevice) -> FBDeviceDebuggerCommands {
     FBDeviceDebuggerCommands(device: device)
   }
@@ -48,8 +46,6 @@ public final class FBDeviceDebuggerCommands {
   init(device: FBDevice) {
     self.device = device
   }
-
-  // MARK: - Public
 
   /**
    Starts the Debug Server and exposes it via a service connection.
@@ -96,8 +92,6 @@ public final class FBDeviceDebuggerCommands {
     )
     return try await bridgeFBFuture(server)
   }
-
-  // MARK: - Private
 
   private func lldbBootstrapCommands(forApplicationAtPath path: String, port: in_port_t) async throws -> [String] {
     guard device != nil else {

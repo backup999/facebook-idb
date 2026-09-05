@@ -113,8 +113,6 @@ final class FBAMDeviceManager: FBDeviceManager<FBAMDevice> {
   private let asyncQueue: DispatchQueue
   private var subscription: AMDNotificationSubscription?
 
-  // MARK: - Initializers
-
   init(
     calls: AMDCalls,
     work workQueue: DispatchQueue,

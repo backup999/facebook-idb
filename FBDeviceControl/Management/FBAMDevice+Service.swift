@@ -73,8 +73,6 @@ extension FBAMDevice {
     }
   }
 
-  // MARK: - Private
-
   private func openServiceConnection(_ service: String) async throws -> FBAMDServiceConnection {
     let calls = self.calls
     let logger = self.logger

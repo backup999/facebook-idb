@@ -90,8 +90,6 @@ extension FBDeviceDebugSymbolsError: LocalizedError {
 public final class FBDeviceDebugSymbolsCommands: DebugSymbolsCommands {
   private weak var device: FBDevice?
 
-  // MARK: - Initializers
-
   init(device: FBDevice) {
     self.device = device
   }

@@ -124,7 +124,7 @@ public final class FBDeviceApplicationCommands {
   fileprivate weak var device: FBDevice?
   private let deltaUpdateDirectory: URL
 
-  // MARK: Initializers
+  // MARK: - Initializers
 
   public class func commands(with device: FBDevice) -> FBDeviceApplicationCommands {
     let deltaUpdateDirectory = device.temporaryDirectory.temporaryDirectory()
@@ -272,7 +272,7 @@ public final class FBDeviceApplicationCommands {
     )
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   fileprivate func killApplication(withProcessIdentifier processIdentifier: pid_t) async throws {
     try await withRemoteInstrumentsClient { client in

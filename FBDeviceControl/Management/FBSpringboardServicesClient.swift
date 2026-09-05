@@ -77,13 +77,13 @@ class FBSpringboardServicesClient {
   fileprivate let queue: DispatchQueue
   private let logger: any FBControlCoreLogger
 
-  // MARK: Constants
+  // MARK: - Constants
 
   static let wallpaperNameHomescreen: String = "homescreen"
   static let wallpaperNameLockscreen: String = "lockscreen"
   static let serviceName: String = "com.apple.springboardservices"
 
-  // MARK: Initializers
+  // MARK: - Initializers
 
   static func springboardServicesClient(connection: FBAMDServiceConnection, logger: any FBControlCoreLogger) -> FBSpringboardServicesClient {
     let queue = DispatchQueue(label: "com.facebook.FBDeviceControl.springboard_services")
@@ -104,8 +104,6 @@ class FBSpringboardServicesClient {
     self.queue = queue
     self.logger = logger
   }
-
-  // MARK: Public Methods
 
   func iconContainer() -> any AsyncFileContainer {
     FBSpringboardServicesIconContainer(client: self)
@@ -217,7 +215,7 @@ class FBSpringboardServicesIconContainer: AsyncFileContainer {
     self.validFilenames = [IconPlistFile, IconJSONFile]
   }
 
-  // MARK: AsyncFileContainer
+  // MARK: - AsyncFileContainer
 
   func copy(fromHost sourcePath: String, toContainer destinationPath: String) async throws {
     try await copyFromHost(sourcePath: sourcePath, toContainer: destinationPath)
@@ -270,7 +268,7 @@ class FBSpringboardServicesIconContainer: AsyncFileContainer {
     try await client.setIconLayout(layout)
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   private func iconLayoutFromSourcePath(_ sourcePath: String, toDestinationFile filename: String) async throws -> FBSpringboardIconLayout {
     if filename == IconJSONFile {

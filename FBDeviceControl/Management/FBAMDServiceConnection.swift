@@ -108,8 +108,6 @@ public final class FBAMDServiceConnection: CustomStringConvertible {
     self.logger = logger
   }
 
-  // MARK: - CustomStringConvertible
-
   public var description: String {
     "\(name) \(String(describing: connection))"
   }

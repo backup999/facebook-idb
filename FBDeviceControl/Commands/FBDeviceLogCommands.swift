@@ -15,8 +15,6 @@ public final class FBDeviceLogOperation: LogOperation {
   private let readCompleted: FBFuture<NSNull>
   private let serviceCompleted: FBMutableFuture<NSNull>
 
-  // MARK: Initializers
-
   init(
     consumer: any FBDataConsumer,
     readCompleted: FBFuture<NSNull>,
@@ -27,7 +25,7 @@ public final class FBDeviceLogOperation: LogOperation {
     self.serviceCompleted = serviceCompleted
   }
 
-  // MARK: LogOperation
+  // MARK: - LogOperation
 
   public var completed: FBFuture<NSNull> {
     unsafeBitCast(serviceCompleted, to: FBFuture<NSNull>.self)
@@ -42,8 +40,6 @@ public final class FBDeviceLogOperation: LogOperation {
 
 public final class FBDeviceLogCommands {
   private weak var device: FBDevice?
-
-  // MARK: - Initializers
 
   public class func commands(with device: FBDevice) -> FBDeviceLogCommands {
     FBDeviceLogCommands(device: device)

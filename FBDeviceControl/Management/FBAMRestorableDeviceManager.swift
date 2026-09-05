@@ -40,16 +40,12 @@ private func restorableDeviceListenerCallback(
 @objc(FBAMRestorableDeviceManager)
 final class FBAMRestorableDeviceManager: FBDeviceManager<FBAMRestorableDevice> {
 
-  // MARK: - Properties
-
   private let calls: AMDCalls
   private let workQueue: DispatchQueue
   private let asyncQueue: DispatchQueue
   private let ecidFilter: String?
   private var registrationID: Int32 = 0
   private var notificationContext: UnsafeMutableRawPointer?
-
-  // MARK: - Initializers
 
   init(
     calls: AMDCalls,
@@ -156,8 +152,6 @@ final class FBAMRestorableDeviceManager: FBDeviceManager<FBAMRestorableDevice> {
   override class func extractPrivateReference(_ publicDevice: FBAMRestorableDevice) -> Unmanaged<AnyObject>? {
     Unmanaged.passUnretained(publicDevice.restorableDevice)
   }
-
-  // MARK: - Private
 
   private func info(forRestorableDevice device: AMRestorableDevice) -> [FBDeviceKey: Any] {
     [

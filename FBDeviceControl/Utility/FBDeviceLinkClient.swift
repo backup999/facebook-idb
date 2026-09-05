@@ -65,8 +65,6 @@ public final class FBDeviceLinkClient {
   private let connection: FBAMDServiceConnection
   private let queue: DispatchQueue
 
-  // MARK: Initializers
-
   public static func deviceLinkClient(connection: FBAMDServiceConnection) async throws -> FBDeviceLinkClient {
     let queue = DispatchQueue(label: "com.facebook.fbdevicecontrol.fbdevicelinkclient")
     try await performVersionExchange(connection: connection, queue: queue)
@@ -77,8 +75,6 @@ public final class FBDeviceLinkClient {
     self.connection = connection
     self.queue = queue
   }
-
-  // MARK: Public Methods
 
   func processMessage(_ message: Any) async throws -> NSDictionary {
     let connectionBox = ConnectionBox(connection)
@@ -111,8 +107,6 @@ public final class FBDeviceLinkClient {
       }
     }
   }
-
-  // MARK: Private
 
   private static func performVersionExchange(connection: FBAMDServiceConnection, queue: DispatchQueue) async throws {
     let connectionBox = ConnectionBox(connection)

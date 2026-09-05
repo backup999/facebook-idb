@@ -39,8 +39,6 @@ extension FBDeviceSocketForwardingError: LocalizedError {
 public final class FBDeviceSocketForwardingCommands {
   private(set) weak var device: FBDevice?
 
-  // MARK: Initializers
-
   public class func commands(with device: FBDevice) -> FBDeviceSocketForwardingCommands {
     FBDeviceSocketForwardingCommands(device: device)
   }
@@ -117,8 +115,6 @@ public final class FBDeviceSocketForwardingCommands {
     logger?.log("Closing local socket \(localSocket)")
     close(localSocket)
   }
-
-  // MARK: Private
 
   private static func openLocalSocket(toRemotePort remotePort: Int, on device: any FBDeviceCommands, logger: (any FBControlCoreLogger)?) throws -> Int32 {
     guard let getConnectionID = device.calls.GetConnectionID else {

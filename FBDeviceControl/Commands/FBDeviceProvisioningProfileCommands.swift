@@ -36,8 +36,6 @@ extension FBDeviceProvisioningProfileError: LocalizedError {
 public final class FBDeviceProvisioningProfileCommands: ProvisioningProfileCommands {
   private(set) weak var device: FBDevice?
 
-  // MARK: Public
-
   public class func commands(with device: FBDevice) -> FBDeviceProvisioningProfileCommands {
     return FBDeviceProvisioningProfileCommands(device: device)
   }
@@ -46,7 +44,7 @@ public final class FBDeviceProvisioningProfileCommands: ProvisioningProfileComma
     self.device = device
   }
 
-  // MARK: ProvisioningProfileCommands
+  // MARK: - ProvisioningProfileCommands
 
   public func allProvisioningProfiles() async throws -> [[String: Any]] {
     guard let device else {

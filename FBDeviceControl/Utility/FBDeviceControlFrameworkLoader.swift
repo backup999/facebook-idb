@@ -24,14 +24,10 @@ private func symbol<T>(_ handle: UnsafeMutableRawPointer, _ name: String) throws
 @objc(FBDeviceControlFrameworkLoader)
 public final class FBDeviceControlFrameworkLoader: FBControlCoreFrameworkLoader {
 
-  // MARK: - Initializers
-
   @objc
   public override init() {
     super.init(name: "FBDeviceControl", frameworks: [FBWeakFramework.mobileDevice])
   }
-
-  // MARK: - Public
 
   public override func loadPrivateFrameworks(_ logger: (any FBControlCoreLogger)?) throws {
     if hasLoadedFrameworks {
@@ -52,8 +48,6 @@ public final class FBDeviceControlFrameworkLoader: FBControlCoreFrameworkLoader 
       return resolvedCalls
     }
   }
-
-  // MARK: - Private
 
   private var resolvedCalls: AMDCalls?
 

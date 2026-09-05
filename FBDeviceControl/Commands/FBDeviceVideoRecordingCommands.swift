@@ -32,8 +32,6 @@ public final class FBDeviceVideoRecordingCommands: NSObject {
   private weak var device: FBDevice?
   private var video: FBDeviceVideo?
 
-  // MARK: - Initializers
-
   public class func commands(with device: FBDevice) -> FBDeviceVideoRecordingCommands {
     FBDeviceVideoRecordingCommands(device: device)
   }

@@ -64,7 +64,7 @@ public final class FBDeviceDeveloperDiskImageCommands: DeveloperDiskImageCommand
   private(set) weak var device: FBDevice?
   private let diskImages: any DeveloperDiskImageProviding
 
-  // MARK: Initializers
+  // MARK: - Initializers
 
   public class func commands(with device: FBDevice) -> FBDeviceDeveloperDiskImageCommands {
     FBDeviceDeveloperDiskImageCommands(device: device)
@@ -75,7 +75,7 @@ public final class FBDeviceDeveloperDiskImageCommands: DeveloperDiskImageCommand
     self.diskImages = diskImages
   }
 
-  // MARK: DeveloperDiskImageCommands
+  // MARK: - DeveloperDiskImageCommands
 
   public func mountedDiskImages() async throws -> [FBDeveloperDiskImage] {
     let mountInfo = try await mountInfoToDiskImage()

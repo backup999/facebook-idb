@@ -79,7 +79,7 @@ public class FBDeviceVideoStream: NSObject, FBVideoStream, @unchecked Sendable {
   var consumer: (any FBDataConsumer)?
   var pixelBufferAttributes_: [String: Any]?
 
-  // MARK: Factory
+  // MARK: - Factory
 
   public class func stream(withSession session: AVCaptureSession, configuration: FBVideoStreamConfiguration, logger: any FBControlCoreLogger) throws -> FBDeviceVideoStream {
     let format = configuration.format
@@ -130,8 +130,6 @@ public class FBDeviceVideoStream: NSObject, FBVideoStream, @unchecked Sendable {
     output.videoSettings = [:]
   }
 
-  // MARK: Initializers
-
   required init(session: AVCaptureSession, output: AVCaptureVideoDataOutput, writeQueue: DispatchQueue, logger: any FBControlCoreLogger) {
     self.session = session
     self.output = output
@@ -140,7 +138,7 @@ public class FBDeviceVideoStream: NSObject, FBVideoStream, @unchecked Sendable {
     super.init()
   }
 
-  // MARK: Public Methods
+  // MARK: - Public Methods
 
   public func startStreaming(_ consumer: any FBDataConsumer) async throws {
     if self.consumer != nil {
@@ -221,13 +219,9 @@ public class FBDeviceVideoStream: NSObject, FBVideoStream, @unchecked Sendable {
     }
   }
 
-  // MARK: Data consumption
-
   func consumeSampleBuffer(_ sampleBuffer: CMSampleBuffer) {
     fatalError("\(type(of: self)).\(#function) is abstract and should be overridden")
   }
-
-  // MARK: FBVideoStream
 
   public func awaitCompletion() async {
     await withTaskCancellationHandler {
