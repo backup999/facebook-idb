@@ -110,8 +110,6 @@ struct ReplReportFormatterTests {
     #expect(ReplReportFormatter.sessionMeta(fromLine: "<!-- idb-repl-session: s -->") == nil)
   }
 
-  // MARK: - reconnectMarker
-
   @Test
   func reconnectMarkerIsLabeled() {
     #expect(ReplReportFormatter.reconnectMarker(at: epoch).contains("Reconnected"))

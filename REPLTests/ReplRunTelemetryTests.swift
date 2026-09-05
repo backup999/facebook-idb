@@ -71,8 +71,6 @@ struct ReplRunTelemetryTests {
     #expect(subject.normals.isEmpty)
   }
 
-  // MARK: - wire formats
-
   @Test
   func modeAndStageWireValuesArePinned() {
     // These raw values are the strings written to the mode/stage columns;
