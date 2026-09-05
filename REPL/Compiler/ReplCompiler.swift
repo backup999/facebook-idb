@@ -92,8 +92,6 @@ public enum ReplCompiler {
     return .success(dylibPath: dylibPath, symbol: symbol)
   }
 
-  // MARK: - Private
-
   private static func compileSwift(
     sourcePath: String,
     outputPath: String,

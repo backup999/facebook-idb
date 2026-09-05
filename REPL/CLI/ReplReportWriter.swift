@@ -123,8 +123,6 @@ final class ReplReportWriter {
     handle = nil
   }
 
-  // MARK: - Private
-
   /// The session id recorded in the report at `path` (its marker line), or nil when
   /// there is no readable report or it has no marker.
   private static func existingSessionID(atPath path: String) -> String? {

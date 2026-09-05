@@ -125,8 +125,6 @@ enum ReplReportParser {
       skippedFailedRuns: skippedFailedRuns)
   }
 
-  // MARK: - Private
-
   /// Records a parsed run: a completed run becomes replayable; a compile failure (or any
   /// non-`ok` status) is counted as skipped instead.
   private static func commitRun(_ meta: RunMeta, code: String, into runs: inout [ParsedRun], skipped: inout Int) {

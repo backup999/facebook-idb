@@ -165,8 +165,6 @@ enum ReplSourceMetadata {
     return max(0, count)
   }
 
-  // MARK: - Private
-
   /// The scanning context of `countSignificantLinesOfCode(in:)`. Line delimiters
   /// split a line only in `.code`; inside comments and string literals they are
   /// literal content.

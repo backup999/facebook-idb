@@ -54,8 +54,6 @@ public enum ReplSourceGenerator {
     return regex.firstMatch(in: code, range: NSRange(location: 0, length: nsCode.length)) != nil
   }
 
-  // MARK: - Private
-
   private static func wrappedCode(swiftCode: String, imports: [String], index: Int) -> String {
     let function =
       containsAsync(swiftCode)
