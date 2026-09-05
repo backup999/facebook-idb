@@ -182,8 +182,6 @@ struct FBDeviceControlTransientTests {
     }
   }
 
-  // MARK: - Wallpaper Name Constants Tests
-
   @Test
   func wallpaperNameConstants() {
     #expect((FBWallpaperName.homescreen.rawValue) == ("homescreen"))

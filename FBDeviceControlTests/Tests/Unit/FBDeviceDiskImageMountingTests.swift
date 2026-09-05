@@ -145,8 +145,6 @@ struct FBDeviceDiskImageMountingTests {
     }
   }
 
-  // MARK: - Helpers
-
   private func assertThrows(
     expected: String,
     sourceLocation: SourceLocation = SourceLocation(fileID: #fileID, filePath: #filePath, line: #line, column: #column),

@@ -77,8 +77,6 @@ struct FBDeviceCrashLogPingbackTests {
     #expect(mover.isInvalidated)
   }
 
-  // MARK: - Helpers
-
   private func capture(_ body: () async throws -> Void) async -> String? {
     do {
       try await body()

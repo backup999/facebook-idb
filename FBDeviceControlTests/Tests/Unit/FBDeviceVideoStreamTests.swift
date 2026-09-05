@@ -17,8 +17,6 @@ import Testing
 @Suite
 struct FBDeviceVideoStreamTests {
 
-  // MARK: - Helpers
-
   private func configuration(_ format: FBVideoStreamFormat) -> FBVideoStreamConfiguration {
     FBVideoStreamConfiguration(format: format, framesPerSecond: nil, rateControl: nil, scaleFactor: nil, keyFrameRate: nil)
   }
