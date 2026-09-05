@@ -10,7 +10,6 @@ import Foundation
 
 private let ScreenShotDataKey = "ScreenShotData"
 
-/// The ways a device screenshot can fail, as data rather than assembled strings.
 public enum FBDeviceScreenshotError: Error {
   case notImageData(response: String, key: String)
 }

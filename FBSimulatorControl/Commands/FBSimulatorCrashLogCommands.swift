@@ -8,7 +8,6 @@
 import FBControlCore
 import Foundation
 
-/// The way crash-log file access fails on simulators, as data rather than an assembled string.
 public enum FBSimulatorCrashLogError: Error, LocalizedError {
   case fileAccessUnsupported
 

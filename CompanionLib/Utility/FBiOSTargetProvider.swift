@@ -11,7 +11,6 @@ import FBSimulatorControl
 import Foundation
 import XCTestBootstrap
 
-/// The ways target resolution can fail, as data rather than assembled strings.
 public enum FBiOSTargetProviderError: Error {
   case targetNotUsable(udid: String, targetDescription: String)
   case targetNotFound(udid: String, targetSetsDescription: String)

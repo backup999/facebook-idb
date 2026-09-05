@@ -10,7 +10,6 @@ import Foundation
 
 private let DiagnosticsRelayService = "com.apple.mobile.diagnostics_relay"
 
-/// The ways a diagnostics_relay exchange can fail, as data rather than assembled strings.
 /// Shared with the power commands, which drive the same relay service.
 public enum FBDiagnosticsRelayError: Error {
   case unexpectedResponse

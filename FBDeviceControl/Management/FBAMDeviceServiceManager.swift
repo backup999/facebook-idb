@@ -8,7 +8,6 @@
 @preconcurrency import FBControlCore
 import Foundation
 
-/// The ways house-arrest service management can fail, as data rather than assembled strings.
 enum FBAMDeviceServiceError: Error {
   case houseArrestStartFailed(bundleID: String, status: Int32, message: String)
   case houseArrestConnectionMissing(bundleID: String)

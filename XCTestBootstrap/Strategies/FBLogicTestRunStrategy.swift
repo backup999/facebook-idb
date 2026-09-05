@@ -26,7 +26,6 @@ private final class FBLogicTestRunOutputs {
   }
 }
 
-/// The ways logic-test runs can fail, as data rather than assembled strings.
 public enum FBLogicTestRunError: Error {
   case missingOutputsAndShim(result: String)
   case sanitiserDylibsMalformed(result: String)

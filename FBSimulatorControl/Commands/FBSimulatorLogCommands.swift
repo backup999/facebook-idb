@@ -9,7 +9,6 @@
 import FBControlCore
 import Foundation
 
-/// The way log invocation fails without a runtime root, as data rather than an assembled string.
 public enum FBSimulatorLogError: Error, LocalizedError {
   case runtimeRootUnavailable
 

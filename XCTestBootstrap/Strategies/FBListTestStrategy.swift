@@ -8,7 +8,6 @@
 import FBControlCore
 import Foundation
 
-/// The ways test listing can fail, as data rather than assembled strings.
 public enum FBListTestError: Error {
   case testNamesMalformed(result: String)
   case missingShimAndOutput(result: String)

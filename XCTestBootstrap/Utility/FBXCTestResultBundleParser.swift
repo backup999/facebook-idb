@@ -93,7 +93,6 @@ private func dateFromString(_ date: String) -> Date? {
   return FBXCTestResultBundleParser_dateFormatter.date(from: date)
 }
 
-/// The ways result-bundle parsing can fail, as data rather than assembled strings.
 public enum FBXCTestResultBundleError: Error {
   case noActions
   case notADirectory(path: String)

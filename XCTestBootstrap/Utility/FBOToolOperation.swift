@@ -8,7 +8,6 @@
 import FBControlCore
 import Foundation
 
-/// The ways otool inspection can fail, as data rather than assembled strings.
 public enum FBOToolError: Error {
   case bundleInaccessible(path: String)
   case bundleMissingExecutable(path: String)

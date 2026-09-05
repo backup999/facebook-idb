@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// The ways developer-directory resolution can fail, as data rather than assembled strings.
 public enum FBXcodeDirectoryError: Error, LocalizedError {
   case emptyXcodeSelectOutput(stdErr: String)
   case pathNil

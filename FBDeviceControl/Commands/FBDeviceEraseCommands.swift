@@ -121,7 +121,6 @@ private final class FBDeviceEraseOperation: NSObject, FBiOSTargetSetDelegate, @u
 
 // MARK: - FBDeviceEraseCommands
 
-/// The ways a device erase can fail, as data rather than assembled strings.
 public enum FBDeviceEraseError: Error {
   case badEraseCallback(value: Int32, expected: Int32)
 }

@@ -13,7 +13,6 @@ private let SipsPath = "/usr/bin/sips"
 private let HEIC = "public.heic"
 private let JPEG = "public.jpeg"
 
-/// The way screenshot export fails on an unknown encoding, as data rather than an assembled string.
 public enum FBXCTestResultToolError: Error, LocalizedError {
   case unrecognizedScreenshotEncoding(encoding: String)
 

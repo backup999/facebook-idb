@@ -8,7 +8,6 @@
 @preconcurrency import FBControlCore
 import Foundation
 
-/// The ways provisioning-profile operations can fail, as data rather than assembled strings.
 public enum FBDeviceProvisioningProfileError: Error {
   case copyFailed
   case removeFailed(uuid: String, message: String)

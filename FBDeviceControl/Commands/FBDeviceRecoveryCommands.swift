@@ -8,7 +8,6 @@
 @preconcurrency import FBControlCore
 import Foundation
 
-/// The ways recovery-mode transitions can fail, as data rather than assembled strings.
 public enum FBDeviceRecoveryError: Error {
   case callUnavailable(function: String)
   case enterRecoveryFailed(message: String)

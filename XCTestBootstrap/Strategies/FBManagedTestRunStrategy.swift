@@ -8,7 +8,6 @@
 import FBControlCore
 import Foundation
 
-/// The way a managed run fails before starting, as data rather than an assembled string.
 public enum FBManagedTestRunError: Error, LocalizedError {
   case frameworkLoadingFailed(underlying: Error)
 

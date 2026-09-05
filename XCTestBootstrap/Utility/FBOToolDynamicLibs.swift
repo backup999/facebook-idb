@@ -8,7 +8,6 @@
 import FBControlCore
 import Foundation
 
-/// The ways sanitiser-dylib discovery can fail, as data rather than assembled strings.
 public enum FBOToolDynamicLibsError: Error {
   case dylibNamesMalformed(result: String)
   case directoryListFailed(path: String, underlying: Error)

@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// The way temporary-directory creation fails, as data rather than an assembled string.
 public enum FBTemporaryDirectoryError: Error, LocalizedError {
   case creationFailed(directory: URL, underlying: Error)
 

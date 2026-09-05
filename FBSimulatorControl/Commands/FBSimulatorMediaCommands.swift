@@ -11,7 +11,6 @@ import FBControlCore
 import Foundation
 import UniformTypeIdentifiers
 
-/// The ways media upload can fail, as data rather than assembled strings.
 public enum FBSimulatorMediaError: Error {
   case noMediaProvided
   case unknownMediaPaths(paths: [URL])

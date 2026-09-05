@@ -9,7 +9,6 @@
 import FBControlCore
 import Foundation
 
-/// The way memory-warning simulation fails on older CoreSimulators, as data rather than an assembled string.
 public enum FBSimulatorMemoryError: Error, LocalizedError {
   case selectorUnavailable
 

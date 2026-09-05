@@ -9,7 +9,6 @@
 import FBControlCore
 import Foundation
 
-/// The ways simulator file-container access can fail, as data rather than assembled strings.
 public enum FBSimulatorFileError: Error {
   case noDataContainer(applicationDescription: String)
   case noDataDirectory(simulatorDescription: String)

@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// The ways codesigning can fail, as data rather than assembled strings.
 public enum FBCodesignError: Error, LocalizedError {
   case signingFailed(exitCode: NSNumber, stdOut: String, stdErr: String)
   case cdHashCheckFailed(exitCode: NSNumber, stdOut: String, stdErr: String)

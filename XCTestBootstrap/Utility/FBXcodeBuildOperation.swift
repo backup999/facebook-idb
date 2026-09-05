@@ -13,7 +13,6 @@ private let XcodebuildEnvironmentDeviceSetPath = "SIM_DEVICE_SET_PATH"
 private let XcodebuildEnvironmentInsertDylib = "DYLD_INSERT_LIBRARIES"
 private let XcodebuildDestinationTimeoutSecs = "180"
 
-/// The ways xcodebuild orchestration can fail, as data rather than assembled strings.
 public enum FBXcodeBuildError: Error {
   case shimMissing
   case writeFailed(path: String)

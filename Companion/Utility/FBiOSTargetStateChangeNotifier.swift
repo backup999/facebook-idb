@@ -10,7 +10,6 @@ import CompanionUtilities
 import FBControlCore
 import Foundation
 
-/// The ways target-state notification can fail, as data rather than assembled strings.
 enum FBiOSTargetStateChangeNotifierError: Error {
   case noTargetSets
   case targetsFileCreationFailed(path: String, message: String)

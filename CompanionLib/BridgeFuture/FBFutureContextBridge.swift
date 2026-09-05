@@ -26,7 +26,6 @@ func bridgeFBFutureContext<T: AnyObject>(_ futureContext: FBFutureContext<T>) as
   return try await bridgeFBFuture(futureContext.future)
 }
 
-/// The way the array bridge fails on an unexpected element type, as data rather than an assembled string.
 public enum FBFutureBridgeError: Error, LocalizedError {
   case unexpectedArrayElementType(expected: String, array: NSArray)
 

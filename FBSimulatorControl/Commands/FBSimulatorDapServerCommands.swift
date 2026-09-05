@@ -8,7 +8,6 @@
 import FBControlCore
 import Foundation
 
-/// The ways dap-server launch can fail, as data rather than assembled strings.
 public enum FBSimulatorDapServerError: Error {
   case logDirectoryCreationFailed(path: String, underlying: Error)
   case logFileCreationFailed(path: String)

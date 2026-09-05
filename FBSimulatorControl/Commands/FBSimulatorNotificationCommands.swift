@@ -9,7 +9,6 @@
 import FBControlCore
 import Foundation
 
-/// The ways push-notification injection can fail, as data rather than assembled strings.
 public enum FBSimulatorNotificationError: Error {
   case jsonNotUTF8
   case jsonNotADictionary

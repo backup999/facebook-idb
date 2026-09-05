@@ -12,7 +12,6 @@ private let CrashLogStartDateFuzz: TimeInterval = -20
 private let CrashLogWaitTime: TimeInterval = 180
 private let KillBackoffTimeout: TimeInterval = 1
 
-/// The ways xctest process supervision can fail, as data rather than assembled strings.
 public enum FBXCTestProcessError: Error {
   case stalled(timeout: TimeInterval, processIdentifier: pid_t, stackshot: String)
   case crashed(info: String, rawLog: String)

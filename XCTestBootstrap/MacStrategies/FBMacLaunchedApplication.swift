@@ -8,7 +8,6 @@
 import FBControlCore
 import Foundation
 
-/// The way termination-waiting fails on macOS applications, as data rather than an assembled string.
 public enum FBMacLaunchedApplicationError: Error, LocalizedError {
   case awaitingTerminationUnsupported
 

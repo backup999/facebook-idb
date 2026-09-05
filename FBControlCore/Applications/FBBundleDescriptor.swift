@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// The ways bundle inspection can fail, as data rather than assembled strings.
 public enum FBBundleDescriptorError: Error {
   case binaryPathUnavailable(bundlePath: String)
   case bundleLoadFailed(path: String)

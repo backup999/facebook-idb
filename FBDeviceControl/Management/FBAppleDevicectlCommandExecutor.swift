@@ -8,7 +8,6 @@
 @preconcurrency import FBControlCore
 import Foundation
 
-/// The way a devicectl invocation fails, as data rather than an assembled string.
 public enum FBDevicectlError: Error {
   case commandFailed(exitCode: String, arguments: [String], stdOut: String, stdErr: String)
 }

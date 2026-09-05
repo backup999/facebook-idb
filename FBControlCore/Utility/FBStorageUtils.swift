@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// The ways file discovery can fail, as data rather than assembled strings.
 public enum FBStorageUtilsError: Error {
   case notExactlyOneFileWithExtension(count: Int, fileExtension: String, url: URL)
   case notExactlyOneFile(found: [URL])

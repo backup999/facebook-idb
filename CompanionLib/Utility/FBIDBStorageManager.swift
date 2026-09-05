@@ -17,7 +17,6 @@ let IdbFrameworksFolder: String = "idb-frameworks"
 
 // MARK: - FBInstalledArtifact
 
-/// The ways bundle storage can fail, as data rather than assembled strings.
 public enum FBIDBStorageError: Error {
   case bundleMissingBinary(name: String)
   case architecturesIncompatible(supported: [String], bundle: [String])
