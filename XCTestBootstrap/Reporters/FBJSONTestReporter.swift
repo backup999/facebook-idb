@@ -47,7 +47,7 @@ public final class FBJSONTestReporter: NSObject, FBXCTestReporter {
     super.init()
   }
 
-  // MARK: FBXCTestReporter
+  // MARK: - FBXCTestReporter
 
   public func printReport() throws {
     if !started {
@@ -166,7 +166,7 @@ public final class FBJSONTestReporter: NSObject, FBXCTestReporter {
     crashError = error
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   private func printEvent(_ event: [String: Any]) {
     var timestamped = event

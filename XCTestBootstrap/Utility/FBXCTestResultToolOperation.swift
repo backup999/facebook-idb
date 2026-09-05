@@ -26,8 +26,6 @@ public enum FBXCTestResultToolError: Error, LocalizedError {
 
 public final class FBXCTestResultToolOperation {
 
-  // MARK: Private
-
   private static func runProcess(launchPath: String, arguments: [String], logger: FBControlCoreLogger?) -> FBFuture<AnyObject> {
     let base = FBProcessBuilder<NSNull, NSData, NSData>.withLaunchPath(launchPath, arguments: arguments).withTaskLifecycleLogging(to: logger)
     if let logger {
@@ -64,8 +62,6 @@ public final class FBXCTestResultToolOperation {
     }
     return (try? JSONSerialization.jsonObject(with: data, options: [])) as? NSDictionary ?? NSDictionary()
   }
-
-  // MARK: Public
 
   public static func getJSON(from path: String, forId bundleObjectId: String?, queue: DispatchQueue, logger: FBControlCoreLogger?) -> FBFuture<NSDictionary> {
     logger?.log("Getting json for id \(bundleObjectId ?? "nil")")

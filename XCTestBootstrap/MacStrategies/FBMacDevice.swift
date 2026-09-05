@@ -277,16 +277,12 @@ public final class FBMacDevice: NSObject, FBiOSTarget {
       .retyped(FBFutureContext<NSNumber>.self)
   }
 
-  // MARK: - Process ID
-
   public func processID(withBundleID bundleID: String) -> FBFuture<NSNumber> {
     guard let task = bundleIDToRunningTask[bundleID] else {
       return FBFuture(error: FBMacDeviceError.applicationNotLaunched(bundleID: bundleID))
     }
     return FBFuture(result: NSNumber(value: task.processIdentifier))
   }
-
-  // MARK: - Not supported
 
   var consoleString: String {
     assertionFailure("consoleString is not yet supported")

@@ -34,7 +34,7 @@ extension FBXcodeBuildError: LocalizedError {
 
 public final class FBXcodeBuildOperation {
 
-  // MARK: Initializers
+  // MARK: - Initializers
 
   public static func operation(withUDID udid: String, configuration: FBTestLaunchConfiguration, xcodeBuildPath: String, testRunFilePath: String, simDeviceSet simDeviceSetPath: String?, macOSTestShimPath: String?, queue: DispatchQueue, logger: FBControlCoreLogger?) -> FBFuture<FBSubprocess<AnyObject, AnyObject, AnyObject>> {
     var arguments = [
@@ -94,7 +94,7 @@ public final class FBXcodeBuildOperation {
     )
   }
 
-  // MARK: Public Methods
+  // MARK: - Public Methods
 
   public static func xctestRunProperties(_ testLaunch: FBTestLaunchConfiguration) -> [String: Any] {
     return [
@@ -211,7 +211,7 @@ public final class FBXcodeBuildOperation {
     )
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   private static func activeXcodebuildProcesses(forUDID udid: String, processFetcher: FBProcessFetcher) -> [FBProcessInfo] {
     let xcodebuildProcesses = processFetcher.processes(withProcessName: "xcodebuild")

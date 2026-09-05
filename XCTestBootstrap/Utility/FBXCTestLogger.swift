@@ -34,7 +34,7 @@ public final class FBXCTestLogger: NSObject, FBControlCoreLogger, @unchecked Sen
     super.init()
   }
 
-  // MARK: Factory Methods
+  // MARK: - Factory Methods
 
   private static func defaultLogDirectory() -> String {
     let env = ProcessInfo.processInfo.environment
@@ -91,7 +91,7 @@ public final class FBXCTestLogger: NSObject, FBControlCoreLogger, @unchecked Sen
     return FBXCTestLogger(baseLogger: baseLogger, logDirectory: directory)
   }
 
-  // MARK: FBControlCoreLogger
+  // MARK: - FBControlCoreLogger
 
   @discardableResult
   public func log(_ string: String) -> FBControlCoreLogger {
@@ -127,7 +127,7 @@ public final class FBXCTestLogger: NSObject, FBControlCoreLogger, @unchecked Sen
     baseLogger.level
   }
 
-  // MARK: Log Consumption
+  // MARK: - Log Consumption
 
   public func logConsumption(of consumer: FBDataConsumer, toFileNamed fileName: String, logger: FBControlCoreLogger) -> FBFuture<AnyObject> {
     let queue = DispatchQueue.global(qos: .userInitiated)

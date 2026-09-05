@@ -10,7 +10,7 @@ import Foundation
 
 private let XCTestOperationTimeoutSecs: TimeInterval = 120
 
-// MARK: Helper functions
+// MARK: - Helper functions
 
 private func readFromDict(_ dict: NSDictionary, _ key: String) -> Any {
   guard let val = dict[key] else {
@@ -111,7 +111,7 @@ extension FBXCTestResultBundleError: LocalizedError {
 
 public final class FBXCTestResultBundleParser {
 
-  // MARK: Public
+  // MARK: - Public
 
   public static func parse(_ resultBundlePath: String, target: FBiOSTarget, reporter: FBXCTestReporter, logger: FBControlCoreLogger, extractScreenshots: Bool) -> FBFuture<NSNull> {
     logger.log("Parsing the result bundle \(resultBundlePath)")
@@ -174,7 +174,7 @@ public final class FBXCTestResultBundleParser {
     }
   }
 
-  // MARK: Private: Legacy XCTest Result Parsing
+  // MARK: - Private: Legacy XCTest Result Parsing
 
   private static func reportResultsLegacy(_ results: NSDictionary, reporter: FBXCTestReporter) {
     let testTargets = results["TestableSummaries"] as? [NSDictionary]
@@ -313,7 +313,7 @@ public final class FBXCTestResultBundleParser {
     return messages.joined(separator: "\n")
   }
 
-  // MARK: Private: Xcode 11+ XCTest Result Parsing
+  // MARK: - Private: Xcode 11+ XCTest Result Parsing
 
   private static func parseActions(_ actions: NSDictionary, logger: FBControlCoreLogger) -> [String] {
     guard let actionValues = unwrapValues(actions) as? [NSDictionary] else {

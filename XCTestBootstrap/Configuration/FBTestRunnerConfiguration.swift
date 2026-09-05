@@ -32,7 +32,7 @@ public enum FBTestRunnerConfigurationError: Error, LocalizedError {
 
 public struct FBTestRunnerConfiguration {
 
-  // MARK: Properties
+  // MARK: - Properties
 
   public let sessionIdentifier: UUID
   public let testRunner: FBBundleDescriptor
@@ -47,8 +47,6 @@ public struct FBTestRunnerConfiguration {
     ]
   }
 
-  // MARK: Initializers
-
   public init(sessionIdentifier: UUID, testRunner: FBBundleDescriptor, launchEnvironment: [String: String], testedApplicationAdditionalEnvironment: [String: String], testConfiguration: FBTestConfiguration) {
     self.sessionIdentifier = sessionIdentifier
     self.testRunner = testRunner
@@ -57,7 +55,7 @@ public struct FBTestRunnerConfiguration {
     self.testConfiguration = testConfiguration
   }
 
-  // MARK: Public
+  // MARK: - Public
 
   public static func prepareConfiguration(withTarget target: FBiOSTarget & ApplicationCommands & XCTestExtendedCommands, testLaunchConfiguration: FBTestLaunchConfiguration, workingDirectory: String, codesign: FBCodesignProvider?) async throws -> FBTestRunnerConfiguration {
     if let codesign {
@@ -83,7 +81,7 @@ public struct FBTestRunnerConfiguration {
     return addAdditionalEnvironmentVariables(environmentVariables)
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   private static func addAdditionalEnvironmentVariables(_ currentEnvironmentVariables: [String: String]) -> [String: String] {
     let prefix = "CUSTOM_"

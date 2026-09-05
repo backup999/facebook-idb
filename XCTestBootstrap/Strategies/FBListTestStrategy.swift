@@ -124,7 +124,7 @@ public final class FBListTestStrategy {
     FBListTestStrategy_ReporterWrapped(strategy: self, reporter: reporter)
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   private func listTests(withShimPath shimPath: String, shimOutput: FBProcessFileOutput, shimBuffer: FBConsumableBuffer) -> FBFuture<NSArray> {
     let stdOutBuffer = FBDataBuffer.consumableBuffer()

@@ -85,8 +85,6 @@ public final class FBXCTestProcess {
     }
   }
 
-  // MARK: Private
-
   private static func performSampleStackshot(onProcess process: FBSubprocess<AnyObject, AnyObject, AnyObject>, forTimeout timeout: TimeInterval, queue: DispatchQueue, logger: FBControlCoreLogger) -> FBFuture<AnyObject> {
     (FBProcessFetcher.performSampleStackshot(forProcessIdentifier: process.processIdentifier, queue: queue) as FBFuture)
       .onQueue(

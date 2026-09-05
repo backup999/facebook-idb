@@ -74,13 +74,11 @@ public final class FBLogicTestRunStrategy: FBXCTestRunner {
     self.logger = logger
   }
 
-  // MARK: FBXCTestRunner
-
   public func execute() -> FBFuture<NSNull> {
     return testFuture()
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   private func testFuture() -> FBFuture<NSNull> {
     let uuid = UUID()

@@ -18,7 +18,7 @@ public final class FBLogicReporterAdapter: FBLogicXCTestReporter {
     self.logger = logger?.withName("FBLogicReporterAdapter") as (any FBControlCoreLogger)?
   }
 
-  // MARK: FBLogicXCTestReporter
+  // MARK: - FBLogicXCTestReporter
 
   public func didBeginExecutingTestPlan() {
     reporter.didBeginExecutingTestPlan()
@@ -91,8 +91,6 @@ public final class FBLogicReporterAdapter: FBLogicXCTestReporter {
     }
     reporter.processUnderTestDidExit()
   }
-
-  // MARK: Private
 
   private func handleEndTest(_ jsonEvent: [String: Any], data: Data) {
     let testClass = jsonEvent["className"] as? String ?? ""

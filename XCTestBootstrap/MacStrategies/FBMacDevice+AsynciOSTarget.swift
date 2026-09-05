@@ -179,6 +179,4 @@ extension FBMacDevice: PowerCommands {
   }
 }
 
-// MARK: - FBMacDevice+AsynciOSTarget
-
 extension FBMacDevice: AsynciOSTarget {}

@@ -8,7 +8,7 @@
 import FBControlCore
 import Foundation
 
-// MARK: JSON Keys
+// MARK: - JSON Keys
 
 private let KeyEnvironment = "environment"
 private let KeyListTestsOnly = "list_only"
@@ -24,8 +24,6 @@ private let KeyTestType = "test_type"
 private let KeyVideoRecordingPath = "video_recording_path"
 private let KeyWaitForDebugger = "wait_for_debugger"
 private let KeyWorkingDirectory = "working_directory"
-
-// MARK: Defaults
 
 private let kDefaultTimeoutValue: TimeInterval = 500
 
@@ -87,8 +85,6 @@ public class FBXCTestConfiguration: NSObject, NSCopying {
     super.init()
   }
 
-  // MARK: NSObject
-
   public override var description: String {
     guard let data = try? JSONSerialization.data(withJSONObject: jsonSerializableRepresentation(), options: []) else {
       return super.description
@@ -111,7 +107,7 @@ public class FBXCTestConfiguration: NSObject, NSCopying {
     (processUnderTestEnvironment as NSDictionary).hash ^ (workingDirectory as NSString).hash ^ (testBundlePath as NSString).hash ^ (testType.rawValue as NSString).hash ^ (waitForDebugger ? 1 : 0) ^ Int(testTimeout)
   }
 
-  // MARK: Public
+  // MARK: - Public
 
   func buildEnvironment(withEntries entries: [String: String]) -> [String: String] {
     var parentEnvironment = ProcessInfo.processInfo.environment
@@ -135,8 +131,6 @@ public class FBXCTestConfiguration: NSObject, NSCopying {
     return environment
   }
 
-  // MARK: JSON
-
   func jsonSerializableRepresentation() -> [String: Any] {
     [
       KeyEnvironment: processUnderTestEnvironment,
@@ -148,8 +142,6 @@ public class FBXCTestConfiguration: NSObject, NSCopying {
       KeyTestTimeout: testTimeout,
     ]
   }
-
-  // MARK: NSCopying
 
   public func copy(with zone: NSZone? = nil) -> Any {
     self
