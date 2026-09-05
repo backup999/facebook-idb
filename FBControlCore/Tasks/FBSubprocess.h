@@ -21,7 +21,7 @@ static const size_t FBProcessOutputErrorMessageLength = 200;
 #pragma mark Properties
 
 /**
- The Process Idenfifer of the Launched Process.
+ The Process Identifier of the Launched Process.
  */
 @property (nonatomic, readonly, assign) pid_t processIdentifier;
 
@@ -47,7 +47,7 @@ static const size_t FBProcessOutputErrorMessageLength = 200;
 @property (nonnull, nonatomic, readonly, strong) FBFuture<NSNumber *> *signal;
 
 /**
- The IO Object attached to the process.
+ The configuration the process was launched with.
  */
 @property (nonnull, nonatomic, readonly, strong) FBProcessSpawnConfiguration *configuration;
 
@@ -117,7 +117,7 @@ static const size_t FBProcessOutputErrorMessageLength = 200;
 - (nonnull FBFuture<NSNumber *> *)sendSignal:(int)signo;
 
 /**
- A mechanism for sending an signal to a task, backing off to a kill.
+ A mechanism for sending a signal to a task, backing off to a kill.
  If the process does not die before the timeout is hit, a SIGKILL will be sent.
 
  @param signo the signal number to send.
