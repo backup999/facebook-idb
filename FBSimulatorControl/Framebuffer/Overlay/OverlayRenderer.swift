@@ -82,7 +82,7 @@ public final class FBOverlayRenderer {
 
   private var shapes: [TimedShape] = []
   private var effectTimer: DispatchSourceTimer?
-  private let effectQueue = DispatchQueue(label: "com.facebook.sime2e.overlay-effects")
+  private let effectQueue = DispatchQueue(label: "com.facebook.FBSimulatorControl.overlay-effects")
 
   /// Serializes access to the renderer's mutable state (`shapes`, the bar dictionaries, `statsText`,
   /// `effectTimer`) and the buffer render. The renderer is driven from several threads — the
