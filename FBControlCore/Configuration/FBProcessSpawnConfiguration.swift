@@ -31,8 +31,6 @@ public final class FBProcessSpawnConfiguration: FBProcessLaunchConfiguration {
     super.init(arguments: arguments, environment: environment, io: io)
   }
 
-  // MARK: NSObject
-
   public override var hash: Int {
     super.hash | (launchPath as NSString).hash | Int(mode.rawValue)
   }

@@ -7,7 +7,6 @@
 
 import Foundation
 
-// MARK: - Public API
 //
 // These are written as standalone functions because Swift does not allow
 // extension methods on generic Objective-C classes to access the class's

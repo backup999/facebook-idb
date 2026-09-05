@@ -12,12 +12,8 @@ private let CrashLogPollInterval: UInt64 = 100 * NSEC_PER_MSEC
 
 public final class FBCrashLogNotifier {
 
-  // MARK: Properties
-
   public let store: FBCrashLogStore
   internal var sinceDate: Date
-
-  // MARK: Initializers
 
   internal init(logger: any FBControlCoreLogger) {
     self.store = FBCrashLogStore.store(forDirectories: FBCrashLogInfo.diagnosticReportsPaths, logger: logger)
@@ -32,7 +28,7 @@ public final class FBCrashLogNotifier {
     FBCrashLogNotifier(logger: FBControlCoreGlobalConfiguration.defaultLogger)
   }()
 
-  // MARK: Notifications
+  // MARK: - Notifications
 
   public func startListening(_ onlyNew: Bool) -> Bool {
     sinceDate = onlyNew ? Date() : .distantPast

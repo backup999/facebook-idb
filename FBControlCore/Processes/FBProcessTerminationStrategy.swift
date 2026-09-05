@@ -65,14 +65,14 @@ public enum FBProcessTerminationStrategyError: Error, LocalizedError {
 
 public final class FBProcessTerminationStrategy: NSObject {
 
-  // MARK: Private Properties
+  // MARK: - Private Properties
 
   private let configuration: FBProcessTerminationStrategyConfiguration
   private let processFetcher: FBProcessFetcher
   private let workQueue: DispatchQueue
   private let logger: FBControlCoreLogger
 
-  // MARK: Initializers
+  // MARK: - Initializers
 
   public class func strategy(
     withConfiguration configuration: FBProcessTerminationStrategyConfiguration,
@@ -112,7 +112,7 @@ public final class FBProcessTerminationStrategy: NSObject {
     super.init()
   }
 
-  // MARK: Public Methods
+  // MARK: - Public Methods
 
   @discardableResult
   public func killProcessIdentifier(_ processIdentifier: pid_t) -> FBFuture<NSNull> {
@@ -175,7 +175,7 @@ public final class FBProcessTerminationStrategy: NSObject {
       ).retyped(FBFuture<NSNull>.self)
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   private func hasOption(_ option: FBProcessTerminationStrategyOptions) -> Bool {
     configuration.options.contains(option)

@@ -277,6 +277,4 @@ private final class FBFutureResolverBox<Success>: @unchecked Sendable {
   }
 }
 
-// MARK: - Internal
-
 let asyncBridgeQueue = DispatchQueue(label: "com.facebook.fbcontrolcore.async_bridge")

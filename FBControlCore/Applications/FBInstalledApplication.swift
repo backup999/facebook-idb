@@ -80,8 +80,6 @@ public final class FBInstalledApplication: NSObject, NSCopying {
     self.init(bundle: bundle, installType: installType, dataContainer: dataContainer)
   }
 
-  // MARK: NSObject
-
   public override var hash: Int {
     bundle.hash ^ Int(installType.rawValue)
   }
@@ -97,13 +95,11 @@ public final class FBInstalledApplication: NSObject, NSCopying {
     "Bundle \(bundle.description) | Install Type \(installTypeString) | Container \(dataContainer ?? "nil")"
   }
 
-  // MARK: NSCopying
-
   public func copy(with zone: NSZone? = nil) -> Any {
     self
   }
 
-  // MARK: Install Type Mapping
+  // MARK: - Install Type Mapping
 
   @objc(stringFromApplicationInstallType:)
   public class func string(from installType: FBApplicationInstallType) -> String {

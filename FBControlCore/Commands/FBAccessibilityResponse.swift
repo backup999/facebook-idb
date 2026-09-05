@@ -13,7 +13,7 @@ import Foundation
 /// use the same names so callers can compare backend performance without flattening the two models.
 public struct FBAccessibilityProfilingData: Sendable, Equatable, Encodable {
 
-  // MARK: The core, spelled identically in every backend's profile
+  // MARK: - The core, spelled identically in every backend's profile
 
   /// Elements in the serialized read.
   public let elementCount: Int64
@@ -28,7 +28,7 @@ public struct FBAccessibilityProfilingData: Sendable, Equatable, Encodable {
   /// Turning what was read into what the caller asked for — the walk's time less what it spent waiting.
   public let serializeDuration: CFAbsoluteTime
 
-  // MARK: What only a translator-backed read has
+  // MARK: - What only a translator-backed read has
 
   /// The number of attribute fetches made on accessibility elements. Each
   /// property access (accessibilityLabel, accessibilityFrame, etc.) counts as one.

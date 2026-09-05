@@ -31,15 +31,11 @@ extension FBXCTraceError: LocalizedError {
 
 public final class FBXCTraceRecordOperation {
 
-  // MARK: Properties
-
   public let task: FBSubprocess<AnyObject, AnyObject, AnyObject>
   public let queue: DispatchQueue
   public let traceDir: URL
   public let configuration: FBXCTraceRecordConfiguration
   public let logger: FBControlCoreLogger
-
-  // MARK: Initializers
 
   public init(task: FBSubprocess<AnyObject, AnyObject, AnyObject>, traceDir: URL, configuration: FBXCTraceRecordConfiguration, queue: DispatchQueue, logger: FBControlCoreLogger) {
     self.task = task
@@ -112,8 +108,6 @@ public final class FBXCTraceRecordOperation {
     let typedTask = unsafeBitCast(started, to: FBSubprocess<AnyObject, AnyObject, AnyObject>.self)
     return FBXCTraceRecordOperation(task: typedTask, traceDir: URL(fileURLWithPath: traceFile), configuration: configuration, queue: queue, logger: logger)
   }
-
-  // MARK: Public Methods
 
   /// Stops the xctrace recording and returns the trace directory URL on success.
   public func stop(withTimeout timeout: TimeInterval) async throws -> URL {

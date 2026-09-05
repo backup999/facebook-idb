@@ -26,13 +26,9 @@ public enum FBCodesignError: Error, LocalizedError {
 
 public final class FBCodesignProvider {
 
-  // MARK: Properties
-
   public let identityName: String
   private let logger: FBControlCoreLogger?
   private let queue: DispatchQueue
-
-  // MARK: Initializers
 
   public class func codeSignCommand(withIdentityName identityName: String, logger: FBControlCoreLogger?) -> Self {
     self.init(identityName: identityName, logger: logger)
@@ -47,8 +43,6 @@ public final class FBCodesignProvider {
     self.logger = logger
     self.queue = DispatchQueue(label: "com.facebook.fbcontrolcore.codesign", attributes: .concurrent)
   }
-
-  // MARK: Private
 
   private func makeCodesignatureWritable(_ bundlePath: String) throws {
     let fileManager = FileManager.default
@@ -68,8 +62,6 @@ public final class FBCodesignProvider {
       logger?.log("Added user writable permission to code sign file")
     }
   }
-
-  // MARK: Public Methods
 
   func signBundle(atPath bundlePath: String) -> FBFuture<NSNull> {
     do {

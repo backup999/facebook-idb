@@ -111,8 +111,6 @@ public final class FBFileReader: NSObject, FBFileReaderProtocol {
     super.init()
   }
 
-  // MARK: - NSObject
-
   public override var description: String {
     "Reader for \(targeting) with state \(stateString(from: state))"
   }

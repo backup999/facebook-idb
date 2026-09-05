@@ -38,15 +38,13 @@ extension FBWeakFrameworkError: LocalizedError {
 @objc(FBWeakFramework)
 public final class FBWeakFramework: NSObject {
 
-  // MARK: Properties
-
   @objc public let name: String
   private let basePath: String
   private let relativePath: String
   private let requiredClassNames: [String]
   private let rootPermitted: Bool
 
-  // MARK: Factory Methods
+  // MARK: - Factory Methods
 
   @objc(xcodeFrameworkWithRelativePath:requiredClassNames:)
   public class func xcodeFramework(withRelativePath relativePath: String, requiredClassNames: [String]) -> FBWeakFramework {
@@ -68,7 +66,7 @@ public final class FBWeakFramework: NSObject {
     )
   }
 
-  // MARK: Private Init
+  // MARK: - Private Init
 
   private init(basePath: String, relativePath: String, requiredClassNames: [String], rootPermitted: Bool) {
     let fullPath = (basePath as NSString).appendingPathComponent(relativePath)
@@ -81,15 +79,11 @@ public final class FBWeakFramework: NSObject {
     super.init()
   }
 
-  // MARK: Public Methods
-
   /// A nil logger loads silently.
   @objc(loadWithLogger:error:)
   public func load(with logger: (any FBControlCoreLogger)?) throws {
     try loadFromRelativeDirectory(basePath, logger: logger)
   }
-
-  // MARK: Private
 
   private func allRequiredClassesExist() throws {
     for requiredClassName in requiredClassNames {

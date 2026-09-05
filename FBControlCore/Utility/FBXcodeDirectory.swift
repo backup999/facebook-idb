@@ -32,8 +32,6 @@ public enum FBXcodeDirectoryError: Error, LocalizedError {
 
 public struct FBXcodeDirectory {
 
-  // MARK: Public
-
   public static func resolveDeveloperDirectory() throws -> String {
     let directory: String
     do {
@@ -69,8 +67,6 @@ public struct FBXcodeDirectory {
     try validateXcodeDirectory(directory)
     return directory
   }
-
-  // MARK: Private
 
   private static func validateXcodeDirectory(_ directory: String?) throws {
     guard let directory else {

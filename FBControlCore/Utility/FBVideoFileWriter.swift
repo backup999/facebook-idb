@@ -38,8 +38,6 @@ extension FBVideoFileWriterError: LocalizedError {
 
 public final class FBVideoFileWriter: NSObject, AVCaptureFileOutputRecordingDelegate {
 
-  // MARK: Properties
-
   private let session: AVCaptureSession
   private let output: AVCaptureMovieFileOutput
   private let logger: any FBControlCoreLogger
@@ -49,8 +47,6 @@ public final class FBVideoFileWriter: NSObject, AVCaptureFileOutputRecordingDele
   private var hasFinished = false
   private var startAwaiters: [CheckedContinuation<Void, Error>] = []
   private var finishAwaiters: [CheckedContinuation<Void, Error>] = []
-
-  // MARK: Initializers
 
   public class func writer(withSession session: AVCaptureSession, filePath: String, logger: any FBControlCoreLogger) throws -> Self {
     let output = AVCaptureMovieFileOutput()
@@ -69,8 +65,6 @@ public final class FBVideoFileWriter: NSObject, AVCaptureFileOutputRecordingDele
     super.init()
   }
 
-  // MARK: Public Methods
-
   public func start() async throws {
     try await startWriting()
   }
@@ -79,8 +73,6 @@ public final class FBVideoFileWriter: NSObject, AVCaptureFileOutputRecordingDele
     try await stopWriting()
     return outputURL
   }
-
-  // MARK: Private Methods
 
   private var filePath: String {
     outputURL.path
@@ -163,7 +155,7 @@ public final class FBVideoFileWriter: NSObject, AVCaptureFileOutputRecordingDele
     return awaiters
   }
 
-  // MARK: AVCaptureFileOutputRecordingDelegate
+  // MARK: - AVCaptureFileOutputRecordingDelegate
 
   public func fileOutput(_ output: AVCaptureFileOutput, didStartRecordingTo fileURL: URL, from connections: [AVCaptureConnection]) {
     logger.log("Did Start Recording at \(filePath)")

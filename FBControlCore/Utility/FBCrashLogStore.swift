@@ -11,14 +11,10 @@ private let FBCrashLogAppeared = NSNotification.Name("FBCrashLogAppeared")
 
 public final class FBCrashLogStore {
 
-  // MARK: Properties
-
   private let directories: [String]
   private let logger: any FBControlCoreLogger
   private let ingestedCrashLogs: NSMutableDictionary
   private let queue: DispatchQueue
-
-  // MARK: Initializers
 
   public class func store(forDirectories directories: [String], logger: any FBControlCoreLogger) -> Self {
     return self.init(directories: directories, logger: logger)
@@ -31,7 +27,7 @@ public final class FBCrashLogStore {
     self.queue = DispatchQueue(label: "com.facebook.fbcontrolcore.crash_store")
   }
 
-  // MARK: Ingestion
+  // MARK: - Ingestion
 
   @discardableResult public func ingestAllExistingInDirectory() -> [FBCrashLogInfo] {
     var ingested: [FBCrashLogInfo] = []
@@ -84,7 +80,7 @@ public final class FBCrashLogStore {
     return crashLog
   }
 
-  // MARK: Fetching
+  // MARK: - Fetching
 
   public func ingestedCrashLog(withName name: String) -> FBCrashLogInfo? {
     return ingestedCrashLogs[name] as? FBCrashLogInfo
@@ -138,8 +134,6 @@ public final class FBCrashLogStore {
     ingestedCrashLogs.removeObjects(forKeys: keys)
     return crashLogs
   }
-
-  // MARK: Private
 
   private func hasIngestedCrashLog(withName key: String) -> Bool {
     return ingestedCrashLogs[key] != nil

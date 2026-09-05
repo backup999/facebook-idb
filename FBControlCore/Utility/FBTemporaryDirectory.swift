@@ -21,14 +21,14 @@ public enum FBTemporaryDirectoryError: Error, LocalizedError {
 @objc(FBTemporaryDirectory)
 public final class FBTemporaryDirectory: NSObject {
 
-  // MARK: Properties
+  // MARK: - Properties
 
   @objc public let logger: FBControlCoreLogger
   @objc public let queue: DispatchQueue
 
   private let rootTemporaryDirectory: URL
 
-  // MARK: Initializers
+  // MARK: - Initializers
 
   @objc(temporaryDirectoryWithLogger:)
   public class func temporaryDirectory(logger: FBControlCoreLogger) -> Self {
@@ -68,7 +68,7 @@ public final class FBTemporaryDirectory: NSObject {
     super.init()
   }
 
-  // MARK: Public Methods
+  // MARK: - Public Methods
 
   @objc public func cleanOnExit() {
     do {
@@ -156,7 +156,7 @@ public final class FBTemporaryDirectory: NSObject {
       ).retyped(FBFutureContext<NSArray>.self)
   }
 
-  // MARK: Temporary Directory
+  // MARK: - Temporary Directory
 
   @objc public func temporaryDirectory() -> URL {
     let tempDirectory = ephemeralTemporaryDirectory()
@@ -192,7 +192,7 @@ public final class FBTemporaryDirectory: NSObject {
         })
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   private func withTemporaryFileNamed(_ name: String) -> FBFutureContext<NSURL> {
     return withTemporaryDirectory()

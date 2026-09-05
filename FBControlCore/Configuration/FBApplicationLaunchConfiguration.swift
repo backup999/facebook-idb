@@ -31,8 +31,6 @@ public final class FBApplicationLaunchConfiguration: FBProcessLaunchConfiguratio
     super.init(arguments: arguments, environment: environment, io: io)
   }
 
-  // MARK: NSObject
-
   public override var hash: Int {
     super.hash ^ (bundleID as NSString).hash ^ ((bundleName as NSString?)?.hash ?? 0) &+ (waitForDebugger ? 1231 : 1237)
   }

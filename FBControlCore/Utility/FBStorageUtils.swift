@@ -28,7 +28,7 @@ extension FBStorageUtilsError: LocalizedError {
 
 public final class FBStorageUtils {
 
-  // MARK: Finding Files
+  // MARK: - Finding Files
 
   public class func bucketFiles(withExtensions extensions: Set<String>, inDirectory directory: URL) throws -> [String: Set<URL>] {
     var files: [String: Set<URL>] = [:]

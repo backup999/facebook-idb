@@ -26,7 +26,7 @@ public protocol AsynciOSTarget: AnyObject,
   PowerCommands
 {
 
-  // MARK: FBiOSTargetInfo
+  // MARK: - FBiOSTargetInfo
 
   var uniqueIdentifier: String { get }
   var udid: String { get }
@@ -38,7 +38,7 @@ public protocol AsynciOSTarget: AnyObject,
   var targetType: FBiOSTargetType { get }
   var state: FBiOSTargetState { get }
 
-  // MARK: Shared FBiOSTarget properties
+  // MARK: - Shared FBiOSTarget properties
 
   var logger: any FBControlCoreLogger { get }
   var customDeviceSetPath: String? { get }

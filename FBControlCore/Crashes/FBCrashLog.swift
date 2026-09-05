@@ -33,13 +33,11 @@ public final class FBCrashLog: CustomStringConvertible {
     self.contents = contents
   }
 
-  // MARK: CustomStringConvertible
-
   public var description: String {
     "Crash Info: \(info) \n Crash Report: \(contents)\n"
   }
 
-  // MARK: Public
+  // MARK: - Public
 
   public class func dateFormatter() -> DateFormatter {
     FBCrashLog_dateFormatter
@@ -90,7 +88,7 @@ extension FBCrashLogError: LocalizedError {
 
 public final class FBCrashLogInfo: CustomStringConvertible {
 
-  // MARK: Properties
+  // MARK: - Properties
 
   public let crashPath: String
   public let executablePath: String
@@ -107,8 +105,6 @@ public final class FBCrashLogInfo: CustomStringConvertible {
   public var name: String {
     (crashPath as NSString).lastPathComponent
   }
-
-  // MARK: Initializers
 
   public init(
     crashPath: String,
@@ -136,7 +132,7 @@ public final class FBCrashLogInfo: CustomStringConvertible {
     self.crashedThreadDescription = crashedThreadDescription
   }
 
-  // MARK: Factory Methods
+  // MARK: - Factory Methods
 
   public class func fromCrashLog(atPath crashPath: String) throws -> FBCrashLogInfo {
     let fileManager = FileManager.default
@@ -181,19 +177,15 @@ public final class FBCrashLogInfo: CustomStringConvertible {
     #endif
   }
 
-  // MARK: CustomStringConvertible
-
   public var description: String {
     "Identifier \(identifier) | Executable Path \(executablePath) | Process \(processName) | pid \(processIdentifier) | Parent \(parentProcessName) | ppid \(parentProcessIdentifier) | Date \(date) | Path \(crashPath) | Exception: \(exceptionDescription ?? "nil") | Trace: \(crashedThreadDescription ?? "nil")"
   }
-
-  // MARK: Public Methods
 
   public func loadRawCrashLogString() throws -> String {
     try String(contentsOfFile: crashPath, encoding: .utf8)
   }
 
-  // MARK: Bulk Collection
+  // MARK: - Bulk Collection
 
   public class func crashInfo(afterDate date: Date, logger: FBControlCoreLogger?) -> [FBCrashLogInfo] {
     var allCrashInfos: [FBCrashLogInfo] = []
@@ -223,7 +215,7 @@ public final class FBCrashLogInfo: CustomStringConvertible {
     return allCrashInfos
   }
 
-  // MARK: Contents
+  // MARK: - Contents
 
   public func obtainCrashLog() throws -> FBCrashLog {
     let contents: String
@@ -235,7 +227,7 @@ public final class FBCrashLogInfo: CustomStringConvertible {
     return FBCrashLog(info: self, contents: contents)
   }
 
-  // MARK: Predicates
+  // MARK: - Predicates
 
   public class func predicateForCrashLogs(withProcessID processID: pid_t) -> NSPredicate {
     NSPredicate { evaluatedObject, _ in
@@ -276,8 +268,6 @@ public final class FBCrashLogInfo: CustomStringConvertible {
     }
   }
 
-  // MARK: Helpers
-
   public class var diagnosticReportsPaths: [String] {
     [
       (NSHomeDirectory() as NSString).appendingPathComponent("Library/Logs/DiagnosticReports"),
@@ -285,7 +275,7 @@ public final class FBCrashLogInfo: CustomStringConvertible {
     ]
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   private class func getPreferredCrashLogParser(forCrashString crashString: String) -> FBCrashLogParser {
     if !crashString.isEmpty && crashString.first == "{" {

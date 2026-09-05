@@ -10,7 +10,7 @@ import Foundation
 @objc(FBXcodeConfiguration)
 public final class FBXcodeConfiguration: NSObject {
 
-  // MARK: Public Properties
+  // MARK: - Public Properties
 
   @objc public static let developerDirectory: String = {
     (try? FBXcodeDirectory.resolveDeveloperDirectory()) ?? ""
@@ -67,8 +67,6 @@ public final class FBXcodeConfiguration: NSObject {
     return FBBundleDescriptor(name: name, identifier: identifier, path: path, binary: nil)
   }()
 
-  // MARK: NSObject
-
   override public class func description() -> String {
     "Developer Directory \(developerDirectory) | Xcode Version \(xcodeVersionNumber) | iOS SDK Version \(iosSDKVersionNumber)"
   }
@@ -76,8 +74,6 @@ public final class FBXcodeConfiguration: NSObject {
   public override var description: String {
     Self.description()
   }
-
-  // MARK: Private
 
   fileprivate class var simulatorApplicationPath: String {
     // Xcode 27 renamed Simulator.app to DeviceHub.app and moved it from

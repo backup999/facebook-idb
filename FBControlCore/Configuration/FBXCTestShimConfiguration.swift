@@ -59,8 +59,6 @@ public struct FBXCTestShimConfiguration: Sendable {
   public let iOSSimulatorTestShimPath: String
   public let macOSTestShimPath: String
 
-  // MARK: Initializers
-
   public init(iOSSimulatorTestShimPath: String, macOSTestShimPath: String) {
     assert(!iOSSimulatorTestShimPath.isEmpty)
     assert(!macOSTestShimPath.isEmpty)
@@ -68,7 +66,7 @@ public struct FBXCTestShimConfiguration: Sendable {
     self.macOSTestShimPath = macOSTestShimPath
   }
 
-  // MARK: Lookup
+  // MARK: - Lookup
 
   private static func pathForCanonicallyNamedShim(_ shim: CanonicalShim, inDirectory directory: String) async throws -> String {
     let shimPath = (directory as NSString).appendingPathComponent(shim.filename)

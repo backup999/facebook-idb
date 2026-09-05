@@ -40,8 +40,6 @@ public final class FBBundleDescriptor: NSObject, NSCopying, Sendable {
   @objc public let path: String
   @objc public let binary: FBBinaryDescriptor?
 
-  // MARK: Initializers
-
   @objc
   public init(name: String, identifier: String, path: String, binary: FBBinaryDescriptor?) {
     self.name = name
@@ -61,13 +59,9 @@ public final class FBBundleDescriptor: NSObject, NSCopying, Sendable {
     return try bundleFromPath(path, fallbackIdentifier: true)
   }
 
-  // MARK: NSCopying
-
   public func copy(with zone: NSZone? = nil) -> Any {
     return self
   }
-
-  // MARK: NSObject
 
   public override func isEqual(_ object: Any?) -> Bool {
     guard let other = object as? FBBundleDescriptor, other.isMember(of: type(of: self)) else {
@@ -86,8 +80,6 @@ public final class FBBundleDescriptor: NSObject, NSCopying, Sendable {
   public override var description: String {
     "Name: \(name) | ID: \(identifier)"
   }
-
-  // MARK: Public Methods
 
   public func updatePathsForRelocation(withCodesign codesign: FBCodesignProvider, logger: FBControlCoreLogger) async throws {
     let replacements = try replacementsForBinary()
@@ -111,8 +103,6 @@ public final class FBBundleDescriptor: NSObject, NSCopying, Sendable {
     logger.log("Re-Codesigning after rpath update \(path)")
     try await bridgeFBFutureVoid(codesign.signBundle(atPath: path))
   }
-
-  // MARK: Private
 
   private class func binaryForBundle(_ bundle: Bundle) throws -> FBBinaryDescriptor {
     guard let binaryPath = bundle.executablePath else {

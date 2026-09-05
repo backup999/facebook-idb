@@ -146,7 +146,7 @@ public final class FBPlainTextCrashLogParser: NSObject, FBCrashLogParser {
     }
   }
 
-  // MARK: Private
+  // MARK: - Private
 
   private func parseProcessLine(_ line: String) -> (name: String, pid: pid_t)? {
     let scanner = Scanner(string: line)

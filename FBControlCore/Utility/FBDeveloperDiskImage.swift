@@ -103,14 +103,12 @@ public struct InstalledDeveloperDiskImages: DeveloperDiskImageProviding {
 @objc(FBDeveloperDiskImage)
 public final class FBDeveloperDiskImage: NSObject, @unchecked Sendable {
 
-  // MARK: Properties
+  // MARK: - Properties
 
   @objc public let diskImagePath: String
   @objc public let signature: Data
   @objc public let version: OperatingSystemVersion
   @objc public let xcodeVersion: OperatingSystemVersion
-
-  // MARK: Init
 
   public init(diskImagePath: String, signature: Data, version: OperatingSystemVersion, xcodeVersion: OperatingSystemVersion) {
     self.diskImagePath = diskImagePath
@@ -120,7 +118,7 @@ public final class FBDeveloperDiskImage: NSObject, @unchecked Sendable {
     super.init()
   }
 
-  // MARK: Initializers
+  // MARK: - Initializers
 
   @objc(unknownDiskImageWithSignature:)
   public class func unknownDiskImage(withSignature signature: Data) -> FBDeveloperDiskImage {
@@ -128,7 +126,7 @@ public final class FBDeveloperDiskImage: NSObject, @unchecked Sendable {
     return FBDeveloperDiskImage(diskImagePath: "unknown.dmg", signature: signature, version: unknownVersion, xcodeVersion: unknownVersion)
   }
 
-  // MARK: Public
+  // MARK: - Public
 
   @objc(pathForDeveloperSymbols:logger:error:)
   public class func pathForDeveloperSymbols(_ buildVersion: String, logger: any FBControlCoreLogger) throws -> String {
@@ -193,8 +191,6 @@ public final class FBDeveloperDiskImage: NSObject, @unchecked Sendable {
     }
     throw FBDeveloperDiskImageError.noSuitableImage(bestDescription: String(describing: best), majorVersion: targetVersion.majorVersion, minorVersion: targetVersion.minorVersion)
   }
-
-  // MARK: NSObject
 
   override public var description: String {
     "\(diskImagePath): \(version.majorVersion).\(version.minorVersion)"

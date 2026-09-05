@@ -9,13 +9,9 @@ import Foundation
 
 public final class FBProcessLogOperation: LogOperation {
 
-  // MARK: Properties
-
   public let process: FBSubprocess<AnyObject, AnyObject, AnyObject>
   public let consumer: any FBDataConsumer
   private let queue: DispatchQueue
-
-  // MARK: Initializers
 
   public init(process: FBSubprocess<AnyObject, AnyObject, AnyObject>, consumer: any FBDataConsumer, queue: DispatchQueue) {
     self.process = process
@@ -23,7 +19,7 @@ public final class FBProcessLogOperation: LogOperation {
     self.queue = queue
   }
 
-  // MARK: LogOperation
+  // MARK: - LogOperation
 
   public var completed: FBFuture<NSNull> {
     let process = self.process
@@ -41,8 +37,6 @@ public final class FBProcessLogOperation: LogOperation {
     try await bridgeFBFutureVoid(completed)
   }
 
-  // MARK: Class Methods
-
   public class func osLogArgumentsInsertStreamIfNeeded(_ arguments: [String]) -> [String] {
     guard let firstArgument = arguments.first else {
       return ["stream"]
@@ -52,8 +46,6 @@ public final class FBProcessLogOperation: LogOperation {
     }
     return ["stream"] + arguments
   }
-
-  // MARK: Private
 
   private static let osLogSubcommands: Set<String> = {
     Set(["collect", "config", "erase", "show", "stream", "stats"])

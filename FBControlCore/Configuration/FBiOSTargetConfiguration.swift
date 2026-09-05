@@ -24,8 +24,6 @@ public final class FBiOSTargetScreenInfo: NSObject, NSCopying {
     super.init()
   }
 
-  // MARK: NSObject
-
   public override func isEqual(_ object: Any?) -> Bool {
     guard let other = object as? FBiOSTargetScreenInfo else { return false }
     return widthPixels == other.widthPixels
@@ -40,8 +38,6 @@ public final class FBiOSTargetScreenInfo: NSObject, NSCopying {
   public override var description: String {
     String(format: "Screen Pixels %lu,%lu | Scale %fX", widthPixels, heightPixels, scale)
   }
-
-  // MARK: NSCopying
 
   public func copy(with zone: NSZone? = nil) -> Any {
     self
@@ -71,8 +67,6 @@ public final class FBDeviceType: NSObject, NSCopying, @unchecked Sendable {
     super.init()
   }
 
-  // MARK: NSObject
-
   /// The model is the identity: the other properties are catalogue data looked up from it, so a
   /// catalogue entry and a generic device type of the same model are equal.
   public override func isEqual(_ object: Any?) -> Bool {
@@ -88,13 +82,11 @@ public final class FBDeviceType: NSObject, NSCopying, @unchecked Sendable {
     "Model '\(model.rawValue)'"
   }
 
-  // MARK: NSCopying
-
   public func copy(with zone: NSZone? = nil) -> Any {
     self
   }
 
-  // MARK: Fileprivate Helpers
+  // MARK: - Fileprivate Helpers
 
   fileprivate class func iPhone(withModel model: FBDeviceModel, productType: String, deviceArchitecture: FBArchitecture) -> FBDeviceType {
     iPhone(withModel: model, productTypes: [productType], deviceArchitecture: deviceArchitecture)
@@ -160,7 +152,7 @@ public final class FBOSVersion: NSObject, NSCopying, @unchecked Sendable {
     super.init()
   }
 
-  // MARK: Public Computed Properties
+  // MARK: - Public Computed Properties
 
   @objc public var versionString: String {
     (name.rawValue as String).components(separatedBy: CharacterSet.whitespaces)[1]
@@ -173,8 +165,6 @@ public final class FBOSVersion: NSObject, NSCopying, @unchecked Sendable {
   @objc public var version: OperatingSystemVersion {
     FBOSVersion.operatingSystemVersion(fromName: versionString)
   }
-
-  // MARK: NSObject
 
   /// The name is the identity: `families` is catalogue data looked up from it.
   public override func isEqual(_ object: Any?) -> Bool {
@@ -190,13 +180,11 @@ public final class FBOSVersion: NSObject, NSCopying, @unchecked Sendable {
     "OS '\(name.rawValue)'"
   }
 
-  // MARK: NSCopying
-
   public func copy(with zone: NSZone? = nil) -> Any {
     self
   }
 
-  // MARK: Fileprivate Helpers
+  // MARK: - Fileprivate Helpers
 
   fileprivate class func iOS(withName name: FBOSVersionName) -> FBOSVersion {
     let families: Set<NSNumber> = [
@@ -219,12 +207,8 @@ public final class FBOSVersion: NSObject, NSCopying, @unchecked Sendable {
   }
 }
 
-// MARK: - FBiOSTargetConfiguration
-
 @objc(FBiOSTargetConfiguration)
 public final class FBiOSTargetConfiguration: NSObject {
-
-  // MARK: Device Configurations
 
   private static let _deviceConfigurations: [FBDeviceType] = {
     [
@@ -325,8 +309,6 @@ public final class FBiOSTargetConfiguration: NSObject {
     ]
   }()
 
-  // MARK: OS Configurations
-
   private static let _osConfigurations: [FBOSVersion] = {
     [
       FBOSVersion.iOS(withName: .nameiOS_7_1),
@@ -420,7 +402,7 @@ public final class FBiOSTargetConfiguration: NSObject {
     ]
   }()
 
-  // MARK: Class Properties
+  // MARK: - Class Properties
 
   private static let _nameToDevice: [FBDeviceModel: FBDeviceType] = {
     var dictionary = [FBDeviceModel: FBDeviceType]()
@@ -460,7 +442,7 @@ public final class FBiOSTargetConfiguration: NSObject {
     _nameToOSVersion
   }
 
-  // MARK: Public Methods
+  // MARK: - Public Methods
 
   @objc(baseArchsToCompatibleArch:)
   public class func baseArchsToCompatibleArch(_ architectures: [FBArchitecture]) -> Set<FBArchitecture> {

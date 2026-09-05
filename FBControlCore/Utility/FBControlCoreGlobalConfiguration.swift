@@ -21,13 +21,13 @@ public final class FBControlCoreGlobalConfiguration: NSObject {
   nonisolated(unsafe) private static var _logger: (any FBControlCoreLogger)?
   private static let _loggerLock = NSLock()
 
-  // MARK: Timeouts
+  // MARK: - Timeouts
 
   @objc public class var fastTimeout: TimeInterval { 10 }
   @objc public class var regularTimeout: TimeInterval { 30 }
   @objc public class var slowTimeout: TimeInterval { 120 }
 
-  // MARK: Logger
+  // MARK: - Logger
 
   /// The logger used wherever a nullable logger parameter is passed as nil.
   ///
@@ -57,14 +57,10 @@ public final class FBControlCoreGlobalConfiguration: NSObject {
     }
   }
 
-  // MARK: Configuration
-
   @objc public class var confirmCodesignaturesAreValid: Bool {
     guard let value = ProcessInfo.processInfo.environment[ConfirmShimsAreSignedEnv] else { return false }
     return (value as NSString).boolValue
   }
-
-  // MARK: NSObject
 
   override public class func description() -> String {
     _loggerLock.lock()
@@ -78,8 +74,6 @@ public final class FBControlCoreGlobalConfiguration: NSObject {
   public override var description: String {
     Self.description()
   }
-
-  // MARK: Private
 
   private class func createDefaultLogger() -> any FBControlCoreLogger {
     FBControlCoreLoggerFactory.systemLoggerWriting(toStderr: stderrLoggingEnabledByDefault, withDebugLogging: debugLoggingEnabledByDefault)
