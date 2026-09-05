@@ -89,11 +89,9 @@ final class FBTestManagerResultSummaryTransientTests: XCTestCase {
   }
 }
 
-// MARK: - FBXCTestConfiguration Subclass Tests
-
 final class FBXCTestConfigurationTransientTests: XCTestCase {
 
-  // MARK: FBListTestConfiguration
+  // MARK: - FBListTestConfiguration
 
   private func makeListConfig(
     env: [String: String] = [:],
@@ -162,7 +160,7 @@ final class FBXCTestConfigurationTransientTests: XCTestCase {
     XCTAssertEqual(config1.hash, config2.hash)
   }
 
-  // MARK: FBTestManagerTestConfiguration
+  // MARK: - FBTestManagerTestConfiguration
 
   func testManagerTestConfigurationApplicationTestType() {
     let config = FBTestManagerTestConfiguration(
@@ -219,7 +217,7 @@ final class FBXCTestConfigurationTransientTests: XCTestCase {
     XCTAssertTrue(desc.contains("SomeFilter"), "Description should contain test filter")
   }
 
-  // MARK: FBLogicTestConfiguration
+  // MARK: - FBLogicTestConfiguration
 
   func testLogicTestConfigurationTestType() {
     let config = makeLogicConfig()
@@ -233,7 +231,7 @@ final class FBXCTestConfigurationTransientTests: XCTestCase {
     XCTAssertTrue(desc.contains("MyFilter"), "Description should contain test filter")
   }
 
-  // MARK: FBXCTestConfiguration base class
+  // MARK: - FBXCTestConfiguration base class
 
   func testBuildEnvironmentWithEntries() {
     let config = makeListConfig()

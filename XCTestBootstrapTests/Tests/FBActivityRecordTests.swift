@@ -11,8 +11,6 @@ import XCTestBootstrap
 /// `XCActivityRecord` lives in `XCTestPrivate`, which cannot be imported alongside `XCTest` (both define `XCTAttachment`/`XCTIssue`), so the input record is built and `+[FBActivityRecord from:]` is invoked through the Objective-C runtime.
 final class FBActivityRecordTests: XCTestCase {
 
-  // MARK: - Helpers
-
   private func makeXCActivityRecord(
     title: String = "Activity Title",
     activityType: String = "com.apple.dt.xctest.activity-type.userCreated",
