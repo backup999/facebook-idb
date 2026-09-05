@@ -34,7 +34,7 @@ final class FBControlCoreTransientTests: XCTestCase {
     )
   }
 
-  // MARK: FBBundleDescriptor
+  // MARK: - FBBundleDescriptor
 
   func testBundleDescriptorEqualityWithNilBinary() {
     let a = FBBundleDescriptor(name: "App", identifier: "com.test", path: "/a", binary: nil)
@@ -70,7 +70,7 @@ final class FBControlCoreTransientTests: XCTestCase {
     XCTAssertThrowsError(try FBBundleDescriptor.bundle(fromPath: "/nonexistent/path"))
   }
 
-  // MARK: FBInstalledApplication
+  // MARK: - FBInstalledApplication
 
   func testInstalledApplicationInstallTypeStringConversion() {
     let bundle = makeBundle()
@@ -126,7 +126,7 @@ final class FBControlCoreTransientTests: XCTestCase {
     XCTAssertTrue(app.description.contains("/data/container"))
   }
 
-  // MARK: FBProcessInfo
+  // MARK: - FBProcessInfo
 
   func testProcessInfoProcessName() {
     let info = FBProcessInfo(processIdentifier: 1, launchPath: "/usr/bin/some_tool", arguments: [], environment: [:])
@@ -161,7 +161,7 @@ final class FBControlCoreTransientTests: XCTestCase {
     XCTAssertEqual(a.hash, b.hash)
   }
 
-  // MARK: FBApplicationLaunchConfiguration
+  // MARK: - FBApplicationLaunchConfiguration
 
   func testApplicationLaunchConfigurationEquality() {
     let io = makeIO()
@@ -193,7 +193,7 @@ final class FBControlCoreTransientTests: XCTestCase {
     XCTAssertTrue(config.description.contains("MyApp"))
   }
 
-  // MARK: FBProcessSpawnConfiguration
+  // MARK: - FBProcessSpawnConfiguration
 
   func testProcessSpawnConfigurationProcessName() {
     let config = FBProcessSpawnConfiguration(
@@ -235,7 +235,7 @@ final class FBControlCoreTransientTests: XCTestCase {
     XCTAssertTrue(config.description.contains("/usr/bin/env"))
   }
 
-  // MARK: FBCollectionInformation
+  // MARK: - FBCollectionInformation
 
   func testOneLineDescriptionFromArray() {
     let result = FBCollectionInformation.oneLineDescription(from: ["alpha", "beta", "gamma"])
@@ -282,7 +282,7 @@ final class FBControlCoreTransientTests: XCTestCase {
     XCTAssertFalse(FBCollectionInformation.isDictionaryHeterogeneous(dict as! [AnyHashable: Any], keyClass: NSString.self, valueClass: NSString.self))
   }
 
-  // MARK: FBCollectionOperations
+  // MARK: - FBCollectionOperations
 
   func testArrayFromIndices() {
     var indexSet = IndexSet()

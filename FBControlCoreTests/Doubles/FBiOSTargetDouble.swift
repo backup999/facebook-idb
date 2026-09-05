@@ -9,7 +9,7 @@ import FBControlCore
 
 final class FBiOSTargetDouble: FBiOSTarget {
 
-  // MARK: FBiOSTargetInfo
+  // MARK: - FBiOSTargetInfo
 
   var uniqueIdentifier: String = ""
   var udid: String = ""
@@ -21,7 +21,7 @@ final class FBiOSTargetDouble: FBiOSTarget {
   var deviceType: FBDeviceType = .generic(withName: "FBiOSTargetDouble")
   var osVersion: FBOSVersion = .generic(withName: "FBiOSTargetDouble")
 
-  // MARK: FBiOSTarget
+  // MARK: - FBiOSTarget
 
   var architectures: [FBArchitecture] = []
   var logger: any FBControlCoreLogger = FBControlCoreLoggerDouble()
@@ -30,13 +30,11 @@ final class FBiOSTargetDouble: FBiOSTarget {
   var screenInfo: FBiOSTargetScreenInfo?
   var temporaryDirectory: FBTemporaryDirectory = .temporaryDirectory(logger: FBControlCoreLoggerDouble())
 
-  // MARK: FBiOSTargetCommand
-
   static func commands(with target: any FBiOSTarget) -> Self {
     return self.init()
   }
 
-  // MARK: FBiOSTarget
+  // MARK: - FBiOSTarget
 
   var workQueue: DispatchQueue { .main }
 

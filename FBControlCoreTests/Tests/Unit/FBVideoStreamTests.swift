@@ -334,11 +334,9 @@ private func TSPacketPIDs(_ data: Data) -> [UInt16] {
   return pids
 }
 
-// MARK: - Tests
-
 final class FBVideoStreamTests: XCTestCase {
 
-  // MARK: H264 Annex-B Writer
+  // MARK: - H264 Annex-B Writer
 
   func testH264AnnexBKeyframeDetectionWithModernAttachments() {
     let sampleBuffer = CreateH264SampleBuffer(isKeyFrame: true)
@@ -400,7 +398,7 @@ final class FBVideoStreamTests: XCTestCase {
     XCTAssertEqual(consumer.data().count, 0, "No data should be written for not-ready buffer")
   }
 
-  // MARK: Minicap Header
+  // MARK: - Minicap Header
 
   func testWriteMinicapHeader() {
     let consumer = FBDataBuffer.accumulatingBuffer()
@@ -436,7 +434,7 @@ final class FBVideoStreamTests: XCTestCase {
     XCTAssertEqual(height, 1080)
   }
 
-  // MARK: Buffer Limit
+  // MARK: - Buffer Limit
 
   func testCheckConsumerBufferLimitAllowsWhenNotOverflown() {
     let consumer = FBDataBuffer.accumulatingBuffer()
@@ -459,7 +457,7 @@ final class FBVideoStreamTests: XCTestCase {
     XCTAssertFalse(checkConsumerBufferLimit(consumer, logger))
   }
 
-  // MARK: MPEG-TS CRC32
+  // MARK: - MPEG-TS CRC32
 
   func testMPEGTSCRC32KnownVector() {
     // MPEG-2 CRC32 of "123456789" is a well-known test vector
@@ -476,7 +474,7 @@ final class FBVideoStreamTests: XCTestCase {
     XCTAssertEqual(crc, 0xFFFFFFFF)
   }
 
-  // MARK: MPEG-TS PAT/PMT Structure
+  // MARK: - MPEG-TS PAT/PMT Structure
 
   func testPATPacketStructure() {
     var counter: UInt8 = 0
@@ -550,7 +548,7 @@ final class FBVideoStreamTests: XCTestCase {
     XCTAssertEqual(counter, 2)
   }
 
-  // MARK: MPEG-TS Packetization
+  // MARK: - MPEG-TS Packetization
 
   func testTSPacketizationSinglePacket() {
     // Small PES payload that fits in one TS packet (< 184 bytes)
@@ -679,7 +677,7 @@ final class FBVideoStreamTests: XCTestCase {
     XCTAssertEqual(pmtSection[12], 0x1B)
   }
 
-  // MARK: MPEG-TS PMT with Metadata
+  // MARK: - MPEG-TS PMT with Metadata
 
   func testPMTWithMetadataStreamContainsTwoEntries() {
     var counter: UInt8 = 0
@@ -719,7 +717,7 @@ final class FBVideoStreamTests: XCTestCase {
     XCTAssertEqual(pmtWithout, pmtOriginal)
   }
 
-  // MARK: MPEG-TS Timed Metadata Packets
+  // MARK: - MPEG-TS Timed Metadata Packets
 
   func testTimedMetadataPacketStructure() {
     var counter: UInt8 = 0
@@ -790,7 +788,7 @@ final class FBVideoStreamTests: XCTestCase {
     }
   }
 
-  // MARK: fMP4 Writer
+  // MARK: - fMP4 Writer
 
   func testFMP4InitSegmentEmittedOnFirstKeyframe() {
     let sampleBuffer = CreateH264SampleBuffer(isKeyFrame: true)
@@ -899,7 +897,7 @@ final class FBVideoStreamTests: XCTestCase {
     XCTAssertEqual(consumer.data().count, 0)
   }
 
-  // MARK: MJPEG / Minicap Frame Writers
+  // MARK: - MJPEG / Minicap Frame Writers
 
   func testMJPEGFrameWriterWritesRawBytes() {
     let jpeg: [UInt8] = [0xFF, 0xD8, 0xFF, 0xE0, 0x00, 0x10, 0x4A, 0x46, 0x49, 0x46, 0xFF, 0xD9]
@@ -931,7 +929,7 @@ final class FBVideoStreamTests: XCTestCase {
     XCTAssertEqual(output.subdata(in: 4..<output.count), Data(jpeg))
   }
 
-  // MARK: MPEG-TS Frame Writer (full pipeline)
+  // MARK: - MPEG-TS Frame Writer (full pipeline)
 
   func testH264MPEGTSFrameWriterKeyframeIsWellFormed() {
     let sampleBuffer = CreateH264SampleBuffer(isKeyFrame: true)
@@ -971,7 +969,7 @@ final class FBVideoStreamTests: XCTestCase {
     XCTAssertEqual(consumer.data().count, 0, "No data should be written for not-ready buffer")
   }
 
-  // MARK: HEVC Writers
+  // MARK: - HEVC Writers
 
   func testHEVCAnnexBKeyframeEmitsParameterSets() throws {
     let sampleBuffer = try XCTUnwrap(CreateHEVCSampleBuffer(isKeyFrame: true))
@@ -1036,7 +1034,7 @@ final class FBVideoStreamTests: XCTestCase {
     XCTAssertNotEqual(hvcC.location, NSNotFound, "moov should contain an hvcC config box for HEVC")
   }
 
-  // MARK: MPEG-TS Timed Metadata Stream
+  // MARK: - MPEG-TS Timed Metadata Stream
 
   func testEnableMetadataStreamThenWriteTimedMetadataEmitsOnMetadataPID() {
     let writer = FBMPEGTSFrameWriter(codec: .h264)

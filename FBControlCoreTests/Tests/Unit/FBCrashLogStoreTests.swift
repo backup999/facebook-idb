@@ -84,8 +84,6 @@ final class FBCrashLogStoreTests: XCTestCase {
     XCTAssertEqual(delivered.identifier, "assetsd", "A crash log not matching the predicate should not resolve the wait")
   }
 
-  // MARK: - Helpers
-
   /// Ingests `data` repeatedly under distinct names until cancelled. The store registers its
   /// notification observer asynchronously, so a single ingest can be posted before the observer
   /// exists and be missed; identical names are deduplicated and post nothing, so each retry

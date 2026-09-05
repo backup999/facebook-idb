@@ -55,8 +55,6 @@ final class FBScreenshotConfigurationTests: XCTestCase {
     XCTAssertEqual(result.outputSize, sourceSize)
   }
 
-  // MARK: - Encoding
-
   func testCompressionQualityExistsOnlyOnJPEG() {
     XCTAssertNil(FBScreenshotEncoding.png.compressionQuality)
     XCTAssertNil(FBScreenshotEncoding.tiff.compressionQuality)
@@ -286,8 +284,6 @@ final class FBScreenshotConfigurationTests: XCTestCase {
     let size = FBScreenshotGeometry.outputSize(baseSize: CGSize(width: 100, height: 100), factor: 0.001)
     XCTAssertEqual(size, CGSize(width: 1, height: 1))
   }
-
-  // MARK: - Source
 
   func testEmptySourceIsRejected() {
     assertThrows(.sourceSizeNotPositive(.zero), FBScreenshotConfiguration(), sourceSize: .zero)

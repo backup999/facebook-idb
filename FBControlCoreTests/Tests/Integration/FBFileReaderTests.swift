@@ -254,7 +254,7 @@ final class FBFileReaderTests: XCTestCase, FBDataConsumer {
     XCTAssertEqual(reader.state, FBFileReaderState.finishedReadingInError)
   }
 
-  // MARK: FBDataConsumer
+  // MARK: - FBDataConsumer
 
   func consumeEndOfFile() {
     didRecieveEOF = true

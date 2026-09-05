@@ -345,7 +345,7 @@ final class FBArchiveOperationsTests: XCTestCase {
       Self.executableContents)
   }
 
-  // MARK: Extraction from a file path
+  // MARK: - Extraction from a file path
 
   func testExtractArchiveAtPath_GzippedTar_RestoresContentsPermissionsAndSymlinks() throws {
     let archive = try makeArchive(from: try makePayloadFixture(), format: .gzippedTar)
@@ -379,7 +379,7 @@ final class FBArchiveOperationsTests: XCTestCase {
       try FileManager.default.destinationOfSymbolicLink(atPath: link), Self.symlinkDestination)
   }
 
-  // MARK: Extraction from a stream
+  // MARK: - Extraction from a stream
 
   func testExtractArchiveFromStream_GzippedTar_RestoresContentsPermissionsAndSymlinks() throws {
     let archive = try makeArchive(from: try makePayloadFixture(), format: .gzippedTar)
@@ -422,7 +422,7 @@ final class FBArchiveOperationsTests: XCTestCase {
       "BUG: and the file's contents are the link target path, not the target's contents")
   }
 
-  // MARK: Modification time
+  // MARK: - Modification time
 
   func testExtractArchiveAtPath_PreservesModificationTimeByDefault() throws {
     let source = try makePayloadFixture()
@@ -457,7 +457,7 @@ final class FBArchiveOperationsTests: XCTestCase {
       "The archive's mtime should be discarded in favour of the current time")
   }
 
-  // MARK: Failure
+  // MARK: - Failure
 
   func testExtractArchiveAtPath_WhenArchiveIsCorrupt_Fails() throws {
     let archive = (tempDirectory as NSString).appendingPathComponent("corrupt.tar.gz")

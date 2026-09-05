@@ -67,8 +67,6 @@ final class FBInstrumentsOperationTests: XCTestCase {
     XCTAssertEqual(result, traceFile, "Empty post-processing arguments should pass the trace file straight through")
   }
 
-  // MARK: - Helpers
-
   /// The consumer parses lines asynchronously on the block consumer's own queue, so the
   /// markers resolve some time after the data is fed in.
   private func waitForCompletion(of future: FBMutableFuture<NSNull>, timeout: TimeInterval = 5) async -> Bool {
