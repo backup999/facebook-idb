@@ -66,7 +66,7 @@ int dispatchService(NSString *service, NSString *action, NSArray<NSString *> *ar
     return 1;
   } else {
     NSLog(@"Unknown service: %@", service);
-    NSLog(@"Available services: contacts, dns, photos, notifications, health, proxy, accessibility");
+    NSLog(@"Available services: contacts, dns, photos, notifications, health, proxy, accessibility, repl");
     return 1;
   }
 }
