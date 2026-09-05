@@ -85,8 +85,6 @@ struct CompanionInfoTests {
     #expect(decoded == infos)
   }
 
-  // MARK: - Helpers
-
   private func jsonObject(encoding info: CompanionInfo) throws -> [String: Any] {
     let data = try JSONEncoder().encode(info)
     let parsed = try JSONSerialization.jsonObject(with: data) as? [String: Any]

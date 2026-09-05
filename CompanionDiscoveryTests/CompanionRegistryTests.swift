@@ -124,8 +124,6 @@ struct CompanionRegistryTests {
     }
   }
 
-  // MARK: - Helpers
-
   /// Runs `body` with a path to a state file inside a fresh temporary directory,
   /// removing the directory afterwards.
   private func withTemporaryStateFile(_ body: (String) throws -> Void) throws {

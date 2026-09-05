@@ -167,8 +167,6 @@ struct CompanionSpawnerTests {
     #expect(FileManager.default.fileExists(atPath: logPath))
   }
 
-  // MARK: - Helpers
-
   private func withFakeCompanion(_ script: String, _ body: (CompanionSpawner) async throws -> Void) async throws {
     let fakePath = try TestSupport.makeExecutableScript(script)
     defer { try? FileManager.default.removeItem(atPath: (fakePath as NSString).deletingLastPathComponent) }

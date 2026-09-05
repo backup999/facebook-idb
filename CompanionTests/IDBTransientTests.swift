@@ -312,8 +312,6 @@ struct IDBTransientTests {
     #expect((status.message?.contains("String") ?? false))
   }
 
-  // MARK: - IDBConfiguration Tests
-
   @Test
   func defaultEventReporterIsEmptyReporter() {
     #expect((IDBConfiguration.eventReporter is EmptyEventReporter))

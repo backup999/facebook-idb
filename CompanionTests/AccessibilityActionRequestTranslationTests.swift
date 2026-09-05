@@ -20,8 +20,6 @@ import XCTest
 /// reaches the simulator and does something the caller did not ask for.
 final class AccessibilityActionRequestTranslationTests: XCTestCase {
 
-  // MARK: - Helpers
-
   private func action(
     _ mutate: (inout Idb_AccessibilityActionRequest) -> Void
   ) throws -> AccessibilityActionRequestTranslation.Action {

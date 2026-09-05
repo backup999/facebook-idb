@@ -45,8 +45,6 @@ final class ScreenshotRequestTranslationTests: XCTestCase {
     }
   }
 
-  // MARK: - Defaults
-
   func testAnEmptyRequestIsTheHistoricalBehaviour() throws {
     // Every field defaults to 0 on the wire, so an old client that only ever set `format` must
     // still get exactly what it got before the request gained fields: a full-screen native PNG.
