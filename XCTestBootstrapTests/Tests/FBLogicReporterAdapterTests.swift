@@ -101,7 +101,6 @@ final class FBLogicReporterAdapterTests: XCTestCase {
 
   func test_LogicReporter_testCaseDidSucceed() throws {
     var event = testEventDict()
-    event["event"] = "begin-event"
     let duration: TimeInterval = 0.0050642
     event["totalDuration"] = duration
     event["event"] = "end-test"
