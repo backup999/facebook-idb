@@ -58,10 +58,4 @@ struct DescribeMethodHandler {
 
     return response
   }
-
-  private func populateCompanionInfo(info: inout Idb_CompanionInfo) throws {
-    info.udid = target.udid
-    let data = try JSONSerialization.data(withJSONObject: reporter.metadata, options: [])
-    info.metadata = data
-  }
 }
