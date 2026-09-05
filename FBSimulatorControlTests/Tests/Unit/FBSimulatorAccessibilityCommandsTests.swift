@@ -77,27 +77,6 @@ final class FBSimulatorAccessibilityCommandsTests: XCTestCase {
     ])
   }
 
-  /// Properties accessed during tap operation (includes action validation)
-  private var tapOperationProperties: Set<String> {
-    Set([
-      "accessibilityLabel",
-      "accessibilityIdentifier",
-      "accessibilityValue",
-      "accessibilityTitle",
-      "accessibilityHelp",
-      "accessibilityRole",
-      "accessibilityRoleDescription",
-      "accessibilitySubrole",
-      "accessibilityFrame",
-      "accessibilityEnabled",
-      "accessibilityRequired",
-      "accessibilityCustomActions",
-      "accessibilityChildren",
-      "accessibilityActionNames", // Accessed for action validation
-      "translation",
-    ])
-  }
-
   private func assertProfilingData(
     _ profile: FBAccessibilityProfile?,
     expectedElements: Int64,
