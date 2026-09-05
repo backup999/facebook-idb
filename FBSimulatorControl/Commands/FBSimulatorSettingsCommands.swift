@@ -136,10 +136,6 @@ public struct FBSimulatorSettingsCommands {
     self.simulator = simulator
   }
 
-  private func requireSimulator() throws -> FBSimulator {
-    return simulator
-  }
-
   private func requireDataDirectory(of simulator: FBSimulator) throws -> String {
     guard let dataDirectory = simulator.dataDirectory else {
       throw FBSimulatorSettingsError.noDataDirectoryForPlists
@@ -176,29 +172,24 @@ public struct FBSimulatorSettingsCommands {
   }
 
   fileprivate func currentAppearance() async throws -> FBSimulatorAppearance {
-    let simulator = try requireSimulator()
     let raw = simulator.device.currentUIInterfaceStyle()
     return FBSimulatorAppearance(rawValue: raw) ?? .light
   }
 
   fileprivate func setAppearance(_ appearance: FBSimulatorAppearance) async throws {
-    let simulator = try requireSimulator()
     try simulator.device.setUIInterfaceStyle(appearance.rawValue)
   }
 
   fileprivate func currentContentSizeCategory() async throws -> FBSimulatorContentSizeCategory {
-    let simulator = try requireSimulator()
     let raw = simulator.device.currentContentSizeCategory()
     return FBSimulatorContentSizeCategory(rawValue: raw) ?? .large
   }
 
   fileprivate func setContentSizeCategory(_ category: FBSimulatorContentSizeCategory) async throws {
-    let simulator = try requireSimulator()
     try simulator.device.setContentSizeCategory(category.rawValue)
   }
 
   fileprivate func currentStatusBarOverrides() async throws -> FBStatusBarOverride {
-    let simulator = try requireSimulator()
     var timeString: NSString?
     var dataNetworkType: NSNumber?
     var wiFiMode: NSNumber?
@@ -235,7 +226,6 @@ public struct FBSimulatorSettingsCommands {
   }
 
   fileprivate func overrideStatusBar(_ override: FBStatusBarOverride?) async throws {
-    let simulator = try requireSimulator()
     guard let override else {
       // clearStatusBarOverrides:(NSUInteger)flags sends @{@"OverridesToClear": @(flags)} via MIG.
       // Bit 31 (0x80000000) = clear all. Pass NSUIntegerMax to clear everything.
@@ -270,7 +260,6 @@ public struct FBSimulatorSettingsCommands {
   // MARK: - Async
 
   fileprivate func setHardwareKeyboardEnabled(_ enabled: Bool) async throws {
-    let simulator = try requireSimulator()
     try simulator.device.setHardwareKeyboardEnabled(enabled, keyboardType: 0)
   }
 
@@ -279,7 +268,6 @@ public struct FBSimulatorSettingsCommands {
   }
 
   fileprivate func setIncreaseContrastEnabled(_ enabled: Bool) async throws {
-    let simulator = try requireSimulator()
     try simulator.device.setIncreaseContrastEnabled(enabled)
   }
 
@@ -291,25 +279,21 @@ public struct FBSimulatorSettingsCommands {
   }
 
   fileprivate func setDarwinNotificationState(_ enabled: Bool, name: String) async throws {
-    let simulator = try requireSimulator()
     try simulator.device.darwinNotificationSetState(enabled ? 1 : 0, name: name)
     try simulator.device.postDarwinNotification(name)
   }
 
   fileprivate func setPreference(_ name: String, value: String, type: String?, domain: String?) async throws {
-    let simulator = try requireSimulator()
     try await FBPreferenceModificationStrategy(simulator: simulator)
       .setPreference(name, value: value, type: type, domain: domain)
   }
 
   fileprivate func getCurrentPreference(_ name: String, domain: String?) async throws -> String {
-    let simulator = try requireSimulator()
     return try await FBPreferenceModificationStrategy(simulator: simulator)
       .getCurrentPreference(name, domain: domain)
   }
 
   fileprivate func grantAccess(_ bundleIDs: Set<String>, toServices services: Set<FBTargetSettingsService>) async throws {
-    let simulator = try requireSimulator()
     if services.isEmpty {
       throw FBSimulatorSettingsError.noServicesToGrant(bundleIDs: bundleIDs)
     }
@@ -364,7 +348,6 @@ public struct FBSimulatorSettingsCommands {
   }
 
   fileprivate func revokeAccess(_ bundleIDs: Set<String>, toServices services: Set<FBTargetSettingsService>) async throws {
-    let simulator = try requireSimulator()
     if services.isEmpty {
       throw FBSimulatorSettingsError.noServicesToRevoke(bundleIDs: bundleIDs)
     }
@@ -419,7 +402,6 @@ public struct FBSimulatorSettingsCommands {
   }
 
   fileprivate func grantAccess(_ bundleIDs: Set<String>, toDeeplink scheme: String) async throws {
-    let simulator = try requireSimulator()
     if scheme.isEmpty {
       throw FBSimulatorSettingsError.emptyScheme(operation: "url approve")
     }
@@ -454,7 +436,6 @@ public struct FBSimulatorSettingsCommands {
   }
 
   fileprivate func revokeAccess(_ bundleIDs: Set<String>, toDeeplink scheme: String) async throws {
-    let simulator = try requireSimulator()
     if scheme.isEmpty {
       throw FBSimulatorSettingsError.emptyScheme(operation: "url revoke")
     }
@@ -481,7 +462,6 @@ public struct FBSimulatorSettingsCommands {
   }
 
   fileprivate func updateContacts(_ databaseDirectory: String) async throws {
-    let simulator = try requireSimulator()
     let destinationDirectory = (try requireDataDirectory(of: simulator) as NSString).appendingPathComponent("Library/AddressBook")
     if !FileManager.default.fileExists(atPath: destinationDirectory) {
       throw FBSimulatorSettingsError.addressBookDirectoryMissing(path: destinationDirectory)
@@ -546,7 +526,6 @@ public struct FBSimulatorSettingsCommands {
 
   @discardableResult
   fileprivate func runSimulatorFrameworkBridge(withService service: String, action: String, arguments: [String] = []) async throws -> String {
-    let simulator = try requireSimulator()
     guard let helperPath = BundledResources.path(forItem: "SimulatorFrameworkBridge") else {
       throw FBSimulatorSettingsError.frameworkBridgeBinaryMissing
     }
@@ -563,13 +542,11 @@ public struct FBSimulatorSettingsCommands {
   }
 
   fileprivate func authorizeLocationSettings(_ bundleIDs: [String]) async throws {
-    let simulator = try requireSimulator()
     try await FBLocationServicesModificationStrategy(simulator: simulator)
       .approveLocationServices(forBundleIDs: bundleIDs)
   }
 
   fileprivate func revokeLocationSettings(_ bundleIDs: [String]) async throws {
-    let simulator = try requireSimulator()
     try await FBLocationServicesModificationStrategy(simulator: simulator)
       .revokeLocationServices(forBundleIDs: bundleIDs)
   }
@@ -596,7 +573,6 @@ public struct FBSimulatorSettingsCommands {
   }
 
   fileprivate func modifyTCCDatabase(withBundleIDs bundleIDs: Set<String>, toServices services: Set<FBTargetSettingsService>, grantAccess: Bool) async throws {
-    let simulator = try requireSimulator()
     guard let dataDirectory = simulator.dataDirectory else {
       throw FBSimulatorSettingsError.noDataDirectory
     }
@@ -623,7 +599,6 @@ public struct FBSimulatorSettingsCommands {
   }
 
   fileprivate func coreSimulatorApprove(withBundleIDs bundleIDs: Set<String>, toServices services: Set<String>) throws {
-    let simulator = try requireSimulator()
     for bundleID in bundleIDs {
       for internalService in services {
         try simulator.device.setPrivacyAccessForService(internalService, bundleID: bundleID, granted: true)
@@ -632,7 +607,6 @@ public struct FBSimulatorSettingsCommands {
   }
 
   fileprivate func coreSimulatorRevoke(withBundleIDs bundleIDs: Set<String>, toServices services: Set<String>) throws {
-    let simulator = try requireSimulator()
     for bundleID in bundleIDs {
       for internalService in services {
         try simulator.device.resetPrivacyAccess(forService: internalService, bundleID: bundleID)
