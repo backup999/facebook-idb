@@ -43,7 +43,7 @@ public final class FBDataDownloadInput: NSObject, @unchecked Sendable {
   // The session holds both the delegate and the resumed task for the lifetime of the download, so neither needs storing here.
   private func startDownload(from url: URL, configuration: URLSessionConfiguration) {
     let delegateQueue = OperationQueue()
-    delegateQueue.name = "CompanionLib.FBDataDownloadInput.urlSessionDelegate"
+    delegateQueue.name = "FBControlCore.FBDataDownloadInput.urlSessionDelegate"
     let session = URLSession(configuration: configuration, delegate: self, delegateQueue: delegateQueue)
     session.dataTask(with: url).resume()
   }
