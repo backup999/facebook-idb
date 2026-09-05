@@ -112,8 +112,6 @@ final class FBSimulatorReplSocketTests: XCTestCase {
     XCTAssertTrue(alive)
   }
 
-  // MARK: - Helpers
-
   /// A short, unique `/tmp` socket path (kept in `/tmp` like the production path
   /// so it fits `sockaddr_un.sun_path`).
   private static func temporarySocketPath() -> String {

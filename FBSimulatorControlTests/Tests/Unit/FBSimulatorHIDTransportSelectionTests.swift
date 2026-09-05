@@ -12,7 +12,7 @@ import Testing
 @Suite("HID transport selection")
 struct FBSimulatorHIDTransportSelectionTests {
 
-  // MARK: CoreSimulator version gate
+  // MARK: - CoreSimulator version gate
 
   @Test(
     "dtuhidd ships from CoreSimulator-1155.4",
@@ -34,8 +34,6 @@ struct FBSimulatorHIDTransportSelectionTests {
     #expect(!FBSimulatorHIDTransportSelection.shipsDTUHID(coreSimulatorVersion: "999.9"))
   }
 
-  // MARK: Product family
-
   @Test(
     "Every family but Apple TV can be driven over DTUHID",
     arguments: [
@@ -48,7 +46,7 @@ struct FBSimulatorHIDTransportSelectionTests {
     #expect(FBSimulatorHIDTransportSelection.supportsDTUHID(productFamily: family) == expected)
   }
 
-  // MARK: DTUHID reachability
+  // MARK: - DTUHID reachability
 
   @Test("Only a failure to reach dtuhidd is worth falling back to Indigo for")
   func isDTUHIDUnreachable() {
@@ -65,7 +63,7 @@ struct FBSimulatorHIDTransportSelectionTests {
     #expect(!FBSimulatorHIDError.touchUnsupportedOnAppleTV.isDTUHIDUnreachable)
   }
 
-  // MARK: Legacy keyboard suppression
+  // MARK: - Legacy keyboard suppression
 
   @Test("A toolchain without dtuhidd never suppresses the legacy keyboard")
   func legacyKeyboardIsNotSuppressedBeforeXcode27() {
@@ -77,7 +75,7 @@ struct FBSimulatorHIDTransportSelectionTests {
     #expect(FBSimulatorHIDTransportSelection.isLegacyKeyboardSuppressed(coreSimulatorVersion: "1169.1"))
   }
 
-  // MARK: Default transport
+  // MARK: - Default transport
 
   @Test("A toolchain without dtuhidd gets the legacy Indigo transport")
   func defaultTransportBeforeXcode27() {

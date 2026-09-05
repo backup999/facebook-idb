@@ -124,8 +124,6 @@ class OverlayRendererTests: XCTestCase {
     XCTAssertEqual(size, 8.0)
   }
 
-  // MARK: - Label Rendering Tests
-
   func testSnapshotLabelInHeader() {
     // tolerance: 255 allows text rendering differences across macOS versions
     // (glyph shapes vary). The snapshot still catches layout changes like the

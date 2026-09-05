@@ -10,7 +10,7 @@ import XCTest
 
 final class FBSimulatorControlTransientTests: XCTestCase {
 
-  // MARK: FBSimulatorBootConfiguration
+  // MARK: - FBSimulatorBootConfiguration
 
   func testDefaultConfigurationHasVerifyUsable() {
     let config = FBSimulatorBootConfiguration.default
@@ -58,7 +58,7 @@ final class FBSimulatorControlTransientTests: XCTestCase {
     XCTAssertFalse(desc.contains("Direct Launch"), "Description should not contain 'Direct Launch' for verifyUsable only")
   }
 
-  // MARK: FBSimulatorHIDEvent - Swipe
+  // MARK: - FBSimulatorHIDEvent - Swipe
 
   func testSwipeDiagonalProducesCorrectStepCount() {
     // Diagonal: distance = sqrt(30^2 + 40^2) = 50, delta=10 -> 5 steps

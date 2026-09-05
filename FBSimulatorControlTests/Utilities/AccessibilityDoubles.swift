@@ -258,8 +258,6 @@ class FBSimulatorControlTests_AXPTranslator_Double: NSObject {
   }
 }
 
-// MARK: - Accessibility Response Handler
-
 typealias FBAccessibilityResponseHandler = (Any, @escaping (Any?) -> Void) -> Void
 
 // MARK: - SimDevice Accessibility Double

@@ -12,7 +12,7 @@ import XPC
 
 final class FBSimulatorDTUHIDTransportTests: XCTestCase {
 
-  // MARK: Wire encoding (model + XPCEncoder, no connection needed)
+  // MARK: - Wire encoding (model + XPCEncoder, no connection needed)
 
   func testDigitizerEventEnvelopeShape() throws {
     let event = try encodeDigitizer(
@@ -78,7 +78,7 @@ final class FBSimulatorDTUHIDTransportTests: XCTestCase {
     XCTAssertEqual(FBSimulatorHIDEdge.right.rawValue, 4)
   }
 
-  // MARK: Contact-state machine
+  // MARK: - Contact-state machine
 
   func testContactTrackerMapsDownUpToStartPositionEnd() {
     var tracker = DigitizerContactTracker()
@@ -97,7 +97,7 @@ final class FBSimulatorDTUHIDTransportTests: XCTestCase {
     XCTAssertEqual(DigitizerEventType.end.rawValue, 2)
   }
 
-  // MARK: Unimplemented primitives throw
+  // MARK: - Unimplemented primitives throw
 
   func testUnimplementedPrimitivesThrow() async {
     let connection = xpc_connection_create("com.facebook.fbsimulatorcontrol.test.dtuhid", nil)
@@ -111,7 +111,7 @@ final class FBSimulatorDTUHIDTransportTests: XCTestCase {
     await assertThrowsNotImplemented { try await transport.sendButton(direction: .down, button: .applePay) }
   }
 
-  // MARK: Two-finger encoding
+  // MARK: - Two-finger encoding
 
   func testDigitizerEventWithTwoFingers() throws {
     let event = try encodeDigitizer(
@@ -128,7 +128,7 @@ final class FBSimulatorDTUHIDTransportTests: XCTestCase {
     XCTAssertEqual(xpc_dictionary_get_double(pointTwo!, "y"), 0.5, accuracy: 1e-9)
   }
 
-  // MARK: Button encoding
+  // MARK: - Button encoding
 
   func testButtonUsageMapping() {
     XCTAssertEqual(FBSimulatorHIDButton.homeButton.identity.consumerUsage?.page, 0x0C)
@@ -156,7 +156,7 @@ final class FBSimulatorDTUHIDTransportTests: XCTestCase {
     XCTAssertEqual(xpc_dictionary_get_uint64(payload, "state"), 1) // down
   }
 
-  // MARK: Send pipeline (envelope shape, no connection needed)
+  // MARK: - Send pipeline (envelope shape, no connection needed)
 
   /// The transport's `encode` wraps any `Encodable` payload in the shared `DTUHIDMessage` envelope —
   /// `messageType` discriminator, `isBarrier` bool, the digitizer `featureIdentifier`, and the typed
@@ -184,7 +184,7 @@ final class FBSimulatorDTUHIDTransportTests: XCTestCase {
     XCTAssertEqual(xpc_dictionary_get_uint64(payload!, "value"), 7)
   }
 
-  // MARK: Keyboard encoding
+  // MARK: - Keyboard encoding
 
   func testKeyboardButtonEventEnvelope() throws {
     let down = try encodeKeyboard(IndigoKeyboardButtonEvent(usageCode: 4, state: .down)) // 'a'
@@ -209,7 +209,7 @@ final class FBSimulatorDTUHIDTransportTests: XCTestCase {
     XCTAssertEqual(HIDButtonState.up.rawValue, 2)
   }
 
-  // MARK: Helpers
+  // MARK: - Helpers
 
   private func encodeDigitizer(_ event: IndigoDigitizerEvent) throws -> xpc_object_t {
     try XPCEncoder().encode(

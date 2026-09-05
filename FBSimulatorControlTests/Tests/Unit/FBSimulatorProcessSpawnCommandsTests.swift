@@ -15,8 +15,6 @@ import XCTest
 /// is that the device is never reached.
 final class FBSimulatorProcessSpawnCommandsTests: XCTestCase {
 
-  // MARK: - Helpers
-
   private func simulator(state: FBiOSTargetState) -> FBSimulator {
     FBSimulatorTestSupport.testableSimulator(withDevice: StubStateDevice(state: state))
   }

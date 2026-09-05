@@ -13,8 +13,6 @@ import XCTest
 
 final class FBFramebufferTests: XCTestCase {
 
-  // MARK: - Helpers
-
   private func makeFramebuffer(surface: FakeFramebufferSurface) -> FBFramebuffer {
     FBFramebuffer(surface: surface, logger: FBCapturingLogger())
   }

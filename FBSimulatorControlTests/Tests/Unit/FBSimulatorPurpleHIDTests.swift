@@ -10,8 +10,6 @@ import XCTest
 
 final class FBSimulatorPurpleHIDTests: XCTestCase {
 
-  // MARK: - Helpers
-
   private func uint32(at offset: Int, in data: Data) -> UInt32 {
     data.withUnsafeBytes { buf -> UInt32 in
       buf.load(fromByteOffset: offset, as: UInt32.self)

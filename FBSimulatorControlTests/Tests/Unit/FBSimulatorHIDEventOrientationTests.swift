@@ -17,13 +17,9 @@ final class FBSimulatorHIDEventOrientationTests: XCTestCase {
     XCTAssertTrue(description.contains("landscape_left"), "Description should contain orientation name, got: \(description)")
   }
 
-  // MARK: - Shake
-
   func testShakeDescription() {
     XCTAssertTrue(FBSimulatorHIDEvent.shake.description.contains("Shake"))
   }
-
-  // MARK: - Lock Device
 
   func testLockDeviceDescription() {
     XCTAssertTrue(FBSimulatorHIDEvent.lockDevice.description.contains("Lock"))
