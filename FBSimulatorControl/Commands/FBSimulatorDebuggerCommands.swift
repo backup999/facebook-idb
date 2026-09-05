@@ -58,11 +58,7 @@ private final class FBSimulatorDebugServer: FBDebugServer {
   }
 }
 
-// MARK: - FBSimulatorDebuggerCommands
-
 public final class FBSimulatorDebuggerCommands {
-
-  // MARK: - Properties
 
   internal weak var simulator: FBSimulator?
   internal let debugServerPath: String
@@ -70,14 +66,10 @@ public final class FBSimulatorDebuggerCommands {
   /// How the host application is launched; defaults to the simulator itself.
   private let applicationLauncher: (any ApplicationLaunching)?
 
-  // MARK: - Class Methods
-
   internal class func resolveDebugServerPath() -> String {
     (FBXcodeConfiguration.contentsDirectory as NSString)
       .appendingPathComponent("SharedFrameworks/LLDB.framework/Resources/debugserver")
   }
-
-  // MARK: - Initializers
 
   public class func commands(with simulator: FBSimulator) -> FBSimulatorDebuggerCommands {
     FBSimulatorDebuggerCommands(
@@ -95,8 +87,6 @@ public final class FBSimulatorDebuggerCommands {
     self.debugServerPath = debugServerPath
     self.applicationLauncher = applicationLauncher
   }
-
-  // MARK: - Private
 
   func launchDebugServer(forHostApplication application: FBBundleDescriptor, port: in_port_t) async throws -> any FBDebugServer {
     guard let simulator = self.simulator else {

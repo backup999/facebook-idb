@@ -11,14 +11,10 @@ import Foundation
 
 public final class FBAppleSimctlCommandExecutor {
 
-  // MARK: - Properties
-
   private let deviceSetPath: String
   private let deviceUUID: String?
   private let queue: DispatchQueue
   private let logger: any FBControlCoreLogger
-
-  // MARK: - Initializers
 
   public class func executor(for simulator: FBSimulator) -> FBAppleSimctlCommandExecutor {
     // simctl addresses a simulator by its device set, so this is only reachable for a
@@ -38,8 +34,6 @@ public final class FBAppleSimctlCommandExecutor {
     self.logger = logger
     self.queue = DispatchQueue(label: "com.facebook.fbsimulatorcontrol.simctl_executor")
   }
-
-  // MARK: - Public Methods
 
   public func taskBuilder(withCommand command: String, arguments: [String]) -> FBProcessBuilder<NSNull, FBControlCoreLogger, FBControlCoreLogger> {
     var derived: [String] = [

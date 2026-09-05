@@ -22,8 +22,6 @@ public enum FBSimulatorDeletionError: Error, LocalizedError {
 
 final class FBSimulatorDeletionStrategy {
 
-  // MARK: - Public Methods
-
   static func delete(_ simulator: FBSimulator) async throws {
     // Capture the Log Directory ahead of time as the Simulator will disappear on deletion.
     let coreSimulatorLogsDirectory = simulator.coreSimulatorLogsDirectory
@@ -61,8 +59,6 @@ final class FBSimulatorDeletionStrategy {
       try await delete(simulator)
     }
   }
-
-  // MARK: - Private
 
   private static func confirmSimulatorUDID(_ udid: String, isRemovedFromSet set: FBSimulatorSet) async throws {
     // Deleting the device from the set can still leave it around for a few seconds.

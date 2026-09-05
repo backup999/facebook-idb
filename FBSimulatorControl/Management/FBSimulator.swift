@@ -194,13 +194,9 @@ public final class FBSimulator: FBiOSTarget, Hashable, CustomStringConvertible, 
     lhs.device.isEqual(rhs.device)
   }
 
-  // MARK: - CustomStringConvertible
-
   public var description: String {
     FBiOSTargetDescribe(self)
   }
-
-  // MARK: - Private
 
   private class func auxillaryDirectory(fromSimDevice device: SimDevice) -> String {
     ((device.dataPath() ?? "") as NSString).appendingPathComponent("fbsimulatorcontrol")

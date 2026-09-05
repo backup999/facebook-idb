@@ -32,6 +32,4 @@ extension FBSimulator: InstrumentsCommands {
   }
 }
 
-// MARK: - FBSimulator+AsynciOSTarget
-
 extension FBSimulator: AsynciOSTarget {}

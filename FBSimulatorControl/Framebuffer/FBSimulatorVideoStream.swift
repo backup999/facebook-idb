@@ -145,8 +145,6 @@ private func bitmapStreamPixelBufferAttributes(from pixelBuffer: CVPixelBuffer) 
   ]
 }
 
-// MARK: - FBSimulatorVideoStream
-
 /// A real-time video stream of a Simulator's framebuffer, written to an `FBDataConsumer`.
 ///
 /// Concurrency model: the actor serializes start/stop, framebuffer event handling, and every frame
@@ -431,8 +429,6 @@ public actor FBSimulatorVideoStream: FBVideoStream {
       awaiter.resume(throwing: error)
     }
   }
-
-  // MARK: - Private
 
   /// Finishes the `.lazy` trigger stream and cancels the push-loop task (cancellation also wakes an
   /// `.eager` loop suspended in `Task.sleep`).
@@ -740,8 +736,6 @@ public actor FBSimulatorVideoStream: FBVideoStream {
     }
   }
 
-  // MARK: - Timed Metadata
-
   /// Write a timed metadata marker (chapter) at the current stream position. Routed to the
   /// `FBTimedMetadataConsumer` resolved in `mountSurface` — the streaming transport writer
   /// (MPEG-TS ID3 / fMP4 emsg) or, when recording, the file writer's chapter track. A no-op before the
@@ -783,8 +777,6 @@ public actor FBSimulatorVideoStream: FBVideoStream {
       break
     }
   }
-
-  // MARK: - Keyframe Requests
 
   /// Request that the next encoded frame be a keyframe (IDR).
   /// Schedules an extra push on the actor with the VideoToolbox

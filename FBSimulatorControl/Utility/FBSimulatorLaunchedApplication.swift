@@ -10,8 +10,6 @@ import Foundation
 
 public final class FBSimulatorLaunchedApplication: FBLaunchedApplication, CustomStringConvertible {
 
-  // MARK: - Properties
-
   public let configuration: FBApplicationLaunchConfiguration
   public let processIdentifier: pid_t
   private let applicationTerminated: FBFuture<NSNull>
@@ -70,8 +68,6 @@ public final class FBSimulatorLaunchedApplication: FBLaunchedApplication, Custom
     ).retyped(FBFuture<FBSimulatorLaunchedApplication>.self)
   }
 
-  // MARK: - Helpers
-
   public class func terminationFuture(
     forSimulator simulator: FBSimulator,
     processIdentifier: pid_t
@@ -89,8 +85,6 @@ public final class FBSimulatorLaunchedApplication: FBLaunchedApplication, Custom
             .killProcessIdentifier(processIdentifier)
         })
   }
-
-  // MARK: - Private Init
 
   private init(
     simulator: FBSimulator,
@@ -111,8 +105,6 @@ public final class FBSimulatorLaunchedApplication: FBLaunchedApplication, Custom
         }
       ).retyped(FBFuture<NSNull>.self)
   }
-
-  // MARK: - Private
 
   private class func processTerminationFutureNotifier(
     forProcessIdentifier processIdentifier: pid_t
@@ -139,8 +131,6 @@ public final class FBSimulatorLaunchedApplication: FBLaunchedApplication, Custom
 
     return unsafeBitCast(future, to: FBFuture<NSNumber>.self)
   }
-
-  // MARK: - CustomStringConvertible
 
   public var description: String {
     "Application Operation \(configuration.description) | pid \(processIdentifier) | State \(applicationTerminated)"

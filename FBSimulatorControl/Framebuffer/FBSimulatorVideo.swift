@@ -8,8 +8,6 @@
 import FBControlCore
 import Foundation
 
-// MARK: - FBSimulatorVideo
-
 /// Records simulator video in-process. Drives the framebuffer through the shared
 /// `FBSimulatorVideoStream` encode pipeline at an eager (constant-frame-rate) cadence and muxes the
 /// encoded frames into an `.mp4` via `FBSimulatorVideoFileWriter` (`AVAssetWriter`). The byte-stream consumer is
@@ -19,8 +17,6 @@ import Foundation
 /// concurrent `stop()` calls cannot both finalize.
 public actor FBSimulatorVideo {
 
-  // MARK: - Properties
-
   /// The URL of the `.mp4` this recording writes.
   let outputURL: URL
   /// The underlying encode pipeline, exposed so callers can drive overlay/chapter/screenshot on the live
@@ -28,8 +24,6 @@ public actor FBSimulatorVideo {
   public nonisolated let stream: FBSimulatorVideoStream
   private let fileWriter: FBSimulatorVideoFileWriter
   private var hasStopped = false
-
-  // MARK: - Initializers
 
   public static func video(withFramebuffer framebuffer: FBFramebuffer, configuration: FBVideoStreamConfiguration, filePath: String, edgeInsets: FBVideoStreamEdgeInsets = FBVideoStreamEdgeInsets(top: 0, bottom: 0, left: 0, right: 0), chaptersEnabled: Bool = false, logger: any FBControlCoreLogger) -> FBSimulatorVideo {
     FBSimulatorVideo(framebuffer: framebuffer, configuration: configuration, filePath: filePath, edgeInsets: edgeInsets, chaptersEnabled: chaptersEnabled, logger: logger)

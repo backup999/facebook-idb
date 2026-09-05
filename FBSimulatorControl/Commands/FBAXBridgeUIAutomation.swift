@@ -290,8 +290,6 @@ final class FBAXBridgeUIAutomation: FBAXBridgeTreeReader, @unchecked Sendable {
     }
   }
 
-  // MARK: - Geometry
-
   func frame(_ query: FBAccessibilityElementQuery) async throws -> CGRect {
     try await frameFromTree(query)
   }

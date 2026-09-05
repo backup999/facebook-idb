@@ -35,17 +35,11 @@ extension FBSimulatorMediaError: LocalizedError {
 
 public struct FBSimulatorMediaCommands {
 
-  // MARK: - Properties
-
   private let simulator: FBSimulator
-
-  // MARK: - Initializers
 
   public static func commands(with simulator: FBSimulator) -> FBSimulatorMediaCommands {
     FBSimulatorMediaCommands(simulator: simulator)
   }
-
-  // MARK: - Private
 
   private static var predicateForVideoPaths: NSPredicate {
     predicateForPaths(matchingTypes: [.movie, .mpeg4Movie, .quickTimeMovie])

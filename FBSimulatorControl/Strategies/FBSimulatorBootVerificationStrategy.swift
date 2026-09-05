@@ -27,8 +27,6 @@ extension FBSimulatorBootVerificationError: LocalizedError {
 
 public final class FBSimulatorBootVerificationStrategy {
 
-  // MARK: - Properties
-
   private let simulator: FBSimulator
   private var lastBootInfo: SimDeviceBootInfo?
   private var lastInfoUpdateDate: Date?
@@ -38,13 +36,9 @@ public final class FBSimulatorBootVerificationStrategy {
   private static let bootVerificationWaitInterval: TimeInterval = 0.5
   private static let bootVerificationStallInterval: TimeInterval = 1.5
 
-  // MARK: - Initializers
-
   private init(simulator: FBSimulator) {
     self.simulator = simulator
   }
-
-  // MARK: - Public Methods
 
   public class func verifySimulatorIsBooted(_ simulator: FBSimulator) -> FBFuture<NSNull> {
     fbFutureFromAsync {
@@ -70,8 +64,6 @@ public final class FBSimulatorBootVerificationStrategy {
       }
     }
   }
-
-  // MARK: - Private
 
   private func performBootVerificationCheck() throws {
     let bootInfo: SimDeviceBootInfo? = simulator.device.bootStatus()

@@ -30,17 +30,11 @@ extension FBSimulatorNotificationError: LocalizedError {
 
 public struct FBSimulatorNotificationCommands {
 
-  // MARK: - Properties
-
   private let simulator: FBSimulator
-
-  // MARK: - Initializers
 
   public static func commands(with simulator: FBSimulator) -> FBSimulatorNotificationCommands {
     FBSimulatorNotificationCommands(simulator: simulator)
   }
-
-  // MARK: - Private
 
   fileprivate func sendPushNotification(forBundleID bundleID: String, jsonPayload: String) async throws {
 

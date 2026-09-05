@@ -24,11 +24,7 @@ extension FBSimulatorProcessSpawnError: LocalizedError {
 
 public struct FBSimulatorProcessSpawnCommands {
 
-  // MARK: - Properties
-
   private let simulator: FBSimulator
-
-  // MARK: - Initializers
 
   public static func commands(with simulator: FBSimulator) -> FBSimulatorProcessSpawnCommands {
     return FBSimulatorProcessSpawnCommands(simulator: simulator)
@@ -45,8 +41,6 @@ public struct FBSimulatorProcessSpawnCommands {
     }
     return options
   }
-
-  // MARK: - Private
 
   fileprivate func launchProcess(_ configuration: FBProcessSpawnConfiguration) async throws -> FBSubprocess<AnyObject, AnyObject, AnyObject> {
     // Rejected before attaching, so that no file descriptor is opened for an input

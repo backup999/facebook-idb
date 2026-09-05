@@ -45,7 +45,7 @@ final class FBSimulatorPurpleHIDTransport: @unchecked Sendable {
     self.simulator = simulator
   }
 
-  // MARK: Sends
+  // MARK: - Sends
 
   /// Rotates the device.
   func sendOrientation(_ orientation: FBSimulatorHIDDeviceOrientation) async throws {
@@ -57,7 +57,7 @@ final class FBSimulatorPurpleHIDTransport: @unchecked Sendable {
     try await send(purple.lockDeviceEvent())
   }
 
-  // MARK: Mach transit
+  // MARK: - Mach transit
 
   /**
    Sends a raw mach message to the simulator's PurpleWorkspacePort, bounded by a send-side timeout.

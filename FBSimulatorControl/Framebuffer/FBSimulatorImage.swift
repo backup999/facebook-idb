@@ -12,15 +12,11 @@ import Foundation
 
 public actor FBSimulatorImage {
 
-  // MARK: - Properties
-
   private let logger: (any FBControlCoreLogger)?
   private let imageGenerator: FBSurfaceImageGenerator
   private let framebuffer: FBFramebuffer
   private var attachment: FBFramebufferAttachment?
   private var eventTask: Task<Void, Never>?
-
-  // MARK: - Initializers
 
   public static func image(with framebuffer: FBFramebuffer, logger: (any FBControlCoreLogger)?) -> FBSimulatorImage {
     FBSimulatorImage(framebuffer: framebuffer, logger: logger)
@@ -38,8 +34,6 @@ public actor FBSimulatorImage {
     eventTask?.cancel()
   }
 
-  // MARK: - Public Methods
-
   public func image() throws -> CGImage? {
     try attachIfNeeded()
     return try imageGenerator.image()
@@ -51,8 +45,6 @@ public actor FBSimulatorImage {
     try attachIfNeeded()
     return try imageGenerator.image(configuration: configuration, screenScale: screenScale)
   }
-
-  // MARK: - Private
 
   /// One-time lazy attach; actor isolation makes this attach-exactly-once regardless of caller
   /// threading. The generator's surface is seeded synchronously from `initialSurface`, then kept

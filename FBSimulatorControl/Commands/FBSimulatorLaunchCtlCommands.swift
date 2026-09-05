@@ -48,8 +48,6 @@ extension FBSimulatorLaunchCtlError: LocalizedError {
 
 public final class FBSimulatorLaunchCtlCommands {
 
-  // MARK: - Properties
-
   private let simulator: FBSimulator
 
   // MARK: - Initializers
@@ -137,8 +135,6 @@ public final class FBSimulatorLaunchCtlCommands {
       throw FBSimulatorLaunchCtlError.startFailed(serviceName: serviceName, underlying: error)
     }
   }
-
-  // MARK: - Helpers
 
   public class func extractApplicationBundleIdentifier(fromServiceName serviceName: String) -> String? {
     guard let marker = serviceName.range(of: "UIKitApplication:") else {

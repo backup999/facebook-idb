@@ -74,7 +74,7 @@ actor FBSimulatorDTUHIDTransport {
   private var contact = DigitizerContactTracker()
   private var twoFingerContact = DigitizerContactTracker()
 
-  // MARK: Initializers
+  // MARK: - Initializers
 
   /// Builds a DTUHID transport for the provided Simulator, establishing the host XPC connection to
   /// `dtuhidd`. All setup is synchronous, so the returned transport is ready to send.
@@ -127,7 +127,7 @@ actor FBSimulatorDTUHIDTransport {
     return unsafeBitCast(sym, to: type)
   }
 
-  // MARK: Sends
+  // MARK: - Sends
 
   nonisolated func disconnect() {
     xpc_connection_cancel(connection)
@@ -173,7 +173,7 @@ actor FBSimulatorDTUHIDTransport {
       payload: IndigoKeyboardButtonEvent(usageCode: UInt64(keyCode), state: state))
   }
 
-  // MARK: Sending
+  // MARK: - Sending
 
   /// Wraps `payload` in a `DTUHIDMessage` and serializes it to the `xpc_object_t` `dtuhidd` decodes.
   nonisolated func encode(messageType: String, payload: some Encodable) throws -> xpc_object_t {

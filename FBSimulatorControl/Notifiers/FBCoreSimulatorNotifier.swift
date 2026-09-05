@@ -11,12 +11,8 @@ import Foundation
 
 public final class FBCoreSimulatorNotifier {
 
-  // MARK: - Properties
-
   private let handle: UInt64
   private let notifier: SimDeviceNotifier? // nil in test doubles
-
-  // MARK: - Public
 
   public class func notifier(for simDevice: SimDevice, queue: DispatchQueue, block: @escaping @Sendable ([String: Any]) -> Void) -> FBCoreSimulatorNotifier {
     let notifier = simDevice.notificationManager as AnyObject?
@@ -53,15 +49,11 @@ public final class FBCoreSimulatorNotifier {
     notifier?.unregisterNotificationHandler(handle, error: nil)
   }
 
-  // MARK: - Internal
-
   class func notifier(for set: FBSimulatorSet, queue: DispatchQueue, block: @escaping @Sendable ([String: Any]) -> Void) -> FBCoreSimulatorNotifier {
     // notificationManager may be nil in test doubles (ObjC nil messaging returns nil).
     let notifier = (set.deviceSet as AnyObject).notificationManager as AnyObject?
     return FBCoreSimulatorNotifier(notifier: notifier, queue: queue, block: block)
   }
-
-  // MARK: - Private
 
   private init(notifier: AnyObject?, queue: DispatchQueue, block: @escaping @Sendable ([String: Any]) -> Void) {
     // nil for test doubles; mirror ObjC nil-messaging with a 0 handle.

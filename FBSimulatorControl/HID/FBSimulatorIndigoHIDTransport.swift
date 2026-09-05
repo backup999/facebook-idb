@@ -38,8 +38,6 @@ actor FBSimulatorIndigoHIDTransport {
   /// tvOS (it has no digitizer), so the touch primitives reject `AppleTV` rather than failing silently.
   private let productFamily: FBControlCoreProductFamily
 
-  // MARK: Initializers
-
   /// Creates a transport for the provided Simulator, registering a HID client.
   /// Will fail if a HID Port could not be registered for the provided Simulator.
   /// Registration may need to occur prior to booting.
@@ -69,7 +67,7 @@ actor FBSimulatorIndigoHIDTransport {
     self.productFamily = productFamily
   }
 
-  // MARK: Sends
+  // MARK: - Sends
 
   nonisolated func disconnect() {
     indigoClient.disconnect()

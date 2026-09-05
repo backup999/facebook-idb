@@ -52,12 +52,8 @@ public enum FBFramebufferEvent: Sendable {
 
 public final class FBFramebuffer: @unchecked Sendable {
 
-  // MARK: - Properties
-
   private let surface: any FBFramebufferSurface
   private let statsRecorder: FBFramebufferStatsRecorder
-
-  // MARK: - Initializers
 
   public class func mainScreenSurface(for simulator: FBSimulator, logger: any FBControlCoreLogger) throws -> FBFramebuffer {
     let surface = try FBFramebufferSurfaceLocator.mainDisplaySurface(for: simulator, logger: logger)
@@ -68,8 +64,6 @@ public final class FBFramebuffer: @unchecked Sendable {
     self.surface = surface
     self.statsRecorder = FBFramebufferStatsRecorder(logger: logger)
   }
-
-  // MARK: - Public Methods
 
   /// Attach to the framebuffer, receiving events as an ordered `AsyncStream` on the returned
   /// attachment. The stream carries every event from the moment of attachment (events yielded before
@@ -96,8 +90,6 @@ public final class FBFramebuffer: @unchecked Sendable {
   var statsStartTime: CFTimeInterval {
     statsRecorder.startTime
   }
-
-  // MARK: - Private
 
   /// Register with the display surface, producing an attachment whose event stream is fed directly
   /// from the surface callbacks. Events are yielded synchronously inside the callback (no thread

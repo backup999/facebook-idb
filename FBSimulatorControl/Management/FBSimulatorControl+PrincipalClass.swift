@@ -11,13 +11,9 @@ import Foundation
 
 public final class FBSimulatorControl {
 
-  // MARK: - Properties
-
   public var configuration: FBSimulatorControlConfiguration
   public let serviceContext: FBSimulatorServiceContext
   public let set: FBSimulatorSet
-
-  // MARK: - Initializers
 
   public class func withConfiguration(_ configuration: FBSimulatorControlConfiguration) throws -> FBSimulatorControl {
     try FBSimulatorControlFrameworkLoader.essentialFrameworks.loadPrivateFrameworks(configuration.logger)

@@ -69,8 +69,6 @@ extension FBSimulatorApplicationError: LocalizedError {
 
 public final class FBSimulatorApplicationCommands {
 
-  // MARK: - Properties
-
   internal weak var simulator: FBSimulator?
 
   // MARK: - Initializers

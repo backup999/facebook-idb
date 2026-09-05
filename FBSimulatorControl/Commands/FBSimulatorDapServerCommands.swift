@@ -29,11 +29,7 @@ extension FBSimulatorDapServerError: LocalizedError {
 
 public final class FBSimulatorDapServerCommand {
 
-  // MARK: - Properties
-
   private let simulator: FBSimulator
-
-  // MARK: - Initializers
 
   public class func commands(with simulator: FBSimulator) -> FBSimulatorDapServerCommand {
     FBSimulatorDapServerCommand(simulator: simulator)
@@ -42,8 +38,6 @@ public final class FBSimulatorDapServerCommand {
   private init(simulator: FBSimulator) {
     self.simulator = simulator
   }
-
-  // MARK: - Private
 
   fileprivate func launchDapServer(_ dapPath: String, stdIn: FBProcessInput<AnyObject>, stdOut: any FBDataConsumer) async throws -> FBSubprocess<AnyObject, any FBDataConsumer, NSString> {
     let dapLogDir = (simulator.coreSimulatorLogsDirectory as NSString).appendingPathComponent("dap")

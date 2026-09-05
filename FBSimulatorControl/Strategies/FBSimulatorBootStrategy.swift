@@ -11,8 +11,6 @@ import Foundation
 
 final class FBSimulatorBootStrategy {
 
-  // MARK: - Public Methods
-
   static func boot(_ simulator: FBSimulator, with configuration: FBSimulatorBootConfiguration) async throws {
     if simulator.state == .booted {
       return
@@ -24,8 +22,6 @@ final class FBSimulatorBootStrategy {
     try await performSimulatorBoot(simulator, with: configuration)
     try await verifySimulatorIsBooted(simulator, with: configuration)
   }
-
-  // MARK: - Private
 
   private static func verifySimulatorIsBooted(_ simulator: FBSimulator, with configuration: FBSimulatorBootConfiguration) async throws {
     if !configuration.options.contains(.verifyUsable) {

@@ -122,8 +122,6 @@ extension FBSimulatorSettingsError: LocalizedError {
 
 public struct FBSimulatorSettingsCommands {
 
-  // MARK: - Properties
-
   private let simulator: FBSimulator
 
   // MARK: - Initializers

@@ -11,11 +11,7 @@ import Foundation
 
 final class FBSimulatorInflationStrategy {
 
-  // MARK: - Properties
-
   private weak var set: FBSimulatorSet?
-
-  // MARK: - Initializers
 
   class func strategy(for set: FBSimulatorSet) -> FBSimulatorInflationStrategy {
     FBSimulatorInflationStrategy(set: set)
@@ -24,8 +20,6 @@ final class FBSimulatorInflationStrategy {
   private init(set: FBSimulatorSet) {
     self.set = set
   }
-
-  // MARK: - Public Methods
 
   func inflate(fromDevices simDevices: [Any], exitingSimulators simulators: [FBSimulator]) -> [FBSimulator] {
     let existingSimulatorUDIDs = Set(simulators.map { $0.udid })
@@ -56,8 +50,6 @@ final class FBSimulatorInflationStrategy {
     let inflated = inflateSimulators(Array(simulatorsToInflate), availableDevices: availableDevices)
     return result + inflated
   }
-
-  // MARK: - Private
 
   private func inflateSimulators(_ udids: [String], availableDevices: [String: SimDevice]) -> [FBSimulator] {
     guard let set = self.set else { return [] }

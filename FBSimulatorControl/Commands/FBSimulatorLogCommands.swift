@@ -22,17 +22,11 @@ public enum FBSimulatorLogError: Error, LocalizedError {
 
 public struct FBSimulatorLogCommands {
 
-  // MARK: - Properties
-
   private let simulator: FBSimulator
-
-  // MARK: - Initializers
 
   public static func commands(with simulator: FBSimulator) -> FBSimulatorLogCommands {
     FBSimulatorLogCommands(simulator: simulator)
   }
-
-  // MARK: - Private
 
   fileprivate func tailLog(arguments: [String], consumer: any FBDataConsumer) async throws -> any LogOperation {
     let launchPath = try logExecutablePath()

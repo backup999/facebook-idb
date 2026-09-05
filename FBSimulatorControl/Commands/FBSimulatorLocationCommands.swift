@@ -11,17 +11,11 @@ import Foundation
 
 public struct FBSimulatorLocationCommands {
 
-  // MARK: - Properties
-
   private let simulator: FBSimulator
-
-  // MARK: - Initializers
 
   public static func commands(with simulator: FBSimulator) -> FBSimulatorLocationCommands {
     FBSimulatorLocationCommands(simulator: simulator)
   }
-
-  // MARK: - Private
 
   fileprivate func overrideLocation(longitude: Double, latitude: Double) async throws {
     try simulator.device.setLocationWithLatitude(latitude, andLongitude: longitude)

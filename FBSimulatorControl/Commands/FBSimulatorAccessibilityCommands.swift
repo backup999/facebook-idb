@@ -67,7 +67,7 @@ final class FBSimulatorAccessibilityCommands: AccessibilityOperations {
     self.init(simulator: target)
   }
 
-  // MARK: Translation Dispatcher
+  // MARK: - Translation Dispatcher
 
   private var resolvedDispatcher: FBAXTranslationDispatcher? {
     translationDispatcher ?? simulator?.accessibilityTranslationDispatcher
@@ -77,7 +77,7 @@ final class FBSimulatorAccessibilityCommands: AccessibilityOperations {
     launchCtl ?? simulator
   }
 
-  // MARK: AccessibilityOperations
+  // MARK: - AccessibilityOperations
 
   func resolveElement(for query: FBAccessibilityElementQuery) async throws -> FBAccessibilityElement {
     try validateAccessibility()
@@ -99,8 +99,6 @@ final class FBSimulatorAccessibilityCommands: AccessibilityOperations {
       return try await accessibilityElement(request: request, remediationPermitted: false)
     }
   }
-
-  // MARK: Private
 
   // Uses the CoreSimulator accessibility API via
   // -[SimDevice sendAccessibilityRequestAsync:completionQueue:completionHandler:].

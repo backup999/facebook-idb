@@ -11,8 +11,6 @@ import Foundation
 
 public final class FBSimulatorSet: FBiOSTargetSet {
 
-  // MARK: - Properties
-
   public let configuration: FBSimulatorControlConfiguration
   public let deviceSet: SimDeviceSet
   public weak var delegate: (any FBiOSTargetSetDelegate)?
@@ -30,8 +28,6 @@ public final class FBSimulatorSet: FBiOSTargetSet {
 
   // Held only so that the strategy's notifier stays registered for the lifetime of the set; it is never read.
   private var notificationUpdateStrategy: FBSimulatorNotificationUpdateStrategy?
-
-  // MARK: - Initializers
 
   /// - Parameter logger: nil means `FBControlCoreGlobalConfiguration.defaultLogger`, which is
   ///   os_log-only unless the `FBCONTROLCORE_LOGGING`/`FBCONTROLCORE_DEBUG_LOGGING` environment
@@ -128,19 +124,13 @@ public final class FBSimulatorSet: FBiOSTargetSet {
     try await deleteAll(allSimulators)
   }
 
-  // MARK: - Description
-
   public var description: String {
     FBCollectionInformation.oneLineDescription(from: allSimulators)
   }
 
-  // MARK: - FBiOSTargetSet
-
   public var allTargetInfos: [any FBiOSTargetInfo] {
     allSimulators
   }
-
-  // MARK: - Public Properties
 
   public var allSimulators: [FBSimulator] {
     simulatorsLock.lock()
@@ -152,8 +142,6 @@ public final class FBSimulatorSet: FBiOSTargetSet {
     .sorted { ($0 as FBSimulator).compare($1 as any FBiOSTarget) == .orderedAscending }
     return _allSimulators
   }
-
-  // MARK: - Private Methods
 
   private class func keySimulatorsByUDID(_ simulators: [FBSimulator]) -> [String: FBSimulator] {
     var dictionary: [String: FBSimulator] = [:]

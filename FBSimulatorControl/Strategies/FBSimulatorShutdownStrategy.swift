@@ -11,8 +11,6 @@ import Foundation
 
 final class FBSimulatorShutdownStrategy {
 
-  // MARK: - Public Methods
-
   static func shutdown(_ simulator: FBSimulator) async throws {
     let logger = simulator.logger
     logger.debug().log("Starting Safe Shutdown of \(simulator.udid)")
@@ -36,8 +34,6 @@ final class FBSimulatorShutdownStrategy {
       try await shutdown(simulator)
     }
   }
-
-  // MARK: - Private
 
   private static let shutdownWhenShuttingDownErrorCode: Int = 164
 

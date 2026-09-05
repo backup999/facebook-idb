@@ -21,16 +21,12 @@ public struct FBSurfaceImage: Sendable {
 /// confined by the `FBSimulatorImage` actor, which serializes `updateSurface` and `image()`.
 public final class FBSurfaceImageGenerator {
 
-  // MARK: - Properties
-
   private let logger: (any FBControlCoreLogger)?
   /// Created once and reused across renders: CIContext construction is expensive (it builds a GPU
   /// pipeline) and the context carries no per-image state.
   private let context = CIContext(options: nil)
 
   private var surface: IOSurface?
-
-  // MARK: - Initializers
 
   public convenience init(purpose: String, logger: (any FBControlCoreLogger)?) {
     let namedLogger = logger?.withName("\(logger?.name ?? "")_\(purpose)")
@@ -40,8 +36,6 @@ public final class FBSurfaceImageGenerator {
   private init(logger: (any FBControlCoreLogger)?) {
     self.logger = logger
   }
-
-  // MARK: - Public
 
   /// Renders the whole surface at its native resolution.
   public func image() throws -> CGImage? {
@@ -109,8 +103,6 @@ public final class FBSurfaceImageGenerator {
     filter.setValue((outputSize.width / size.width) / yScale, forKey: "inputAspectRatio")
     return filter.outputImage
   }
-
-  // MARK: - Surface
 
   public func updateSurface(_ surface: IOSurface?) {
     if let oldSurface = self.surface {

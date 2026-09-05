@@ -26,12 +26,8 @@ extension FBSimulatorVideoRecordingCommandError: LocalizedError {
 
 public final class FBSimulatorVideoRecordingCommands {
 
-  // MARK: - Properties
-
   private weak var simulator: FBSimulator?
   private var video: FBSimulatorVideo?
-
-  // MARK: - Initializers
 
   public class func commands(with simulator: FBSimulator) -> FBSimulatorVideoRecordingCommands {
     FBSimulatorVideoRecordingCommands(simulator: simulator)
@@ -40,8 +36,6 @@ public final class FBSimulatorVideoRecordingCommands {
   private init(simulator: FBSimulator) {
     self.simulator = simulator
   }
-
-  // MARK: - Private
 
   /// The default configuration for in-process recording when the caller supplies none: H264 at a
   /// constant frame rate (eager cadence), clean frames, default quality. The transport is irrelevant —

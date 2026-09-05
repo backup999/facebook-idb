@@ -10,17 +10,11 @@ import Foundation
 
 public struct FBSimulatorKeychainCommands {
 
-  // MARK: - Properties
-
   private let simulator: FBSimulator
-
-  // MARK: - Initializers
 
   public static func commands(with simulator: FBSimulator) -> FBSimulatorKeychainCommands {
     FBSimulatorKeychainCommands(simulator: simulator)
   }
-
-  // MARK: - Private
 
   fileprivate func clearKeychain() async throws {
     try simulator.device.resetKeychain()

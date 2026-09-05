@@ -27,8 +27,6 @@ extension FBSimulatorReplError: LocalizedError {
 
 public final class FBSimulatorReplCommands {
 
-  // MARK: - Properties
-
   private weak var simulator: FBSimulator?
 
   // MARK: - Initializers

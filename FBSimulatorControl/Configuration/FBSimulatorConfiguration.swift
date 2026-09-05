@@ -10,12 +10,8 @@
 
 public struct FBSimulatorConfiguration: Equatable, Hashable, CustomStringConvertible {
 
-  // MARK: - Properties
-
   public let device: FBDeviceType
   public let os: FBOSVersion
-
-  // MARK: - Initializers
 
   // Internal so same-module extensions can build a configuration without the throwing `defaultConfiguration()`.
   init(device: FBDeviceType, os: FBOSVersion) {
@@ -61,8 +57,6 @@ public struct FBSimulatorConfiguration: Equatable, Hashable, CustomStringConvert
     hasher.combine(os.name.rawValue)
   }
 
-  // MARK: - CustomStringConvertible
-
   public var description: String {
     "Device '\(device.model.rawValue)' | OS Version '\(os.name.rawValue)'"
   }
@@ -80,8 +74,6 @@ public struct FBSimulatorConfiguration: Equatable, Hashable, CustomStringConvert
     let os = FBiOSTargetConfiguration.nameToOSVersion[osName] ?? FBOSVersion.generic(withName: osName.rawValue)
     return withOS(os)
   }
-
-  // MARK: - Private
 
   func withOS(_ os: FBOSVersion) -> FBSimulatorConfiguration {
     FBSimulatorConfiguration(device: device, os: os)

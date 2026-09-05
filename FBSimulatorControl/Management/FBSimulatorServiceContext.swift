@@ -11,8 +11,6 @@ import Foundation
 
 public final class FBSimulatorServiceContext {
 
-  // MARK: - Properties
-
   private let serviceContext: SimServiceContext
 
   // MARK: - Initialization
@@ -68,8 +66,6 @@ public final class FBSimulatorServiceContext {
     self.serviceContext = serviceContext
   }
 
-  // MARK: - Public
-
   func pathsOfAllDeviceSets() -> [String] {
     var deviceSetPaths: [String] = []
     if let deviceSets = serviceContext.allDeviceSets() as? [SimDeviceSet] {
@@ -106,8 +102,6 @@ public final class FBSimulatorServiceContext {
     }
     return deviceSet
   }
-
-  // MARK: - Private
 
   private class func fullyQualifiedDeviceSetPath(_ deviceSetPath: String) throws -> String {
     do {

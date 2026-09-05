@@ -46,8 +46,6 @@ final class FBAccessibilityElement {
     close()
   }
 
-  // MARK: - Lifecycle
-
   /// Close the element, deregistering the token. Called automatically on dealloc
   /// as a safety net. After close, serialization fails.
   func close() {

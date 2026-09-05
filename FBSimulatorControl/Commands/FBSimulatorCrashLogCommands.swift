@@ -21,13 +21,9 @@ public enum FBSimulatorCrashLogError: Error, LocalizedError {
 
 public final class FBSimulatorCrashLogCommands {
 
-  // MARK: - Properties
-
   private weak var simulator: FBSimulator?
   private let notifier: FBCrashLogNotifier
   private var hasPerformedInitialIngestion: Bool = false
-
-  // MARK: - Initializers
 
   public class func commands(with simulator: FBSimulator) -> FBSimulatorCrashLogCommands {
     FBSimulatorCrashLogCommands(
@@ -40,8 +36,6 @@ public final class FBSimulatorCrashLogCommands {
     self.simulator = simulator
     self.notifier = notifier
   }
-
-  // MARK: - Private
 
   fileprivate func notifyOfCrash(matching predicate: NSPredicate) async throws -> FBCrashLogInfo {
     try await notifier.nextCrashLog(forPredicate: predicate)

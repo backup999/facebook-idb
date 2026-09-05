@@ -43,7 +43,7 @@ final class FBSimulatorIndigoHID {
   private let messageForMouseNSEvent: MessageForMouseNSEventFn
   private let messageForTrackpadMoveEvent: MessageForTrackpadMoveEventFn
 
-  // MARK: Initializers
+  // MARK: - Initializers
 
   /// The SimulatorKit implementation. Loads the xcode private frameworks and resolves the
   /// `IndigoHIDMessageFor*` symbols from the SimulatorKit dylib.
@@ -78,7 +78,7 @@ final class FBSimulatorIndigoHID {
     self.messageForTrackpadMoveEvent = messageForTrackpadMoveEvent
   }
 
-  // MARK: Public
+  // MARK: - Public
 
   /// A keyboard event. The keycodes are 'Hardware Independent' as described in `<HIToolbox/Events.h>`.
   func keyboard(with direction: FBSimulatorHIDDirection, keyCode: UInt32) -> Data {
@@ -205,7 +205,7 @@ final class FBSimulatorIndigoHID {
     return FBSimulatorIndigoHID.data(fromMallocedMessage: message)
   }
 
-  // MARK: Event Generation
+  // MARK: - Event Generation
 
   private func touchMessage(point: CGPoint, direction: FBSimulatorHIDDirection, edge: FBSimulatorHIDEdge) -> Data {
     var point = point
@@ -247,7 +247,7 @@ final class FBSimulatorIndigoHID {
     return Data(bytesNoCopy: destination, count: messageSize, deallocator: .free)
   }
 
-  // MARK: Helpers
+  // MARK: - Helpers
 
   /// Wraps a `malloc`'d `IndigoMessage` as `Data` that frees the buffer when deallocated.
   private static func data(fromMallocedMessage message: UnsafeMutablePointer<IndigoMessage>) -> Data {

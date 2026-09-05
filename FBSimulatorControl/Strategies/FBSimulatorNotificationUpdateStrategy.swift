@@ -11,12 +11,8 @@ import Foundation
 
 final class FBSimulatorNotificationUpdateStrategy: @unchecked Sendable {
 
-  // MARK: - Properties
-
   private weak var set: FBSimulatorSet?
   private var notifier: FBCoreSimulatorNotifier?
-
-  // MARK: - Initializers
 
   class func strategy(with set: FBSimulatorSet) -> FBSimulatorNotificationUpdateStrategy {
     let strategy = FBSimulatorNotificationUpdateStrategy(set: set)
@@ -32,8 +28,6 @@ final class FBSimulatorNotificationUpdateStrategy: @unchecked Sendable {
     notifier?.terminate()
     notifier = nil
   }
-
-  // MARK: - Private
 
   private func startNotifyingOfStateChanges() {
     guard let set = self.set else { return }

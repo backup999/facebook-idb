@@ -30,27 +30,19 @@ public struct FBSimulatorBootOptions: OptionSet, Hashable, Sendable {
 
 public struct FBSimulatorBootConfiguration: Equatable, Hashable, Sendable, CustomStringConvertible {
 
-  // MARK: Properties
-
   public let options: FBSimulatorBootOptions
 
   public let environment: [String: String]
-
-  // MARK: Default Instance
 
   public static let `default` = FBSimulatorBootConfiguration(
     options: .verifyUsable,
     environment: [:]
   )
 
-  // MARK: Initializers
-
   public init(options: FBSimulatorBootOptions, environment: [String: String]) {
     self.options = options
     self.environment = environment
   }
-
-  // MARK: - CustomStringConvertible
 
   public var description: String {
     String(
@@ -59,8 +51,6 @@ public struct FBSimulatorBootConfiguration: Equatable, Hashable, Sendable, Custo
       FBCollectionInformation.oneLineDescription(from: Self.stringsFromBootOptions(options) as [Any])
     )
   }
-
-  // MARK: - Private
 
   private static let bootOptionStringDirectLaunch = "Direct Launch"
 

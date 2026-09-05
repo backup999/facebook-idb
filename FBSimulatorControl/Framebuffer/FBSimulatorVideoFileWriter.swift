@@ -132,8 +132,6 @@ final class FBSimulatorVideoFileWriter: FBEncodedSampleConsumer, FBTimedMetadata
     pendingChapters.append((time: time, text: text))
   }
 
-  // MARK: - Lifecycle
-
   /// Finalize the file: mark the inputs finished and await `finishWriting`. Call once, after the
   /// encoder has flushed all pending frames. A no-op if no frame was ever written.
   func finish() async throws {

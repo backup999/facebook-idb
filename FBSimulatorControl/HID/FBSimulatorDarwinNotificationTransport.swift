@@ -34,7 +34,7 @@ final class FBSimulatorDarwinNotificationTransport: @unchecked Sendable {
     self.simulator = simulator
   }
 
-  // MARK: Sends
+  // MARK: - Sends
 
   /// Shakes the device.
   func sendShake() async throws {
@@ -46,7 +46,7 @@ final class FBSimulatorDarwinNotificationTransport: @unchecked Sendable {
     try await post(Self.inCallStatusBar)
   }
 
-  // MARK: Transit
+  // MARK: - Transit
 
   private func post(_ notificationName: String) async throws {
     try await withCheckedThrowingContinuation { (continuation: CheckedContinuation<Void, Error>) in

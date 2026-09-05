@@ -191,7 +191,7 @@ final class FBAXTranslationRequest {
     )
   }
 
-  // MARK: Remote content
+  // MARK: - Remote content
 
   private func discoverRemoteElements(
     screenBounds: CGRect,

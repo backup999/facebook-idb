@@ -30,8 +30,6 @@ extension FBSimulatorFileError: LocalizedError {
 
 public final class FBSimulatorFileCommands {
 
-  // MARK: - Properties
-
   private let simulator: FBSimulator
 
   // MARK: - Initializers

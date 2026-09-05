@@ -22,17 +22,11 @@ public enum FBSimulatorMemoryError: Error, LocalizedError {
 
 public struct FBSimulatorMemoryCommands {
 
-  // MARK: - Properties
-
   private let simulator: FBSimulator
-
-  // MARK: - Initializers
 
   public static func commands(with simulator: FBSimulator) -> FBSimulatorMemoryCommands {
     FBSimulatorMemoryCommands(simulator: simulator)
   }
-
-  // MARK: - Private
 
   fileprivate func simulateMemoryWarning() async throws {
     guard simulator.device.responds(to: NSSelectorFromString("simulateMemoryWarning")) else {

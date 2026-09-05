@@ -29,7 +29,7 @@ import Foundation
  */
 public final class FBSimulatorHID: CustomStringConvertible, @unchecked Sendable {
 
-  // MARK: Properties
+  // MARK: - Properties
 
   /// The transport for the touch / button / keyboard primitives.
   private let transport: FBSimulatorHIDTransport
@@ -45,7 +45,7 @@ public final class FBSimulatorHID: CustomStringConvertible, @unchecked Sendable 
   /// set this to `false` and call `flush()` once before releasing the HID.
   public var flushesAfterEachEvent = true
 
-  // MARK: Initializers
+  // MARK: - Initializers
 
   /// `transport` forces a HID path; `nil` negotiates one (see `transport(for:requested:)`). Throws if the
   /// transport cannot be established (registration may need to occur prior to booting).
@@ -107,8 +107,6 @@ public final class FBSimulatorHID: CustomStringConvertible, @unchecked Sendable 
     self.simulator = simulator
   }
 
-  // MARK: Lifecycle
-
   /**
    Disconnects from the remote HID.
    */
@@ -116,7 +114,7 @@ public final class FBSimulatorHID: CustomStringConvertible, @unchecked Sendable 
     transport.disconnect()
   }
 
-  // MARK: Indigo Event Send Primitives
+  // MARK: - Indigo Event Send Primitives
 
   /// Sends a single-finger touch at the given point (in points), optionally tagged as originating at
   /// a screen edge.
@@ -161,7 +159,7 @@ public final class FBSimulatorHID: CustomStringConvertible, @unchecked Sendable 
     try await indigo.sendTrackpad(point: point, phase: phase)
   }
 
-  // MARK: Purple / GSEvents
+  // MARK: - Purple / GSEvents
 
   /// Rotates the device. Delivered as a GSEvent over Purple, not through the HID transport.
   func sendOrientation(_ orientation: FBSimulatorHIDDeviceOrientation) async throws {
@@ -173,7 +171,7 @@ public final class FBSimulatorHID: CustomStringConvertible, @unchecked Sendable 
     try await purple.sendLockDevice()
   }
 
-  // MARK: Darwin Notifications
+  // MARK: - Darwin Notifications
 
   /// Shakes the device. Posted as a Darwin notification, not through the HID transport.
   func sendShake() async throws {
@@ -185,7 +183,7 @@ public final class FBSimulatorHID: CustomStringConvertible, @unchecked Sendable 
     try await notification.sendToggleInCallStatusBar()
   }
 
-  // MARK: Dispatch
+  // MARK: - Dispatch
 
   /// Sends a (possibly composite) event, logging each sub-event, then drains once if any sub-event reached
   /// the HID transport — so a tap or typed string settles once, not per primitive.
@@ -249,8 +247,6 @@ public final class FBSimulatorHID: CustomStringConvertible, @unchecked Sendable 
       return wrote
     }
   }
-
-  // MARK: CustomStringConvertible
 
   public var description: String {
     "SimulatorKit HID"

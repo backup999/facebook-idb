@@ -27,12 +27,8 @@ extension FBSimulatorScreenshotError: LocalizedError {
 
 public final class FBSimulatorScreenshotCommands {
 
-  // MARK: - Properties
-
   private weak var simulator: FBSimulator?
   private var image: FBSimulatorImage?
-
-  // MARK: - Initializers
 
   public class func commands(with simulator: FBSimulator) -> FBSimulatorScreenshotCommands {
     FBSimulatorScreenshotCommands(simulator: simulator)
@@ -41,8 +37,6 @@ public final class FBSimulatorScreenshotCommands {
   private init(simulator: FBSimulator) {
     self.simulator = simulator
   }
-
-  // MARK: - Private
 
   /// The crop and scale are applied by the render itself rather than to its output, so all that is
   /// left here is to encode what comes back.

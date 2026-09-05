@@ -24,12 +24,8 @@ public enum FBSimulatorDeviceSetError: Error, LocalizedError {
 
 public struct FBSimulatorControlConfiguration: Equatable, Hashable, CustomStringConvertible {
 
-  // MARK: - Properties
-
   public let deviceSetPath: String?
   public let logger: FBControlCoreLogger
-
-  // MARK: - Initializers
 
   /// - Parameter logger: nil means `FBControlCoreGlobalConfiguration.defaultLogger`, which is
   ///   os_log-only unless the `FBCONTROLCORE_LOGGING`/`FBCONTROLCORE_DEBUG_LOGGING` environment
@@ -62,13 +58,9 @@ public struct FBSimulatorControlConfiguration: Equatable, Hashable, CustomString
     hasher.combine(deviceSetPath)
   }
 
-  // MARK: - CustomStringConvertible
-
   public var description: String {
     "Pool Config | Set Path \(deviceSetPath ?? "(null)")"
   }
-
-  // MARK: - Helpers
 
   /// The default CoreSimulator device-set path. Loads the private frameworks on demand and throws
   /// when they cannot be loaded or the path cannot be resolved.
