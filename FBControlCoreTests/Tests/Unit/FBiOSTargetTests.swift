@@ -85,7 +85,7 @@ final class FBiOSTargetTests: XCTestCase {
     XCTAssertEqual(FBiOSTargetComparison(first, second), .orderedAscending)
   }
 
-  func testiPadComesBeforeiPhone() {
+  func testiPhoneComesBeforeiPad() {
     let deviceTypes = FBiOSTargetTests.iPhoneDeviceTypes + FBiOSTargetTests.iPadDeviceTypes
     var input: [FBiOSTarget] = []
     for deviceType in deviceTypes {
