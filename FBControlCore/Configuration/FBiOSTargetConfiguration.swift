@@ -9,38 +9,26 @@ import Foundation
 
 // MARK: - FBiOSTargetScreenInfo
 
-@objc(FBiOSTargetScreenInfo)
-public final class FBiOSTargetScreenInfo: NSObject, NSCopying {
+public struct FBiOSTargetScreenInfo: Equatable, Hashable, CustomStringConvertible {
 
-  @objc public let widthPixels: UInt
-  @objc public let heightPixels: UInt
-  @objc public let scale: Float
+  public let widthPixels: UInt
+  public let heightPixels: UInt
+  public let scale: Float
 
-  @objc
   public init(widthPixels: UInt, heightPixels: UInt, scale: Float) {
     self.widthPixels = widthPixels
     self.heightPixels = heightPixels
     self.scale = scale
-    super.init()
   }
 
-  public override func isEqual(_ object: Any?) -> Bool {
-    guard let other = object as? FBiOSTargetScreenInfo else { return false }
-    return widthPixels == other.widthPixels
-      && heightPixels == other.heightPixels
-      && scale == other.scale
+  /// Truncating the scale to `Int` means two screens differing only in the fraction of their scale
+  /// collide, which equality still separates.
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(Int(widthPixels) ^ Int(heightPixels) ^ Int(scale))
   }
 
-  public override var hash: Int {
-    Int(widthPixels) ^ Int(heightPixels) ^ Int(scale)
-  }
-
-  public override var description: String {
+  public var description: String {
     String(format: "Screen Pixels %lu,%lu | Scale %fX", widthPixels, heightPixels, scale)
-  }
-
-  public func copy(with zone: NSZone? = nil) -> Any {
-    self
   }
 }
 

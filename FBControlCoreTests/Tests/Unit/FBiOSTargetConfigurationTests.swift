@@ -17,13 +17,6 @@ final class FBiOSTargetConfigurationTests: XCTestCase {
     return Array(FBiOSTargetConfiguration.nameToOSVersion.values)
   }
 
-  static var screenConfigurations: [FBiOSTargetScreenInfo] {
-    return [
-      FBiOSTargetScreenInfo(widthPixels: 320, heightPixels: 480, scale: 1),
-      FBiOSTargetScreenInfo(widthPixels: 640, heightPixels: 960, scale: 2),
-    ]
-  }
-
   func testDeviceTypes() {
     let configurations = FBiOSTargetConfigurationTests.deviceTypeConfigurations
     assertEqualityOfCopy(configurations)
@@ -31,11 +24,6 @@ final class FBiOSTargetConfigurationTests: XCTestCase {
 
   func testOSVersions() {
     let configurations = FBiOSTargetConfigurationTests.osVersionConfigurations
-    assertEqualityOfCopy(configurations)
-  }
-
-  func testScreenSizes() {
-    let configurations = FBiOSTargetConfigurationTests.screenConfigurations
     assertEqualityOfCopy(configurations)
   }
 
@@ -70,9 +58,9 @@ final class FBiOSTargetConfigurationTests: XCTestCase {
     let integral = FBiOSTargetScreenInfo(widthPixels: 640, heightPixels: 960, scale: 2)
     let fractional = FBiOSTargetScreenInfo(widthPixels: 640, heightPixels: 960, scale: 2.5)
 
-    // `hash` casts the scale to Int, so a fractional difference collides while `isEqual` still separates them.
+    // The hash casts the scale to Int, so a fractional difference collides while equality still separates them.
     XCTAssertNotEqual(integral, fractional)
-    XCTAssertEqual(integral.hash, fractional.hash)
+    XCTAssertEqual(integral.hashValue, fractional.hashValue)
   }
 
   // Swift tests cannot import this target's ObjC `FBControlCoreValueTestCase`, so the helper is duplicated here.
