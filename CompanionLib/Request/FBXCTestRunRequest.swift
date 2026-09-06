@@ -14,9 +14,7 @@ private let FBLogicTestTimeout: TimeInterval = 60 * 60
 // MARK: - FBXCTestRunRequest
 
 public enum FBXCTestRunRequestError: Error {
-  case abstractBaseClass(typeName: String)
   case notExactlyOneTest(count: Int)
-  case noTestBundleID
   case testDescriptorNotFound
   case logicTestsUnsupported(targetDescription: String)
   case testsToSkipUnsupported(testsToSkip: [String])
@@ -27,12 +25,8 @@ public enum FBXCTestRunRequestError: Error {
 extension FBXCTestRunRequestError: LocalizedError {
   public var errorDescription: String? {
     switch self {
-    case let .abstractBaseClass(typeName):
-      return "\(typeName) not implemented in abstract base class"
     case let .notExactlyOneTest(count):
       return "Expected exactly one test in the xctestrun file, got: \(count)"
-    case .noTestBundleID:
-      return "No test bundle ID provided"
     case .testDescriptorNotFound:
       return "Could not find test descriptor"
     case let .logicTestsUnsupported(targetDescription):
@@ -47,11 +41,23 @@ extension FBXCTestRunRequestError: LocalizedError {
   }
 }
 
-public class FBXCTestRunRequest {
-  public let testBundleID: String?
-  public let testPath: URL?
-  public let testHostAppBundleID: String?
-  public let testTargetAppBundleID: String?
+public struct FBXCTestRunRequest {
+
+  /// How the test bundle to run is named: by the identifier of a bundle already stored on the companion, or by a path to a bundle on the host.
+  public enum BundleSource: Equatable {
+    case identifier(String)
+    case path(URL)
+  }
+
+  /// How the test bundle is hosted, and the applications each hosting arrangement requires.
+  public enum Mode: Equatable {
+    case logic
+    case application(testHostAppBundleID: String)
+    case ui(testHostAppBundleID: String, testTargetAppBundleID: String)
+  }
+
+  public let bundle: BundleSource
+  public let mode: Mode
   public let environment: [String: String]
   public let arguments: [String]
   public let testsToRun: Set<String>?
@@ -64,69 +70,81 @@ public class FBXCTestRunRequest {
   public let waitForDebugger: Bool
   public let collectResultBundle: Bool
 
-  var isLogicTest: Bool { false }
-  var isUITest: Bool { false }
+  public var testBundleID: String? {
+    guard case let .identifier(identifier) = bundle else { return nil }
+    return identifier
+  }
+
+  public var testPath: URL? {
+    guard case let .path(path) = bundle else { return nil }
+    return path
+  }
+
+  public var testHostAppBundleID: String? {
+    switch mode {
+    case .logic:
+      return nil
+    case let .application(testHostAppBundleID):
+      return testHostAppBundleID
+    case let .ui(testHostAppBundleID, _):
+      return testHostAppBundleID
+    }
+  }
+
+  public var testTargetAppBundleID: String? {
+    guard case let .ui(_, testTargetAppBundleID) = mode else { return nil }
+    return testTargetAppBundleID
+  }
+
+  var isLogicTest: Bool {
+    mode == .logic
+  }
+
+  var isUITest: Bool {
+    guard case .ui = mode else { return false }
+    return true
+  }
+
+  private init(bundle: BundleSource, mode: Mode, environment: [String: String], arguments: [String], testsToRun: Set<String>?, testsToSkip: Set<String>, testTimeout: NSNumber?, reportActivities: Bool, reportAttachments: Bool, coverageRequest: FBCodeCoverageRequest, collectLogs: Bool, waitForDebugger: Bool, collectResultBundle: Bool) {
+    self.bundle = bundle
+    self.mode = mode
+    self.environment = environment
+    self.arguments = arguments
+    self.testsToRun = testsToRun
+    self.testsToSkip = testsToSkip
+    self.testTimeout = testTimeout
+    self.reportActivities = reportActivities
+    self.reportAttachments = reportAttachments
+    self.coverageRequest = coverageRequest
+    self.collectLogs = collectLogs
+    self.waitForDebugger = waitForDebugger
+    self.collectResultBundle = collectResultBundle
+  }
 
   // MARK: - Initializers
 
   public static func logicTest(withTestBundleID testBundleID: String, environment: [String: String], arguments: [String], testsToRun: Set<String>?, testsToSkip: Set<String>, testTimeout: NSNumber?, reportActivities: Bool, reportAttachments: Bool, coverageRequest: FBCodeCoverageRequest, collectLogs: Bool, waitForDebugger: Bool, collectResultBundle: Bool) -> FBXCTestRunRequest {
-    FBXCTestRunRequest_LogicTest(testBundleID: testBundleID, testHostAppBundleID: nil, testTargetAppBundleID: nil, environment: environment, arguments: arguments, testsToRun: testsToRun, testsToSkip: testsToSkip, testTimeout: testTimeout, reportActivities: reportActivities, reportAttachments: reportAttachments, coverageRequest: coverageRequest, collectLogs: collectLogs, waitForDebugger: waitForDebugger, collectResultBundle: collectResultBundle)
+    FBXCTestRunRequest(bundle: .identifier(testBundleID), mode: .logic, environment: environment, arguments: arguments, testsToRun: testsToRun, testsToSkip: testsToSkip, testTimeout: testTimeout, reportActivities: reportActivities, reportAttachments: reportAttachments, coverageRequest: coverageRequest, collectLogs: collectLogs, waitForDebugger: waitForDebugger, collectResultBundle: collectResultBundle)
   }
 
   public static func logicTest(withTestPath testPath: URL, environment: [String: String], arguments: [String], testsToRun: Set<String>?, testsToSkip: Set<String>, testTimeout: NSNumber?, reportActivities: Bool, reportAttachments: Bool, coverageRequest: FBCodeCoverageRequest, collectLogs: Bool, waitForDebugger: Bool, collectResultBundle: Bool) -> FBXCTestRunRequest {
-    FBXCTestRunRequest_LogicTest(testPath: testPath, testHostAppBundleID: nil, testTargetAppBundleID: nil, environment: environment, arguments: arguments, testsToRun: testsToRun, testsToSkip: testsToSkip, testTimeout: testTimeout, reportActivities: reportActivities, reportAttachments: reportAttachments, coverageRequest: coverageRequest, collectLogs: collectLogs, waitForDebugger: waitForDebugger, collectResultBundle: collectResultBundle)
+    FBXCTestRunRequest(bundle: .path(testPath), mode: .logic, environment: environment, arguments: arguments, testsToRun: testsToRun, testsToSkip: testsToSkip, testTimeout: testTimeout, reportActivities: reportActivities, reportAttachments: reportAttachments, coverageRequest: coverageRequest, collectLogs: collectLogs, waitForDebugger: waitForDebugger, collectResultBundle: collectResultBundle)
   }
 
   public static func applicationTest(withTestBundleID testBundleID: String, testHostAppBundleID: String, environment: [String: String], arguments: [String], testsToRun: Set<String>?, testsToSkip: Set<String>, testTimeout: NSNumber?, reportActivities: Bool, reportAttachments: Bool, coverageRequest: FBCodeCoverageRequest, collectLogs: Bool, waitForDebugger: Bool, collectResultBundle: Bool) -> FBXCTestRunRequest {
-    FBXCTestRunRequest_AppTest(testBundleID: testBundleID, testHostAppBundleID: testHostAppBundleID, testTargetAppBundleID: nil, environment: environment, arguments: arguments, testsToRun: testsToRun, testsToSkip: testsToSkip, testTimeout: testTimeout, reportActivities: reportActivities, reportAttachments: reportAttachments, coverageRequest: coverageRequest, collectLogs: collectLogs, waitForDebugger: waitForDebugger, collectResultBundle: collectResultBundle)
+    FBXCTestRunRequest(bundle: .identifier(testBundleID), mode: .application(testHostAppBundleID: testHostAppBundleID), environment: environment, arguments: arguments, testsToRun: testsToRun, testsToSkip: testsToSkip, testTimeout: testTimeout, reportActivities: reportActivities, reportAttachments: reportAttachments, coverageRequest: coverageRequest, collectLogs: collectLogs, waitForDebugger: waitForDebugger, collectResultBundle: collectResultBundle)
   }
 
   public static func applicationTest(withTestPath testPath: URL, testHostAppBundleID: String, environment: [String: String], arguments: [String], testsToRun: Set<String>?, testsToSkip: Set<String>, testTimeout: NSNumber?, reportActivities: Bool, reportAttachments: Bool, coverageRequest: FBCodeCoverageRequest, collectLogs: Bool, waitForDebugger: Bool, collectResultBundle: Bool) -> FBXCTestRunRequest {
-    FBXCTestRunRequest_AppTest(testPath: testPath, testHostAppBundleID: testHostAppBundleID, testTargetAppBundleID: nil, environment: environment, arguments: arguments, testsToRun: testsToRun, testsToSkip: testsToSkip, testTimeout: testTimeout, reportActivities: reportActivities, reportAttachments: reportAttachments, coverageRequest: coverageRequest, collectLogs: collectLogs, waitForDebugger: waitForDebugger, collectResultBundle: collectResultBundle)
+    FBXCTestRunRequest(bundle: .path(testPath), mode: .application(testHostAppBundleID: testHostAppBundleID), environment: environment, arguments: arguments, testsToRun: testsToRun, testsToSkip: testsToSkip, testTimeout: testTimeout, reportActivities: reportActivities, reportAttachments: reportAttachments, coverageRequest: coverageRequest, collectLogs: collectLogs, waitForDebugger: waitForDebugger, collectResultBundle: collectResultBundle)
   }
 
   public static func uiTest(withTestBundleID testBundleID: String, testHostAppBundleID: String, testTargetAppBundleID: String, environment: [String: String], arguments: [String], testsToRun: Set<String>?, testsToSkip: Set<String>, testTimeout: NSNumber?, reportActivities: Bool, reportAttachments: Bool, coverageRequest: FBCodeCoverageRequest, collectLogs: Bool, collectResultBundle: Bool) -> FBXCTestRunRequest {
-    FBXCTestRunRequest_UITest(testBundleID: testBundleID, testHostAppBundleID: testHostAppBundleID, testTargetAppBundleID: testTargetAppBundleID, environment: environment, arguments: arguments, testsToRun: testsToRun, testsToSkip: testsToSkip, testTimeout: testTimeout, reportActivities: reportActivities, reportAttachments: reportAttachments, coverageRequest: coverageRequest, collectLogs: collectLogs, waitForDebugger: false, collectResultBundle: collectResultBundle)
+    FBXCTestRunRequest(bundle: .identifier(testBundleID), mode: .ui(testHostAppBundleID: testHostAppBundleID, testTargetAppBundleID: testTargetAppBundleID), environment: environment, arguments: arguments, testsToRun: testsToRun, testsToSkip: testsToSkip, testTimeout: testTimeout, reportActivities: reportActivities, reportAttachments: reportAttachments, coverageRequest: coverageRequest, collectLogs: collectLogs, waitForDebugger: false, collectResultBundle: collectResultBundle)
   }
 
   public static func uiTest(withTestPath testPath: URL, testHostAppBundleID: String, testTargetAppBundleID: String, environment: [String: String], arguments: [String], testsToRun: Set<String>?, testsToSkip: Set<String>, testTimeout: NSNumber?, reportActivities: Bool, reportAttachments: Bool, coverageRequest: FBCodeCoverageRequest, collectLogs: Bool, collectResultBundle: Bool) -> FBXCTestRunRequest {
-    FBXCTestRunRequest_UITest(testPath: testPath, testHostAppBundleID: testHostAppBundleID, testTargetAppBundleID: testTargetAppBundleID, environment: environment, arguments: arguments, testsToRun: testsToRun, testsToSkip: testsToSkip, testTimeout: testTimeout, reportActivities: reportActivities, reportAttachments: reportAttachments, coverageRequest: coverageRequest, collectLogs: collectLogs, waitForDebugger: false, collectResultBundle: collectResultBundle)
-  }
-
-  init(testBundleID: String, testHostAppBundleID: String?, testTargetAppBundleID: String?, environment: [String: String], arguments: [String], testsToRun: Set<String>?, testsToSkip: Set<String>, testTimeout: NSNumber?, reportActivities: Bool, reportAttachments: Bool, coverageRequest: FBCodeCoverageRequest, collectLogs: Bool, waitForDebugger: Bool, collectResultBundle: Bool) {
-    self.testBundleID = testBundleID
-    self.testPath = nil
-    self.testHostAppBundleID = testHostAppBundleID
-    self.testTargetAppBundleID = testTargetAppBundleID
-    self.environment = environment
-    self.arguments = arguments
-    self.testsToRun = testsToRun
-    self.testsToSkip = testsToSkip
-    self.testTimeout = testTimeout
-    self.reportActivities = reportActivities
-    self.reportAttachments = reportAttachments
-    self.coverageRequest = coverageRequest
-    self.collectLogs = collectLogs
-    self.waitForDebugger = waitForDebugger
-    self.collectResultBundle = collectResultBundle
-  }
-
-  init(testPath: URL, testHostAppBundleID: String?, testTargetAppBundleID: String?, environment: [String: String], arguments: [String], testsToRun: Set<String>?, testsToSkip: Set<String>, testTimeout: NSNumber?, reportActivities: Bool, reportAttachments: Bool, coverageRequest: FBCodeCoverageRequest, collectLogs: Bool, waitForDebugger: Bool, collectResultBundle: Bool) {
-    self.testBundleID = nil
-    self.testPath = testPath
-    self.testHostAppBundleID = testHostAppBundleID
-    self.testTargetAppBundleID = testTargetAppBundleID
-    self.environment = environment
-    self.arguments = arguments
-    self.testsToRun = testsToRun
-    self.testsToSkip = testsToSkip
-    self.testTimeout = testTimeout
-    self.reportActivities = reportActivities
-    self.reportAttachments = reportAttachments
-    self.coverageRequest = coverageRequest
-    self.collectLogs = collectLogs
-    self.waitForDebugger = waitForDebugger
-    self.collectResultBundle = collectResultBundle
+    FBXCTestRunRequest(bundle: .path(testPath), mode: .ui(testHostAppBundleID: testHostAppBundleID, testTargetAppBundleID: testTargetAppBundleID), environment: environment, arguments: arguments, testsToRun: testsToRun, testsToSkip: testsToSkip, testTimeout: testTimeout, reportActivities: reportActivities, reportAttachments: reportAttachments, coverageRequest: coverageRequest, collectLogs: collectLogs, waitForDebugger: false, collectResultBundle: collectResultBundle)
   }
 
   // MARK: - Test Execution
@@ -139,51 +157,44 @@ public class FBXCTestRunRequest {
       try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true, attributes: nil)
       logDirectoryPath = directory.path
     }
-    return try await startWithTestDescriptor(descriptor, logDirectoryPath: logDirectoryPath, reportActivities: reportActivities, target: target, reporter: reporter, logger: logger, temporaryDirectory: temporaryDirectory)
-  }
-
-  func startWithTestDescriptor(_ testDescriptor: FBXCTestDescriptor, logDirectoryPath: String?, reportActivities: Bool, target: FBiOSTarget, reporter: FBXCTestReporter, logger: FBControlCoreLogger, temporaryDirectory: FBTemporaryDirectory) async throws -> FBIDBTestOperation {
-    throw FBXCTestRunRequestError.abstractBaseClass(typeName: String(describing: type(of: self)))
+    switch mode {
+    case .logic:
+      return try startLogicTest(with: descriptor, logDirectoryPath: logDirectoryPath, target: target, reporter: reporter, logger: logger, temporaryDirectory: temporaryDirectory)
+    case .application, .ui:
+      return try await startAppHostedTest(with: descriptor, logDirectoryPath: logDirectoryPath, target: target, reporter: reporter, logger: logger)
+    }
   }
 
   private func fetchAndSetupDescriptor(withBundleStorage bundleStorage: FBXCTestBundleStorage, target: FBiOSTarget) async throws -> FBXCTestDescriptor {
-    var testDescriptor: FBXCTestDescriptor?
-
-    if let filePath = self.testPath {
-      if filePath.pathExtension == "xctest" {
-        let bundle = try FBBundleDescriptor.bundle(fromPath: filePath.path)
-        testDescriptor = FBXCTestBootstrapDescriptor(url: filePath, name: bundle.name, testBundle: bundle)
-      }
-      if filePath.pathExtension == "xctestrun" {
-        let descriptors = try bundleStorage.getXCTestRunDescriptors(from: filePath)
-        if descriptors.count != 1 {
-          throw FBXCTestRunRequestError.notExactlyOneTest(count: descriptors.count)
-        }
-        testDescriptor = descriptors[0]
-      }
-    } else {
-      guard let bundleID = testBundleID else {
-        throw FBXCTestRunRequestError.noTestBundleID
-      }
-      testDescriptor = try bundleStorage.testDescriptor(withID: bundleID)
-    }
-
-    guard let descriptor = testDescriptor else {
-      throw FBXCTestRunRequestError.testDescriptorNotFound
-    }
-
+    let descriptor = try fetchDescriptor(withBundleStorage: bundleStorage)
     try await descriptor.setupAsync(with: self, target: target)
     return descriptor
   }
-}
 
-// MARK: - Private Subclasses
+  private func fetchDescriptor(withBundleStorage bundleStorage: FBXCTestBundleStorage) throws -> FBXCTestDescriptor {
+    switch bundle {
+    case let .identifier(identifier):
+      return try bundleStorage.testDescriptor(withID: identifier)
+    case let .path(path):
+      switch path.pathExtension {
+      case "xctest":
+        let testBundle = try FBBundleDescriptor.bundle(fromPath: path.path)
+        return FBXCTestBootstrapDescriptor(url: path, name: testBundle.name, testBundle: testBundle)
+      case "xctestrun":
+        let descriptors = try bundleStorage.getXCTestRunDescriptors(from: path)
+        if descriptors.count != 1 {
+          throw FBXCTestRunRequestError.notExactlyOneTest(count: descriptors.count)
+        }
+        return descriptors[0]
+      default:
+        throw FBXCTestRunRequestError.testDescriptorNotFound
+      }
+    }
+  }
 
-private class FBXCTestRunRequest_LogicTest: FBXCTestRunRequest {
-  override var isLogicTest: Bool { true }
-  override var isUITest: Bool { false }
+  // MARK: - Logic Tests
 
-  override func startWithTestDescriptor(_ testDescriptor: FBXCTestDescriptor, logDirectoryPath: String?, reportActivities: Bool, target: FBiOSTarget, reporter: FBXCTestReporter, logger: FBControlCoreLogger, temporaryDirectory: FBTemporaryDirectory) async throws -> FBIDBTestOperation {
+  private func startLogicTest(with testDescriptor: FBXCTestDescriptor, logDirectoryPath: String?, target: FBiOSTarget, reporter: FBXCTestReporter, logger: FBControlCoreLogger, temporaryDirectory: FBTemporaryDirectory) throws -> FBIDBTestOperation {
     let workingDirectory = temporaryDirectory.ephemeralTemporaryDirectory()
     try FileManager.default.createDirectory(at: workingDirectory, withIntermediateDirectories: true, attributes: nil)
 
@@ -221,10 +232,10 @@ private class FBXCTestRunRequest_LogicTest: FBXCTestRunRequest {
       architectures: testDescriptor.architectures
     )
 
-    return try startTestExecution(configuration, target: target, reporter: reporter, logger: logger)
+    return try startLogicTestExecution(configuration, target: target, reporter: reporter, logger: logger)
   }
 
-  private func startTestExecution(_ configuration: FBLogicTestConfiguration, target: FBiOSTarget, reporter: FBXCTestReporter, logger: FBControlCoreLogger) throws -> FBIDBTestOperation {
+  private func startLogicTestExecution(_ configuration: FBLogicTestConfiguration, target: FBiOSTarget, reporter: FBXCTestReporter, logger: FBControlCoreLogger) throws -> FBIDBTestOperation {
     guard let target = target as? (FBiOSTarget & ProcessSpawnCommands & XCTestExtendedCommands) else {
       throw FBXCTestRunRequestError.logicTestsUnsupported(targetDescription: String(describing: target))
     }
@@ -256,21 +267,18 @@ private class FBXCTestRunRequest_LogicTest: FBXCTestRunRequest {
       queue: target.workQueue
     )
   }
-}
 
-private class FBXCTestRunRequest_AppTest: FBXCTestRunRequest {
-  override var isLogicTest: Bool { false }
-  override var isUITest: Bool { false }
+  // MARK: - Application-Hosted Tests
 
-  override func startWithTestDescriptor(_ testDescriptor: FBXCTestDescriptor, logDirectoryPath: String?, reportActivities: Bool, target: FBiOSTarget, reporter: FBXCTestReporter, logger: FBControlCoreLogger, temporaryDirectory: FBTemporaryDirectory) async throws -> FBIDBTestOperation {
+  private func startAppHostedTest(with testDescriptor: FBXCTestDescriptor, logDirectoryPath: String?, target: FBiOSTarget, reporter: FBXCTestReporter, logger: FBControlCoreLogger) async throws -> FBIDBTestOperation {
     let appPair = try await testDescriptor.testAppPair(for: self, target: target)
     logger.log("Obtaining launch configuration for App Pair \(appPair) on descriptor \(testDescriptor)")
     let appHostedTestConfig = try await testDescriptor.testConfig(withRunRequest: self, testApps: appPair, logDirectoryPath: logDirectoryPath, logger: logger)
     logger.log("Obtained app-hosted test configuration \(appHostedTestConfig)")
-    return FBXCTestRunRequest_AppTest.startTestExecution(appHostedTestConfig, reportAttachments: reportAttachments, target: target, reporter: reporter, logger: logger, reportResultBundle: collectResultBundle)
+    return Self.startAppHostedTestExecution(appHostedTestConfig, reportAttachments: reportAttachments, target: target, reporter: reporter, logger: logger, reportResultBundle: collectResultBundle)
   }
 
-  static func startTestExecution(_ configuration: FBIDBAppHostedTestConfiguration, reportAttachments: Bool, target: FBiOSTarget, reporter: FBXCTestReporter, logger: FBControlCoreLogger, reportResultBundle: Bool) -> FBIDBTestOperation {
+  private static func startAppHostedTestExecution(_ configuration: FBIDBAppHostedTestConfiguration, reportAttachments: Bool, target: FBiOSTarget, reporter: FBXCTestReporter, logger: FBControlCoreLogger, reportResultBundle: Bool) -> FBIDBTestOperation {
     let testLaunchConfiguration = configuration.testLaunchConfiguration
     let coverageConfiguration = configuration.coverageConfiguration
 
@@ -311,7 +319,28 @@ private class FBXCTestRunRequest_AppTest: FBXCTestRunRequest {
   }
 }
 
-private class FBXCTestRunRequest_UITest: FBXCTestRunRequest_AppTest {
-  override var isLogicTest: Bool { false }
-  override var isUITest: Bool { true }
+// MARK: - CustomStringConvertible
+
+extension FBXCTestRunRequest: CustomStringConvertible {
+  public var description: String {
+    switch mode {
+    case .logic:
+      return "logic test of \(bundle)"
+    case let .application(testHostAppBundleID):
+      return "application test of \(bundle) hosted by \(testHostAppBundleID)"
+    case let .ui(testHostAppBundleID, testTargetAppBundleID):
+      return "ui test of \(bundle) hosted by \(testHostAppBundleID) targeting \(testTargetAppBundleID)"
+    }
+  }
+}
+
+extension FBXCTestRunRequest.BundleSource: CustomStringConvertible {
+  public var description: String {
+    switch self {
+    case let .identifier(identifier):
+      return "bundle id \(identifier)"
+    case let .path(path):
+      return "bundle at \(path.path)"
+    }
+  }
 }

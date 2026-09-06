@@ -154,9 +154,14 @@ struct CompanionLibTransientTests {
       waitForDebugger: false,
       collectResultBundle: false
     )
+    #expect((request.bundle) == (.identifier("com.test.bundle")))
+    #expect((request.mode) == (.logic))
     #expect((request.isLogicTest))
     #expect(!(request.isUITest))
     #expect((request.testBundleID) == ("com.test.bundle"))
+    #expect((request.testPath) == nil)
+    #expect((request.testHostAppBundleID) == nil)
+    #expect((request.testTargetAppBundleID) == nil)
     #expect((request.environment) == (["KEY": "VALUE"]))
     #expect((request.arguments) == (["-arg1"]))
     #expect((request.testsToRun) == (Set(["TestClass/testMethod"])))
@@ -188,9 +193,12 @@ struct CompanionLibTransientTests {
       waitForDebugger: true,
       collectResultBundle: true
     )
+    #expect((request.bundle) == (.identifier("com.test.apptest")))
+    #expect((request.mode) == (.application(testHostAppBundleID: "com.test.host")))
     #expect(!(request.isLogicTest))
     #expect(!(request.isUITest))
     #expect((request.testBundleID) == ("com.test.apptest"))
+    #expect((request.testPath) == nil)
     #expect((request.testHostAppBundleID) == ("com.test.host"))
     #expect((request.testTargetAppBundleID) == nil)
     #expect((request.testsToRun) == nil)
@@ -217,6 +225,8 @@ struct CompanionLibTransientTests {
       collectLogs: true,
       collectResultBundle: false
     )
+    #expect((request.bundle) == (.identifier("com.test.uitest")))
+    #expect((request.mode) == (.ui(testHostAppBundleID: "com.test.runner", testTargetAppBundleID: "com.test.app")))
     #expect(!(request.isLogicTest))
     #expect((request.isUITest))
     #expect((request.testBundleID) == ("com.test.uitest"))
@@ -247,9 +257,116 @@ struct CompanionLibTransientTests {
       waitForDebugger: false,
       collectResultBundle: false
     )
+    #expect((request.bundle) == (.path(testURL)))
+    #expect((request.mode) == (.logic))
     #expect((request.isLogicTest))
     #expect(!(request.isUITest))
     #expect((request.testPath) == (testURL))
+    #expect((request.testBundleID) == nil)
+  }
+
+  @Test
+  func pathBundlesCombineWithHostedModes() {
+    let coverageRequest = FBCodeCoverageRequest(collect: false, format: .raw, enableContinuousCoverageCollection: false)
+    let testURL = URL(fileURLWithPath: "/tmp/MyTest.xctest")
+    let applicationTest = FBXCTestRunRequest.applicationTest(
+      withTestPath: testURL,
+      testHostAppBundleID: "com.test.host",
+      environment: [:],
+      arguments: [],
+      testsToRun: nil,
+      testsToSkip: Set<String>(),
+      testTimeout: nil,
+      reportActivities: false,
+      reportAttachments: false,
+      coverageRequest: coverageRequest,
+      collectLogs: false,
+      waitForDebugger: false,
+      collectResultBundle: false
+    )
+    #expect((applicationTest.bundle) == (.path(testURL)))
+    #expect((applicationTest.mode) == (.application(testHostAppBundleID: "com.test.host")))
+    #expect(!(applicationTest.isLogicTest))
+    #expect(!(applicationTest.isUITest))
+    #expect((applicationTest.testPath) == (testURL))
+    #expect((applicationTest.testBundleID) == nil)
+    #expect((applicationTest.testTargetAppBundleID) == nil)
+
+    let uiTest = FBXCTestRunRequest.uiTest(
+      withTestPath: testURL,
+      testHostAppBundleID: "com.test.runner",
+      testTargetAppBundleID: "com.test.app",
+      environment: [:],
+      arguments: [],
+      testsToRun: nil,
+      testsToSkip: Set<String>(),
+      testTimeout: nil,
+      reportActivities: false,
+      reportAttachments: false,
+      coverageRequest: coverageRequest,
+      collectLogs: false,
+      collectResultBundle: false
+    )
+    #expect((uiTest.bundle) == (.path(testURL)))
+    #expect((uiTest.mode) == (.ui(testHostAppBundleID: "com.test.runner", testTargetAppBundleID: "com.test.app")))
+    #expect(!(uiTest.isLogicTest))
+    #expect((uiTest.isUITest))
+    #expect((uiTest.testPath) == (testURL))
+    #expect((uiTest.testBundleID) == nil)
+  }
+
+  @Test
+  func requestDescriptionNamesModeAndBundle() {
+    let coverageRequest = FBCodeCoverageRequest(collect: false, format: .raw, enableContinuousCoverageCollection: false)
+    let logicTest = FBXCTestRunRequest.logicTest(
+      withTestBundleID: "com.test.bundle",
+      environment: [:],
+      arguments: [],
+      testsToRun: nil,
+      testsToSkip: Set<String>(),
+      testTimeout: nil,
+      reportActivities: false,
+      reportAttachments: false,
+      coverageRequest: coverageRequest,
+      collectLogs: false,
+      waitForDebugger: false,
+      collectResultBundle: false
+    )
+    #expect((String(describing: logicTest)) == ("logic test of bundle id com.test.bundle"))
+
+    let applicationTest = FBXCTestRunRequest.applicationTest(
+      withTestBundleID: "com.test.apptest",
+      testHostAppBundleID: "com.test.host",
+      environment: [:],
+      arguments: [],
+      testsToRun: nil,
+      testsToSkip: Set<String>(),
+      testTimeout: nil,
+      reportActivities: false,
+      reportAttachments: false,
+      coverageRequest: coverageRequest,
+      collectLogs: false,
+      waitForDebugger: false,
+      collectResultBundle: false
+    )
+    #expect((String(describing: applicationTest)) == ("application test of bundle id com.test.apptest hosted by com.test.host"))
+
+    let uiTest = FBXCTestRunRequest.uiTest(
+      withTestPath: URL(fileURLWithPath: "/tmp/MyTest.xctest"),
+      testHostAppBundleID: "com.test.runner",
+      testTargetAppBundleID: "com.test.app",
+      environment: [:],
+      arguments: [],
+      testsToRun: nil,
+      testsToSkip: Set<String>(),
+      testTimeout: nil,
+      reportActivities: false,
+      reportAttachments: false,
+      coverageRequest: coverageRequest,
+      collectLogs: false,
+      collectResultBundle: false
+    )
+    #expect((String(describing: uiTest)) == ("ui test of bundle at /tmp/MyTest.xctest hosted by com.test.runner targeting com.test.app"))
   }
 
   // MARK: - FBXCTestReporterConfiguration Tests
