@@ -17,11 +17,6 @@ final class FBiOSTargetConfigurationTests: XCTestCase {
     return Array(FBiOSTargetConfiguration.nameToOSVersion.values)
   }
 
-  func testDeviceTypes() {
-    let configurations = FBiOSTargetConfigurationTests.deviceTypeConfigurations
-    assertEqualityOfCopy(configurations)
-  }
-
   func testOSVersions() {
     let configurations = FBiOSTargetConfigurationTests.osVersionConfigurations
     assertEqualityOfCopy(configurations)
@@ -38,7 +33,7 @@ final class FBiOSTargetConfigurationTests: XCTestCase {
 
     // Equality and hashing are by model alone; every other field is catalogue data derived from it.
     XCTAssertEqual(catalogued, generic)
-    XCTAssertEqual(catalogued.hash, generic.hash)
+    XCTAssertEqual(catalogued.hashValue, generic.hashValue)
   }
 
   func testOSVersionEqualityConsidersOnlyTheName() {

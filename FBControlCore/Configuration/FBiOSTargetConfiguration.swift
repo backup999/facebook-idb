@@ -34,16 +34,14 @@ public struct FBiOSTargetScreenInfo: Equatable, Hashable, CustomStringConvertibl
 
 // MARK: - FBDeviceType
 
-@objc(FBDeviceType)
-public final class FBDeviceType: NSObject, NSCopying, @unchecked Sendable {
+public struct FBDeviceType: Equatable, Hashable, CustomStringConvertible, Sendable {
 
-  @objc public let model: FBDeviceModel
-  @objc public let productTypes: Set<String>
-  @objc public let deviceArchitecture: FBArchitecture
-  @objc public let family: FBControlCoreProductFamily
+  public let model: FBDeviceModel
+  public let productTypes: Set<String>
+  public let deviceArchitecture: FBArchitecture
+  public let family: FBControlCoreProductFamily
 
-  @objc(genericWithName:)
-  public class func generic(withName name: String) -> FBDeviceType {
+  public static func generic(withName name: String) -> FBDeviceType {
     FBDeviceType(model: FBDeviceModel(rawValue: name), productTypes: [], deviceArchitecture: .arm64, family: .familyUnknown)
   }
 
@@ -52,51 +50,45 @@ public final class FBDeviceType: NSObject, NSCopying, @unchecked Sendable {
     self.productTypes = productTypes
     self.deviceArchitecture = deviceArchitecture
     self.family = family
-    super.init()
   }
 
   /// The model is the identity: the other properties are catalogue data looked up from it, so a
   /// catalogue entry and a generic device type of the same model are equal.
-  public override func isEqual(_ object: Any?) -> Bool {
-    guard let other = object as? FBDeviceType else { return false }
-    return model == other.model
+  public static func == (lhs: FBDeviceType, rhs: FBDeviceType) -> Bool {
+    lhs.model == rhs.model
   }
 
-  public override var hash: Int {
-    model.hashValue
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(model)
   }
 
-  public override var description: String {
+  public var description: String {
     "Model '\(model.rawValue)'"
-  }
-
-  public func copy(with zone: NSZone? = nil) -> Any {
-    self
   }
 
   // MARK: - Fileprivate Helpers
 
-  fileprivate class func iPhone(withModel model: FBDeviceModel, productType: String, deviceArchitecture: FBArchitecture) -> FBDeviceType {
+  fileprivate static func iPhone(withModel model: FBDeviceModel, productType: String, deviceArchitecture: FBArchitecture) -> FBDeviceType {
     iPhone(withModel: model, productTypes: [productType], deviceArchitecture: deviceArchitecture)
   }
 
-  fileprivate class func iPhone(withModel model: FBDeviceModel, productTypes: [String], deviceArchitecture: FBArchitecture) -> FBDeviceType {
+  fileprivate static func iPhone(withModel model: FBDeviceModel, productTypes: [String], deviceArchitecture: FBArchitecture) -> FBDeviceType {
     FBDeviceType(model: model, productTypes: Set(productTypes), deviceArchitecture: deviceArchitecture, family: .familyiPhone)
   }
 
-  fileprivate class func iPad(withModel model: FBDeviceModel, productTypes: [String], deviceArchitecture: FBArchitecture) -> FBDeviceType {
+  fileprivate static func iPad(withModel model: FBDeviceModel, productTypes: [String], deviceArchitecture: FBArchitecture) -> FBDeviceType {
     FBDeviceType(model: model, productTypes: Set(productTypes), deviceArchitecture: deviceArchitecture, family: .familyiPad)
   }
 
-  fileprivate class func tv(withModel model: FBDeviceModel, productTypes: [String], deviceArchitecture: FBArchitecture) -> FBDeviceType {
+  fileprivate static func tv(withModel model: FBDeviceModel, productTypes: [String], deviceArchitecture: FBArchitecture) -> FBDeviceType {
     FBDeviceType(model: model, productTypes: Set(productTypes), deviceArchitecture: deviceArchitecture, family: .familyAppleTV)
   }
 
-  fileprivate class func watch(withModel model: FBDeviceModel, productTypes: [String], deviceArchitecture: FBArchitecture) -> FBDeviceType {
+  fileprivate static func watch(withModel model: FBDeviceModel, productTypes: [String], deviceArchitecture: FBArchitecture) -> FBDeviceType {
     FBDeviceType(model: model, productTypes: Set(productTypes), deviceArchitecture: deviceArchitecture, family: .familyAppleWatch)
   }
 
-  fileprivate class func generic(withModel model: String) -> FBDeviceType {
+  fileprivate static func generic(withModel model: String) -> FBDeviceType {
     FBDeviceType(model: FBDeviceModel(rawValue: model), productTypes: [], deviceArchitecture: .arm64, family: .familyUnknown)
   }
 }
@@ -392,7 +384,7 @@ public final class FBiOSTargetConfiguration: NSObject {
 
   // MARK: - Class Properties
 
-  private static let _nameToDevice: [FBDeviceModel: FBDeviceType] = {
+  public static let nameToDevice: [FBDeviceModel: FBDeviceType] = {
     var dictionary = [FBDeviceModel: FBDeviceType]()
     for device in _deviceConfigurations {
       dictionary[device.model] = device
@@ -400,7 +392,7 @@ public final class FBiOSTargetConfiguration: NSObject {
     return dictionary
   }()
 
-  private static let _productTypeToDevice: [String: FBDeviceType] = {
+  public static let productTypeToDevice: [String: FBDeviceType] = {
     var dictionary = [String: FBDeviceType]()
     for device in _deviceConfigurations {
       for productType in device.productTypes {
@@ -417,14 +409,6 @@ public final class FBiOSTargetConfiguration: NSObject {
     }
     return dictionary
   }()
-
-  @objc public class var nameToDevice: [FBDeviceModel: FBDeviceType] {
-    _nameToDevice
-  }
-
-  @objc public class var productTypeToDevice: [String: FBDeviceType] {
-    _productTypeToDevice
-  }
 
   @objc public class var nameToOSVersion: [FBOSVersionName: FBOSVersion] {
     _nameToOSVersion
