@@ -384,9 +384,8 @@ public final class FBLogicTestRunStrategy: FBXCTestRunner {
     let stdErr = FBProcessOutput<AnyObject>(for: outputs.stdErrConsumer)
     let io = FBProcessIO<AnyObject, AnyObject, AnyObject>(stdIn: nil, stdOut: stdOut, stdErr: stdErr)
     let spawnConfig = FBProcessSpawnConfiguration(launchPath: launchPath, arguments: arguments, environment: environment, io: io, mode: .posixSpawn)
-    let adapter = FBArchitectureProcessAdapter()
 
-    return adapter.adaptProcessConfiguration(spawnConfig, toAnyArchitectureIn: Set(configuration.architectures.map { FBArchitecture(rawValue: $0) }), queue: queue, temporaryDirectory: temporaryDirectory)
+    return FBArchitectureProcessAdapter.adaptProcessConfiguration(spawnConfig, toAnyArchitectureIn: Set(configuration.architectures.map { FBArchitecture(rawValue: $0) }), queue: queue, temporaryDirectory: temporaryDirectory)
       .onQueue(
         queue,
         fmap: { mappedConfig -> FBFuture<AnyObject> in

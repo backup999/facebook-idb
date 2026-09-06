@@ -39,11 +39,10 @@ public enum FBArchitectureAdapterError: Error, LocalizedError {
   }
 }
 
-@objc(FBArchitectureProcessAdapter)
-public final class FBArchitectureProcessAdapter: NSObject {
+public enum FBArchitectureProcessAdapter {
 
   /// As the `hostArchitectures:` overload, using the host machine's supported architectures.
-  @objc public func adaptProcessConfiguration(
+  public static func adaptProcessConfiguration(
     _ processConfiguration: FBProcessSpawnConfiguration,
     toAnyArchitectureIn requestedArchitectures: Set<FBArchitecture>,
     queue: DispatchQueue,
@@ -52,13 +51,13 @@ public final class FBArchitectureProcessAdapter: NSObject {
     return adaptProcessConfiguration(
       processConfiguration,
       toAnyArchitectureIn: requestedArchitectures,
-      hostArchitectures: FBArchitectureProcessAdapter.hostMachineSupportedArchitectures(),
+      hostArchitectures: hostMachineSupportedArchitectures(),
       queue: queue,
       temporaryDirectory: temporaryDirectory
     )
   }
 
-  private func selectArchitecture(
+  private static func selectArchitecture(
     from requestedArchitectures: Set<FBArchitecture>,
     supportedArchitectures: Set<FBArchitecture>
   ) -> FBArchitecture? {
@@ -72,7 +71,7 @@ public final class FBArchitectureProcessAdapter: NSObject {
   }
 
   /// Force binaries to be launched in desired architectures.
-  @objc public func adaptProcessConfiguration(
+  public static func adaptProcessConfiguration(
     _ processConfiguration: FBProcessSpawnConfiguration,
     toAnyArchitectureIn requestedArchitectures: Set<FBArchitecture>,
     hostArchitectures: Set<FBArchitecture>,
@@ -90,7 +89,7 @@ public final class FBArchitectureProcessAdapter: NSObject {
           fmap: { (_: AnyObject) -> FBFuture<AnyObject> in
             let fileName = (processConfiguration.launchPath as NSString).lastPathComponent + UUID().uuidString + "." + (architecture.rawValue)
             let filePath = temporaryDirectory.appendingPathComponent(fileName, isDirectory: false)
-            return self.extractArchitecture(architecture, processConfiguration: processConfiguration, queue: queue, outputPath: filePath)
+            return extractArchitecture(architecture, processConfiguration: processConfiguration, queue: queue, outputPath: filePath)
               .mapReplace(filePath.path as NSString)
           }
         )
@@ -98,7 +97,7 @@ public final class FBArchitectureProcessAdapter: NSObject {
         .onQueue(
           queue,
           fmap: { extractedBinary -> FBFuture<AnyObject> in
-            return self.getFixedupDyldFrameworkPath(fromOriginalBinary: processConfiguration.launchPath, queue: queue)
+            return getFixedupDyldFrameworkPath(fromOriginalBinary: processConfiguration.launchPath, queue: queue)
               .onQueue(
                 queue,
                 map: { dyldFrameworkPath -> AnyObject in
@@ -119,7 +118,7 @@ public final class FBArchitectureProcessAdapter: NSObject {
   }
 
   /// Verifies that we can extract desired architecture from binary
-  private func verifyArchitectureAvailable(
+  private static func verifyArchitectureAvailable(
     _ binary: String,
     architecture: FBArchitecture,
     queue: DispatchQueue
@@ -142,7 +141,7 @@ public final class FBArchitectureProcessAdapter: NSObject {
     )
   }
 
-  private func extractArchitecture(
+  private static func extractArchitecture(
     _ architecture: FBArchitecture,
     processConfiguration: FBProcessSpawnConfiguration,
     queue: DispatchQueue,
@@ -171,7 +170,7 @@ public final class FBArchitectureProcessAdapter: NSObject {
   /// After we lipoed out arch from binary, new binary placed into temporary folder.
   /// That makes all dynamic library imports become incorrect. To fix that up we
   /// have to specify `DYLD_FRAMEWORK_PATH` correctly.
-  private func getFixedupDyldFrameworkPath(
+  private static func getFixedupDyldFrameworkPath(
     fromOriginalBinary binary: String,
     queue: DispatchQueue
   ) -> FBFuture<NSString> {
@@ -182,7 +181,7 @@ public final class FBArchitectureProcessAdapter: NSObject {
         queue,
         map: { otoolOutput -> AnyObject in
           var rpaths: [String] = []
-          for binaryRpath in self.extractRpaths(fromOtoolOutput: otoolOutput as String) {
+          for binaryRpath in extractRpaths(fromOtoolOutput: otoolOutput as String) {
             if binaryRpath.hasPrefix("@executable_path") {
               rpaths.append(binaryRpath.replacingOccurrences(of: "@executable_path", with: binaryFolder))
             }
@@ -193,7 +192,7 @@ public final class FBArchitectureProcessAdapter: NSObject {
       .retyped(FBFuture<NSString>.self)
   }
 
-  private func getOtoolInfo(
+  private static func getOtoolInfo(
     fromBinary binary: String,
     queue: DispatchQueue
   ) -> FBFuture<NSString> {
@@ -235,7 +234,7 @@ public final class FBArchitectureProcessAdapter: NSObject {
   /// ```
   /// @executable_path/../../Frameworks/
   /// ```
-  private func extractRpaths(fromOtoolOutput otoolOutput: String) -> Set<String> {
+  private static func extractRpaths(fromOtoolOutput otoolOutput: String) -> Set<String> {
     let lines = otoolOutput.components(separatedBy: "\n")
     var result = Set<String>()
 
@@ -253,7 +252,7 @@ public final class FBArchitectureProcessAdapter: NSObject {
   }
 
   /// Checking for `LC_RPATH` in load commands
-  private func isLcPathDefinitionLine(_ line: String) -> Bool {
+  private static func isLcPathDefinitionLine(_ line: String) -> Bool {
     var hasCMD = false
     var hasLcRpath = false
     for component in line.components(separatedBy: " ") {
@@ -267,7 +266,7 @@ public final class FBArchitectureProcessAdapter: NSObject {
   }
 
   // Splits on spaces, so rpaths containing spaces are unsupported; the Xcode binaries this adapts have none.
-  private func extractRpathValue(fromLine line: String) -> String? {
+  private static func extractRpathValue(fromLine line: String) -> String? {
     for component in line.components(separatedBy: " ") {
       if component.hasPrefix("@executable_path") {
         return component
@@ -277,7 +276,7 @@ public final class FBArchitectureProcessAdapter: NSObject {
   }
 
   /// Returns supported architectures based on companion launch architecture and launch under rosetta determination.
-  @objc public class func hostMachineSupportedArchitectures() -> Set<FBArchitecture> {
+  public static func hostMachineSupportedArchitectures() -> Set<FBArchitecture> {
     #if arch(x86_64)
     let isTranslated = processIsTranslated()
     if isTranslated == 1 {
