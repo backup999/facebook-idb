@@ -47,7 +47,7 @@ extension FBXCTestRunRequestError: LocalizedError {
   }
 }
 
-public class FBXCTestRunRequest: NSObject {
+public class FBXCTestRunRequest {
   public let testBundleID: String?
   public let testPath: URL?
   public let testHostAppBundleID: String?
@@ -109,7 +109,6 @@ public class FBXCTestRunRequest: NSObject {
     self.collectLogs = collectLogs
     self.waitForDebugger = waitForDebugger
     self.collectResultBundle = collectResultBundle
-    super.init()
   }
 
   init(testPath: URL, testHostAppBundleID: String?, testTargetAppBundleID: String?, environment: [String: String], arguments: [String], testsToRun: Set<String>?, testsToSkip: Set<String>, testTimeout: NSNumber?, reportActivities: Bool, reportAttachments: Bool, coverageRequest: FBCodeCoverageRequest, collectLogs: Bool, waitForDebugger: Bool, collectResultBundle: Bool) {
@@ -128,7 +127,6 @@ public class FBXCTestRunRequest: NSObject {
     self.collectLogs = collectLogs
     self.waitForDebugger = waitForDebugger
     self.collectResultBundle = collectResultBundle
-    super.init()
   }
 
   // MARK: - Test Execution
