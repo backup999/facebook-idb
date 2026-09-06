@@ -95,19 +95,16 @@ public struct FBDeviceType: Equatable, Hashable, CustomStringConvertible, Sendab
 
 // MARK: - FBOSVersion
 
-@objc(FBOSVersion)
-public final class FBOSVersion: NSObject, NSCopying, @unchecked Sendable {
+public struct FBOSVersion: Equatable, Hashable, CustomStringConvertible, Sendable {
 
-  @objc public let name: FBOSVersionName
-  @objc public let families: Set<NSNumber>
+  public let name: FBOSVersionName
+  public let families: Set<NSNumber>
 
-  @objc(genericWithName:)
-  public class func generic(withName name: String) -> FBOSVersion {
+  public static func generic(withName name: String) -> FBOSVersion {
     FBOSVersion(name: FBOSVersionName(rawValue: name), families: [])
   }
 
-  @objc(operatingSystemVersionFromName:)
-  public class func operatingSystemVersion(fromName name: String) -> OperatingSystemVersion {
+  public static func operatingSystemVersion(fromName name: String) -> OperatingSystemVersion {
     let components = name.components(separatedBy: CharacterSet.punctuationCharacters)
     var version = OperatingSystemVersion(majorVersion: 0, minorVersion: 0, patchVersion: 0)
     for (index, component) in components.enumerated() {
@@ -129,44 +126,38 @@ public final class FBOSVersion: NSObject, NSCopying, @unchecked Sendable {
   private init(name: FBOSVersionName, families: Set<NSNumber>) {
     self.name = name
     self.families = families
-    super.init()
   }
 
   // MARK: - Public Computed Properties
 
-  @objc public var versionString: String {
+  public var versionString: String {
     (name.rawValue as String).components(separatedBy: CharacterSet.whitespaces)[1]
   }
 
-  @objc public var number: NSDecimalNumber {
+  public var number: NSDecimalNumber {
     NSDecimalNumber(string: versionString)
   }
 
-  @objc public var version: OperatingSystemVersion {
+  public var version: OperatingSystemVersion {
     FBOSVersion.operatingSystemVersion(fromName: versionString)
   }
 
   /// The name is the identity: `families` is catalogue data looked up from it.
-  public override func isEqual(_ object: Any?) -> Bool {
-    guard let other = object as? FBOSVersion else { return false }
-    return name == other.name
+  public static func == (lhs: FBOSVersion, rhs: FBOSVersion) -> Bool {
+    lhs.name == rhs.name
   }
 
-  public override var hash: Int {
-    name.hashValue
+  public func hash(into hasher: inout Hasher) {
+    hasher.combine(name)
   }
 
-  public override var description: String {
+  public var description: String {
     "OS '\(name.rawValue)'"
-  }
-
-  public func copy(with zone: NSZone? = nil) -> Any {
-    self
   }
 
   // MARK: - Fileprivate Helpers
 
-  fileprivate class func iOS(withName name: FBOSVersionName) -> FBOSVersion {
+  fileprivate static func iOS(withName name: FBOSVersionName) -> FBOSVersion {
     let families: Set<NSNumber> = [
       NSNumber(value: FBControlCoreProductFamily.familyiPhone.rawValue),
       NSNumber(value: FBControlCoreProductFamily.familyiPad.rawValue),
@@ -174,15 +165,15 @@ public final class FBOSVersion: NSObject, NSCopying, @unchecked Sendable {
     return FBOSVersion(name: name, families: families)
   }
 
-  fileprivate class func tvOS(withName name: FBOSVersionName) -> FBOSVersion {
+  fileprivate static func tvOS(withName name: FBOSVersionName) -> FBOSVersion {
     FBOSVersion(name: name, families: [NSNumber(value: FBControlCoreProductFamily.familyAppleTV.rawValue)])
   }
 
-  fileprivate class func watchOS(withName name: FBOSVersionName) -> FBOSVersion {
+  fileprivate static func watchOS(withName name: FBOSVersionName) -> FBOSVersion {
     FBOSVersion(name: name, families: [NSNumber(value: FBControlCoreProductFamily.familyAppleWatch.rawValue)])
   }
 
-  fileprivate class func macOS(withName name: FBOSVersionName) -> FBOSVersion {
+  fileprivate static func macOS(withName name: FBOSVersionName) -> FBOSVersion {
     FBOSVersion(name: name, families: [NSNumber(value: FBControlCoreProductFamily.familyMac.rawValue)])
   }
 }
@@ -402,17 +393,13 @@ public final class FBiOSTargetConfiguration: NSObject {
     return dictionary
   }()
 
-  private static let _nameToOSVersion: [FBOSVersionName: FBOSVersion] = {
+  public static let nameToOSVersion: [FBOSVersionName: FBOSVersion] = {
     var dictionary = [FBOSVersionName: FBOSVersion]()
     for os in _osConfigurations {
       dictionary[os.name] = os
     }
     return dictionary
   }()
-
-  @objc public class var nameToOSVersion: [FBOSVersionName: FBOSVersion] {
-    _nameToOSVersion
-  }
 
   // MARK: - Public Methods
 

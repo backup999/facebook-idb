@@ -17,11 +17,6 @@ final class FBiOSTargetConfigurationTests: XCTestCase {
     return Array(FBiOSTargetConfiguration.nameToOSVersion.values)
   }
 
-  func testOSVersions() {
-    let configurations = FBiOSTargetConfigurationTests.osVersionConfigurations
-    assertEqualityOfCopy(configurations)
-  }
-
   func testDeviceTypeEqualityConsidersOnlyTheModel() {
     guard let catalogued = FBiOSTargetConfigurationTests.deviceTypeConfigurations.first(where: { !$0.productTypes.isEmpty }) else {
       return XCTFail("No catalogued device type carries product types")
@@ -46,7 +41,7 @@ final class FBiOSTargetConfigurationTests: XCTestCase {
 
     // Equality and hashing are by name alone; families is catalogue data derived from it.
     XCTAssertEqual(catalogued, generic)
-    XCTAssertEqual(catalogued.hash, generic.hash)
+    XCTAssertEqual(catalogued.hashValue, generic.hashValue)
   }
 
   func testScreenInfoHashTruncatesScale() {
@@ -56,16 +51,5 @@ final class FBiOSTargetConfigurationTests: XCTestCase {
     // The hash casts the scale to Int, so a fractional difference collides while equality still separates them.
     XCTAssertNotEqual(integral, fractional)
     XCTAssertEqual(integral.hashValue, fractional.hashValue)
-  }
-
-  // Swift tests cannot import this target's ObjC `FBControlCoreValueTestCase`, so the helper is duplicated here.
-  private func assertEqualityOfCopy(_ values: [NSObject]) {
-    for value in values {
-      let valueCopy = value.copy() as! NSObject
-      let valueCopyCopy = valueCopy.copy() as! NSObject
-      XCTAssertEqual(value, valueCopy)
-      XCTAssertEqual(value, valueCopyCopy)
-      XCTAssertEqual(valueCopy, valueCopyCopy)
-    }
   }
 }
