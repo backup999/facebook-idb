@@ -63,7 +63,7 @@ public enum FBProcessTerminationStrategyError: Error, LocalizedError {
   }
 }
 
-public final class FBProcessTerminationStrategy: NSObject {
+public final class FBProcessTerminationStrategy {
 
   // MARK: - Private Properties
 
@@ -109,7 +109,6 @@ public final class FBProcessTerminationStrategy: NSObject {
     self.processFetcher = processFetcher
     self.workQueue = workQueue
     self.logger = logger
-    super.init()
   }
 
   // MARK: - Public Methods

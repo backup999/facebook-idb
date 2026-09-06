@@ -27,7 +27,7 @@ extension FBDiagnosticsRelayError: LocalizedError {
   }
 }
 
-public final class FBDeviceDiagnosticInformationCommands: NSObject, FBiOSTargetCommand {
+public final class FBDeviceDiagnosticInformationCommands: FBiOSTargetCommand {
   private weak var device: FBDevice?
 
   public class func commands(with target: any FBiOSTarget) -> Self {
@@ -39,7 +39,6 @@ public final class FBDeviceDiagnosticInformationCommands: NSObject, FBiOSTargetC
 
   required init(device: FBDevice) {
     self.device = device
-    super.init()
   }
 
   // MARK: - Async

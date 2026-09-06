@@ -8,15 +8,13 @@
 import Foundation
 
 /// A no-op `FBEventReporter`. It is the default reporter for the OSS implementation.
-public final class EmptyEventReporter: NSObject, FBEventReporter, @unchecked Sendable {
+public final class EmptyEventReporter: FBEventReporter, @unchecked Sendable {
 
   public static let shared = EmptyEventReporter()
 
   public var metadata: [String: String] { [:] }
 
-  public override init() {
-    super.init()
-  }
+  public init() {}
 
   public func report(_ subject: FBEventReporterSubject) {}
   public func addMetadata(_ metadata: [String: String]) {}

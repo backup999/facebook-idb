@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class FBXCTraceRecordCommands: NSObject, FBiOSTargetCommand {
+public final class FBXCTraceRecordCommands: FBiOSTargetCommand {
 
   public let target: any FBiOSTarget
 
@@ -17,7 +17,6 @@ public final class FBXCTraceRecordCommands: NSObject, FBiOSTargetCommand {
 
   required init(target: any FBiOSTarget) {
     self.target = target
-    super.init()
   }
 
   // MARK: - Operations

@@ -8,7 +8,7 @@
 import FBControlCore
 import Foundation
 
-final class FBiOSTargetDescription: NSObject, FBiOSTargetInfo {
+final class FBiOSTargetDescription: FBiOSTargetInfo {
 
   let uniqueIdentifier: String
   let udid: String
@@ -41,7 +41,6 @@ final class FBiOSTargetDescription: NSObject, FBiOSTargetInfo {
     self.uniqueIdentifier = target.uniqueIdentifier
     self.deviceType = target.deviceType
     self.architectures = target.architectures
-    super.init()
   }
 
   var asJSON: [String: Any] {

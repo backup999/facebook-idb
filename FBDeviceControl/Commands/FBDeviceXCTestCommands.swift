@@ -34,7 +34,7 @@ extension FBDeviceXCTestError: LocalizedError {
   }
 }
 
-public final class FBDeviceXCTestCommands: NSObject {
+public final class FBDeviceXCTestCommands {
   private(set) weak var device: FBDevice?
   private(set) var workingDirectory: String
   private(set) var processFetcher: FBProcessFetcher
@@ -48,7 +48,6 @@ public final class FBDeviceXCTestCommands: NSObject {
     self.device = device
     self.workingDirectory = workingDirectory
     self.processFetcher = FBProcessFetcher()
-    super.init()
   }
 
   // MARK: - Async
