@@ -32,15 +32,13 @@ extension FBBundleDescriptorError: LocalizedError {
   }
 }
 
-@objc(FBBundleDescriptor)
 public final class FBBundleDescriptor: NSObject, NSCopying, Sendable {
 
-  @objc public let name: String
-  @objc public let identifier: String
-  @objc public let path: String
-  @objc public let binary: FBBinaryDescriptor?
+  public let name: String
+  public let identifier: String
+  public let path: String
+  public let binary: FBBinaryDescriptor?
 
-  @objc
   public init(name: String, identifier: String, path: String, binary: FBBinaryDescriptor?) {
     self.name = name
     self.identifier = identifier
@@ -49,12 +47,10 @@ public final class FBBundleDescriptor: NSObject, NSCopying, Sendable {
     super.init()
   }
 
-  @objc(bundleFromPath:error:)
   public class func bundle(fromPath path: String) throws -> FBBundleDescriptor {
     return try bundleFromPath(path, fallbackIdentifier: false)
   }
 
-  @objc(bundleWithFallbackIdentifierFromPath:error:)
   public class func bundleWithFallbackIdentifier(fromPath path: String) throws -> FBBundleDescriptor {
     return try bundleFromPath(path, fallbackIdentifier: true)
   }

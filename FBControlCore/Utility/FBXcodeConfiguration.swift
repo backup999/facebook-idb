@@ -53,7 +53,7 @@ public final class FBXcodeConfiguration: NSObject {
     xcodeVersionNumber.compare(NSDecimalNumber(string: "12.5")) != .orderedAscending
   }()
 
-  @objc public static let simulatorApp: FBBundleDescriptor = {
+  public static let simulatorApp: FBBundleDescriptor = {
     let path = simulatorApplicationPath
     guard let bundle = Bundle(path: path) else {
       fatalError("Could not load Simulator.app bundle at '\(path)'")
