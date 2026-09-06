@@ -119,6 +119,18 @@ final class FBControlCoreTransientTests: XCTestCase {
     XCTAssertNotEqual(a, c)
   }
 
+  /// The data container takes part in equality but deliberately not in the hash, so two
+  /// applications differing only by their container are unequal yet share a hash bucket.
+  func testInstalledApplicationHashIgnoresDataContainer() throws {
+    let binary = try FBBinaryDescriptor.binary(withPath: "/usr/bin/codesign")
+    let bundle = FBBundleDescriptor(name: "App", identifier: "com.test", path: "/tmp", binary: binary)
+    let a = FBInstalledApplication(bundle: bundle, installType: .user, dataContainer: "/data/one")
+    let b = FBInstalledApplication(bundle: bundle, installType: .user, dataContainer: "/data/two")
+
+    XCTAssertNotEqual(a, b)
+    XCTAssertEqual(a.hashValue, b.hashValue)
+  }
+
   func testInstalledApplicationDescription() {
     let app = FBInstalledApplication(bundle: makeBundle(), installType: .user, dataContainer: "/data/container")
 
